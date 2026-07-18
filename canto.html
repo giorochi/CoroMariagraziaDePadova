@@ -1,1 +1,82 @@
+<!DOCTYPE html>
+<html lang="it">
 
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Studio canto</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<a href="index.html" class="indietro">
+← Torna ai canti
+</a>
+
+
+<h1 id="titolo">
+Caricamento...
+</h1>
+
+
+<select id="traccia">
+
+<option value="tutti">
+🎵 Tutte le voci
+</option>
+
+<option value="soprano">
+🎤 Soprano
+</option>
+
+<option value="contralto">
+🎤 Contralto
+</option>
+
+<option value="tenore">
+🎤 Tenore
+</option>
+
+<option value="basso">
+🎤 Basso
+</option>
+
+</select>
+
+
+<audio id="audio" controls></audio>
+
+
+<div class="velocita">
+
+<button onclick="cambiaVelocita(0.75)">
+0.75x
+</button>
+
+<button onclick="cambiaVelocita(1)">
+1x
+</button>
+
+<button onclick="cambiaVelocita(1.25)">
+1.25x
+</button>
+
+</div>
+
+
+<div id="sezioni"></div>
+
+
+
+<script src="canto.js"></script>
+
+</body>
+
+</html>
