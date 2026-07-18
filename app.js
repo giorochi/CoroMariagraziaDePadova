@@ -1,7 +1,7 @@
 let dati;
 let audio=document.getElementById("audio");
 let sezioniDiv=document.getElementById("sezioni");
-
+let sezioneInRiproduzione = null;
 let sezioneAttuale;
 
 
@@ -54,12 +54,14 @@ ${s.testo}
 
 div.querySelector("button").onclick=()=>{
 
-audio.currentTime=s.inizio;
-audio.play().catch(error=>{
-    console.log("Play bloccato:", error);
-});
+sezioneAttuale = i;
+sezioneInRiproduzione = s;
 
-sezioneAttuale=i;
+audio.currentTime = s.inizio;
+
+audio.play().catch(error=>{
+    console.log(error);
+});
 
 };
 
@@ -77,20 +79,19 @@ sezioniDiv.appendChild(div);
 
 audio.ontimeupdate=function(){
 
+let tempo = audio.currentTime;
 
-let tempo=audio.currentTime;
 
+// evidenziazione karaoke
 
 document.querySelectorAll(".sezione")
 .forEach((el,i)=>{
 
-
 let s=dati.sezioni[i];
 
-
 if(
-tempo>=s.inizio &&
-tempo<s.fine
+tempo >= s.inizio &&
+tempo < s.fine
 )
 
 el.classList.add("attiva");
@@ -99,9 +100,24 @@ else
 
 el.classList.remove("attiva");
 
-
 });
 
+
+// stop automatico della sezione
+
+if(sezioneInRiproduzione){
+
+if(tempo >= sezioneInRiproduzione.fine){
+
+audio.pause();
+
+audio.currentTime = sezioneInRiproduzione.inizio;
+
+sezioneInRiproduzione = null;
+
+}
+
+}
 
 }
 
