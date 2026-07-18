@@ -1,1 +1,44 @@
+{
+  "titolo": "Canto di esempio",
+  
+  "tracce": {
+    "tutti": "audio/esempio_all.mp3",
+    "soprano": "audio/esempio_soprano.mp3",
+    "contralto": "audio/esempio_contralto.mp3",
+    "tenore": "audio/esempio_tenore.mp3",
+    "basso": "audio/esempio_basso.mp3"
+  },
 
+  "sezioni": [
+    {
+      "nome": "Intro",
+      "inizio": 0,
+      "fine": 12,
+      "testo": ""
+    },
+
+    {
+      "nome": "Strofa 1",
+      "inizio": 12,
+      "fine": 45,
+      "testo": 
+      "Signore ascolta la mia voce\nQuando ti invoco"
+    },
+
+    {
+      "nome": "Ritornello",
+      "inizio": 45,
+      "fine": 80,
+      "testo":
+      "Alleluia alleluia\nCantiamo al Signore"
+    },
+
+    {
+      "nome": "Strofa 2",
+      "inizio": 80,
+      "fine": 115,
+      "testo":
+      "Camminerò nella luce\nDel tuo amore"
+    }
+  ]
+}
