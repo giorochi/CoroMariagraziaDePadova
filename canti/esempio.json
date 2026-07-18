@@ -5,40 +5,30 @@
     "tutti": "audio/esempio_all.mp3",
     "soprano": "audio/esempio_soprano.mp3",
     "contralto": "audio/esempio_contralto.mp3",
-    "tenore": "audio/esempio_tenore.mp3",
-    "basso": "audio/esempio_basso.mp3"
   },
 
-  "sezioni": [
     {
-      "nome": "Intro",
-      "inizio": 0,
-      "fine": 12,
-      "testo": ""
-    },
-
-    {
-      "nome": "Strofa 1",
-      "inizio": 12,
-      "fine": 45,
+      "nome": "Strofa 1 (SOLO SOPRANO)",
+      "inizio": 14,
+      "fine": 41,
       "testo": 
-      "Signore ascolta la mia voce\nQuando ti invoco"
+      "O Signore fa di me uno strumento, \nfa di me uno strumento della tua pace, \ndov’è odio che io porti l’amore, \ndov’è offesa che io porti il perdono"
     },
 
     {
-      "nome": "Ritornello",
-      "inizio": 45,
+      "nome": "Strofa 2 (CON CONTRALTI)",
+      "inizio": 41,
       "fine": 80,
       "testo":
-      "Alleluia alleluia\nCantiamo al Signore"
+      "dov’è dubbio che io porti la fede, \ndov’è discordia che io porti l’unione, \ndov’è errore che io porti verità, \na chi dispera che io porti la speranza. \nDov’è errore che io porti verità, \na chi dispera che io porti la speranza."
     },
 
     {
-      "nome": "Strofa 2",
-      "inizio": 80,
-      "fine": 115,
+      "nome": "RITORNELLO",
+      "inizio": 82,
+      "fine": 124,
       "testo":
-      "Camminerò nella luce\nDel tuo amore"
+      "O Maestro, dammi tu un cuore grande, \nche sia goccia di rugiada per il mondo, \nche sia voce di speranza, \nche sia un buon mattino per il giorno d’ogni uomo, \ne con gli ultimi del mondo sia il mio passo lieto nella povertà, \nnella povertà."
     }
   ]
 }
