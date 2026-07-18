@@ -1,73 +1,54 @@
-let dati;
-let audio=document.getElementById("audio");
-let sezioniDiv=document.getElementById("sezioni");
-let sezioneInRiproduzione = null;
-let sezioneAttuale;
+let lista=document.getElementById("listaCanti");
+let ricerca=document.getElementById("ricerca");
+
+let canti=[];
 
 
-fetch("canti/esempio.json")
+fetch("dati/canti.json")
 
 .then(r=>r.json())
 
-.then(json=>{
+.then(data=>{
 
-dati=json;
+canti=data;
 
-document.getElementById("titolo").innerHTML=json.titolo;
-
-audio.src=json.tracce.tutti;
-
-
-creaSezioni();
+mostraCanti(canti);
 
 });
 
 
 
-function creaSezioni(){
-
-sezioniDiv.innerHTML="";
+function mostraCanti(listaCanti){
 
 
-dati.sezioni.forEach((s,i)=>{
+lista.innerHTML="";
 
 
-let div=document.createElement("div");
-
-div.className="sezione";
-
-div.innerHTML=`
-
-<h2>${s.nome}</h2>
-
-<div class="testo">
-${s.testo}
-</div>
+listaCanti.forEach(canto=>{
 
 
-<button class="play">
-▶ Riproduci
+let card=document.createElement("div");
+
+card.className="card";
+
+
+card.innerHTML=`
+
+<h2>${canto.titolo}</h2>
+
+<p>${canto.categoria}</p>
+
+
+<a href="canto.html?id=${canto.id}">
+<button>
+▶ Studia
 </button>
+</a>
 
 `;
 
 
-div.querySelector("button").onclick=()=>{
-
-sezioneAttuale = i;
-sezioneInRiproduzione = s;
-
-audio.currentTime = s.inizio;
-
-audio.play().catch(error=>{
-    console.log(error);
-});
-
-};
-
-
-
-sezioniDiv.appendChild(div);
+lista.appendChild(card);
 
 
 });
@@ -77,95 +58,18 @@ sezioniDiv.appendChild(div);
 
 
 
-audio.ontimeupdate=function(){
+ricerca.oninput=function(){
 
-let tempo = audio.currentTime;
+let testo=this.value.toLowerCase();
 
 
-// evidenziazione karaoke
+mostraCanti(
 
-document.querySelectorAll(".sezione")
-.forEach((el,i)=>{
-
-let s=dati.sezioni[i];
-
-if(
-tempo >= s.inizio &&
-tempo < s.fine
+canti.filter(c=>
+c.titolo.toLowerCase().includes(testo)
 )
 
-el.classList.add("attiva");
+);
 
-else
-
-el.classList.remove("attiva");
-
-});
-
-
-// stop automatico della sezione
-
-if(sezioneInRiproduzione){
-
-if(tempo >= sezioneInRiproduzione.fine){
-
-audio.pause();
-
-audio.currentTime = sezioneInRiproduzione.inizio;
-
-sezioneInRiproduzione = null;
-
-}
-
-}
-
-}
-
-
-
-document.getElementById("traccia")
-.onchange = async function(){
-
-let posizione = audio.currentTime;
-
-audio.pause();
-
-audio.src = dati.tracce[this.value];
-
-audio.load();
-
-audio.currentTime = posizione;
-
-try {
-    await audio.play();
-}
-catch(error){
-    console.log("Riproduzione interrotta:", error);
-}
-
-}
-
-
-
-function cambiaVelocita(v){
-
-audio.playbackRate=v;
-
-}
-
-
-
-function ripeti(){
-
-if(sezioneAttuale!=undefined){
-
-let s=dati.sezioni[sezioneAttuale];
-
-audio.currentTime=s.inizio;
-
-audio.play();
-
-
-}
 
 }
