@@ -6,7 +6,7 @@
     "soprano": "audio/esempio_soprano.mp3",
     "contralto": "audio/esempio_contralto.mp3",
   }
-
+  "sezioni": [
     {
       "nome": "Strofa 1 (SOLO SOPRANO)",
       "inizio": 14,
@@ -30,4 +30,5 @@
       "testo":
       "O Maestro, dammi tu un cuore grande, \nche sia goccia di rugiada per il mondo, \nche sia voce di speranza, \nche sia un buon mattino per il giorno d’ogni uomo, \ne con gli ultimi del mondo sia il mio passo lieto nella povertà, \nnella povertà."
     }
+  ]
 }
