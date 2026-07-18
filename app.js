@@ -55,7 +55,9 @@ ${s.testo}
 div.querySelector("button").onclick=()=>{
 
 audio.currentTime=s.inizio;
-audio.play();
+audio.play().catch(error=>{
+    console.log("Play bloccato:", error);
+});
 
 sezioneAttuale=i;
 
@@ -106,15 +108,24 @@ el.classList.remove("attiva");
 
 
 document.getElementById("traccia")
-.onchange=function(){
+.onchange = async function(){
 
-let posizione=audio.currentTime;
+let posizione = audio.currentTime;
 
-audio.src=dati.tracce[this.value];
+audio.pause();
 
-audio.currentTime=posizione;
+audio.src = dati.tracce[this.value];
 
-audio.play();
+audio.load();
+
+audio.currentTime = posizione;
+
+try {
+    await audio.play();
+}
+catch(error){
+    console.log("Riproduzione interrotta:", error);
+}
 
 }
 
