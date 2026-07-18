@@ -2,57 +2,40 @@
 <html lang="it">
 
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Coro Karaoke</title>
+<title>Coro "Maragrazia De Paova"</title>
 
 <link rel="stylesheet" href="style.css">
 
 </head>
 
+
 <body>
 
-<h1 id="titolo">
-Caricamento...
-</h1>
+<header>
+
+<h1>🎵 Coro "Maragrazia De Paova"</h1>
+
+<p>Studio dei canti</p>
+
+</header>
 
 
-<select id="traccia">
-<option value="tutti">Tutte le voci</option>
-<option value="soprano">Soprano</option>
-<option value="contralto">Contralto</option>
-</select>
+<input 
+id="ricerca"
+placeholder="🔎 Cerca un canto..."
+>
 
 
-<audio id="audio" controls></audio>
+<div id="listaCanti"></div>
 
-
-<div class="controlli">
-
-<button onclick="cambiaVelocita(0.75)">
-0.75x
-</button>
-
-<button onclick="cambiaVelocita(1)">
-1x
-</button>
-
-<button onclick="cambiaVelocita(1.25)">
-1.25x
-</button>
-
-<button onclick="ripeti()">
-🔁 Ripeti
-</button>
-
-</div>
-
-
-<div id="sezioni"></div>
 
 
 <script src="app.js"></script>
 
 </body>
+
 </html>
