@@ -2,9 +2,9 @@
   "titolo": "Canto di esempio",
   
   "tracce": {
-    "tutti": "audio/esempio_all.mp3",
-    "soprano": "audio/esempio_soprano.mp3",
-    "contralto": "audio/esempio_contralto.mp3"
+    "tutti": "audio/esempio/esempio_all.mp3",
+    "soprano": "audio/esempio/esempio_soprano.mp3",
+    "contralto": "audio/esempio/esempio_contralto.mp3"
   },
   "sezioni": [
     {
