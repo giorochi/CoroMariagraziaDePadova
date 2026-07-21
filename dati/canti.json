@@ -1,10 +1,10 @@
 [
   {
-    "id": "povertà",
+    "id": "esempio",
     "titolo": "Canto di Madonna Povertà",
     "autore": "Mons. Marco Frisina",
     "categoria": "San Francesco",
-    "file": "canti/povertà.json"
+    "file": "canti/esempio.json"
   }
 ]
 
