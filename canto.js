@@ -615,3 +615,33 @@ parseFloat(ultimo);
 
 
 }
+const tema =
+document.getElementById("tema");
+
+
+if(tema){
+
+
+tema.onclick=function(){
+
+
+document.body.classList.toggle("dark");
+
+
+localStorage.setItem(
+
+"tema",
+
+document.body.classList.contains("dark")
+?
+"dark"
+:
+"light"
+
+);
+
+
+};
+
+
+}
