@@ -1,82 +1,358 @@
 <!DOCTYPE html>
 <html lang="it">
 
+
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Studio canto</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<title>
+Studio canto
+</title>
+
 
 <link rel="stylesheet" href="style.css">
 
+
 </head>
+
 
 
 <body>
 
 
-<a href="index.html" class="indietro">
-← Torna ai canti
+
+<a href="index.html">
+
+<button>
+
+← Tutti i canti
+
+</button>
+
 </a>
 
 
-<h1 id="titolo">
-Caricamento...
-</h1>
 
 
-<select id="traccia">
-
-<option value="tutti">
-🎵 Tutte le voci
-</option>
-
-<option value="soprano">
-🎤 Soprano
-</option>
-
-<option value="contralto">
-🎤 Contralto
-</option>
-
-<option value="tenore">
-🎤 Tenore
-</option>
-
-<option value="basso">
-🎤 Basso
-</option>
-
-</select>
+<header>
 
 
-<audio id="audio" controls></audio>
+<div class="logo">
 
-
-<div class="velocita">
-
-<button onclick="cambiaVelocita(0.75)">
-0.75x
-</button>
-
-<button onclick="cambiaVelocita(1)">
-1x
-</button>
-
-<button onclick="cambiaVelocita(1.25)">
-1.25x
-</button>
+🎼
 
 </div>
 
 
-<div id="sezioni"></div>
+
+<h1 id="titolo">
+
+Caricamento...
+
+</h1>
+
+
+
+<p id="autore">
+
+</p>
+
+
+
+</header>
+
+
+
+
+
+<!-- Scelta voce -->
+
+
+<h2>
+
+🎤 La tua parte
+
+</h2>
+
+
+
+<div class="voci">
+
+
+<button 
+class="voce attiva"
+data-voce="tutti">
+
+🎵 Tutte
+
+</button>
+
+
+
+<button
+class="voce"
+data-voce="soprano">
+
+👩 Soprano
+
+</button>
+
+
+
+<button
+class="voce"
+data-voce="contralto">
+
+👩 Contralto
+
+</button>
+
+
+
+<button
+class="voce"
+data-voce="tenore">
+
+👨 Tenore
+
+</button>
+
+
+
+<button
+class="voce"
+data-voce="basso">
+
+👨 Basso
+
+</button>
+
+
+</div>
+
+
+
+
+
+
+<!-- PLAYER -->
+
+
+<div class="player">
+
+
+
+<audio id="audio">
+
+</audio>
+
+
+
+
+<div>
+
+
+<span id="tempoAttuale">
+
+00:00
+
+</span>
+
+
+/
+
+<span id="durata">
+
+00:00
+
+</span>
+
+
+</div>
+
+
+
+
+
+<div class="progress">
+
+
+<div 
+class="progress-bar"
+id="barra">
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="controls">
+
+
+<button id="indietro15">
+
+⏪ 15s
+
+</button>
+
+
+
+<button id="indietro5">
+
+◀ 5s
+
+</button>
+
+
+
+<button id="play">
+
+▶
+
+</button>
+
+
+
+<button id="avanti5">
+
+5s ▶
+
+</button>
+
+
+
+<button id="avanti15">
+
+15s ⏩
+
+</button>
+
+
+</div>
+
+
+
+
+
+<div class="controls">
+
+
+<button data-speed="0.75">
+
+0.75×
+
+</button>
+
+
+
+<button data-speed="1">
+
+1×
+
+</button>
+
+
+
+<button data-speed="1.25">
+
+1.25×
+
+</button>
+
+
+
+<button data-speed="1.5">
+
+1.5×
+
+</button>
+
+
+</div>
+
+
+
+
+
+
+<label>
+
+
+🔊 Volume
+
+
+<input 
+type="range"
+id="volume"
+min="0"
+max="1"
+step="0.05"
+value="1"
+>
+
+
+</label>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+<!-- Modalità studio -->
+
+
+<button id="studio">
+
+📖 Modalità studio
+
+</button>
+
+
+
+
+
+
+
+
+<h2>
+
+🎵 Sezioni
+
+</h2>
+
+
+
+
+<div id="sezioni">
+
+
+</div>
+
+
 
 
 
 <script src="canto.js"></script>
 
+
 </body>
+
 
 </html>
