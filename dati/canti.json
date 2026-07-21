@@ -5,6 +5,13 @@
     "autore": "Paolo Spoladore",
     "categoria": "San Francesco",
     "file": "canti/esempio.json"
+  },
+  {
+    "id": "povertà",
+    "titolo": "Canto di Madonna Povertà",
+    "autore": "Mons. Marco Frisina",
+    "categoria": "San Francesco",
+    "file": "canti/povertà.json"
   }
 ]
 
