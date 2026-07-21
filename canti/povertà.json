@@ -14,14 +14,14 @@
       "inizio": 9,
       "fine": 41,
       "testo": 
-      "Nacque nel mondo un sole, /nFrancesco era il suo nome /ne subito al suo sorgere /nsentì tutta la terra il suo calore."
+      "Nacque nel mondo un sole, \nFrancesco era il suo nome \ne subito al suo sorgere \nsentì tutta la terra il suo calore."
     },
     {
       "nome": "RITORNELLO",
       "inizio": 42,
       "fine": 82,
       "testo":
-      "Ma lui perdutamente, /nlui s'innamorò di Madonna povertà, /ndi Madonna povertà."
+      "Ma lui perdutamente, \nlui s'innamorò di Madonna povertà, \ndi Madonna povertà."
     }
   ]
 }
