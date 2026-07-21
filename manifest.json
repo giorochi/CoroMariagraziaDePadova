@@ -1,0 +1,16 @@
+{
+  "name": "Coro Mariagrazia De Padova",
+  "short_name": "Coro MDP",
+  "description": "Studio delle parti dei canti del coro",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#eef5ff",
+  "theme_color": "#1565c0",
+  "icons": [
+    {
+      "src": "icona.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
