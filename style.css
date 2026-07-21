@@ -1,117 +1,561 @@
-body{
-
-font-family:Arial,sans-serif;
-
-background:#f5f6fa;
-
-padding:20px;
-
-}
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
 
-header{
+:root {
 
-text-align:center;
+    --primary: #1565c0;
+    --primary-dark: #0d47a1;
+    --secondary: #42a5f5;
 
-margin-bottom:30px;
+    --background: #eef5ff;
+    --card: #ffffff;
 
-}
+    --text: #1b1b1b;
+    --text-light: #666;
 
+    --active: #ffd54f;
 
+    --shadow:
+        0 8px 25px rgba(0,0,0,0.12);
 
-h1{
-
-color:#1565c0;
-
+    --radius: 22px;
 }
 
 
 
-#ricerca,
-select{
+* {
 
-width:100%;
-
-padding:15px;
-
-font-size:18px;
-
-border-radius:15px;
-
-border:1px solid #ddd;
-
-margin-bottom:20px;
-
+    box-sizing: border-box;
 }
 
 
 
-.card{
+body {
 
-background:white;
+    margin:0;
 
-padding:20px;
+    padding:20px;
 
-border-radius:20px;
+    min-height:100vh;
 
-margin-bottom:15px;
+    font-family:
+        'Poppins',
+        Arial,
+        sans-serif;
 
-box-shadow:0 3px 10px #ddd;
+    background:
+        linear-gradient(
+            135deg,
+            #eef5ff,
+            #d9eaff
+        );
+
+    color:var(--text);
 
 }
 
 
 
-button{
+header {
 
-background:#1565c0;
+    text-align:center;
 
-color:white;
-
-border:0;
-
-padding:12px 20px;
-
-border-radius:12px;
-
-font-size:16px;
+    margin-bottom:30px;
 
 }
 
 
 
-audio{
+.logo {
 
-width:100%;
+    width:90px;
+
+    height:90px;
+
+    margin:auto;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--primary),
+            var(--secondary)
+        );
+
+    color:white;
+
+    font-size:42px;
+
+    box-shadow:var(--shadow);
 
 }
 
 
 
-.attiva{
+header h1 {
 
-background:#ffe082;
+    margin-top:15px;
 
-}
+    margin-bottom:5px;
 
+    color:var(--primary-dark);
 
-
-.testo{
-
-white-space:pre-line;
-
-font-size:18px;
-
-line-height:1.5;
+    font-size:28px;
 
 }
 
 
 
-.indietro{
+header p {
 
-display:block;
+    color:var(--text-light);
 
-margin-bottom:20px;
+    margin:0;
+
+}
+
+
+
+
+/* Ricerca */
+
+
+#ricerca {
+
+    width:100%;
+
+    padding:16px 20px;
+
+    border:none;
+
+    border-radius:var(--radius);
+
+    font-size:16px;
+
+    outline:none;
+
+    background:white;
+
+    box-shadow:var(--shadow);
+
+    margin-bottom:25px;
+
+}
+
+
+
+/* Card canti */
+
+
+.card {
+
+    background:var(--card);
+
+    border-radius:var(--radius);
+
+    padding:20px;
+
+    margin-bottom:18px;
+
+    box-shadow:var(--shadow);
+
+    transition:
+
+        transform .2s ease,
+
+        box-shadow .2s ease;
+
+}
+
+
+
+.card:hover {
+
+    transform:translateY(-4px);
+
+}
+
+
+
+.card h2 {
+
+    margin-top:0;
+
+    color:var(--primary-dark);
+
+}
+
+
+
+.card p {
+
+    color:var(--text-light);
+
+}
+
+
+
+
+/* Pulsanti */
+
+
+button {
+
+    border:none;
+
+    cursor:pointer;
+
+    padding:13px 22px;
+
+    border-radius:18px;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            var(--primary),
+            var(--secondary)
+        );
+
+    color:white;
+
+    transition:
+
+        transform .15s,
+
+        opacity .15s;
+
+}
+
+
+
+button:active {
+
+    transform:scale(.95);
+
+}
+
+
+
+button:hover {
+
+    opacity:.9;
+
+}
+
+
+
+
+/* Link */
+
+
+a {
+
+    text-decoration:none;
+
+}
+
+
+
+
+/* Pagina canto */
+
+
+.titolo-canto {
+
+    text-align:center;
+
+}
+
+
+
+select {
+
+    width:100%;
+
+    padding:15px;
+
+    border-radius:18px;
+
+    border:none;
+
+    background:white;
+
+    box-shadow:var(--shadow);
+
+    font-size:16px;
+
+    margin-bottom:20px;
+
+}
+
+
+
+
+/* Player */
+
+
+.player {
+
+    background:white;
+
+    border-radius:25px;
+
+    padding:25px;
+
+    box-shadow:var(--shadow);
+
+    text-align:center;
+
+    margin-bottom:25px;
+
+}
+
+
+
+.progress {
+
+    height:10px;
+
+    background:#ddd;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+}
+
+
+
+.progress-bar {
+
+    height:100%;
+
+    width:0%;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            var(--primary),
+            var(--secondary)
+        );
+
+}
+
+
+
+
+
+.controls {
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:10px;
+
+    margin-top:20px;
+
+    flex-wrap:wrap;
+
+}
+
+
+
+
+/* Scelta voci */
+
+
+.voci {
+
+    display:flex;
+
+    gap:10px;
+
+    flex-wrap:wrap;
+
+    margin-bottom:25px;
+
+}
+
+
+
+.voce {
+
+    background:white;
+
+    color:var(--primary-dark);
+
+    border:2px solid var(--secondary);
+
+}
+
+
+
+.voce.attiva {
+
+    background:var(--primary);
+
+    color:white;
+
+}
+
+
+
+/* Sezioni karaoke */
+
+
+.sezione {
+
+    position:relative;
+
+}
+
+
+
+.sezione.attiva {
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #fff4bd,
+            #ffe082
+        );
+
+    transform:scale(1.02);
+
+}
+
+
+
+.testo {
+
+    white-space:pre-line;
+
+    line-height:1.7;
+
+    font-size:18px;
+
+}
+
+
+
+.tempo {
+
+    color:#777;
+
+    font-size:14px;
+
+}
+
+
+
+/* Modalità studio */
+
+
+.study-mode .sezione:not(.attiva) {
+
+    display:none;
+
+}
+
+
+.study-mode .testo {
+
+    font-size:28px;
+
+    text-align:center;
+
+}
+
+
+
+/* Dark mode */
+
+
+body.dark {
+
+    --background:#121212;
+
+    --card:#1e1e1e;
+
+    --text:#ffffff;
+
+    --text-light:#bbbbbb;
+
+    background:#121212;
+
+}
+
+
+
+body.dark .card,
+
+body.dark .player,
+
+body.dark #ricerca,
+
+body.dark select {
+
+    background:#1e1e1e;
+
+}
+
+
+
+body.dark h1,
+
+body.dark h2 {
+
+    color:#90caf9;
+
+}
+
+
+
+/* Mobile */
+
+
+@media(max-width:600px){
+
+    body {
+
+        padding:15px;
+
+    }
+
+
+    header h1 {
+
+        font-size:23px;
+
+    }
+
+
+    .card {
+
+        padding:17px;
+
+    }
+
+
+    .testo {
+
+        font-size:17px;
+
+    }
 
 }
