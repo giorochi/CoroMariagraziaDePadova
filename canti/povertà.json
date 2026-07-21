@@ -11,26 +11,17 @@
   "sezioni": [
     {
       "nome": "Strofa 1 (SOLO SOPRANO)",
-      "inizio": 14,
+      "inizio": 9,
       "fine": 41,
       "testo": 
-      "O Signore fa di me uno strumento, \nfa di me uno strumento della tua pace, \ndov’è odio che io porti l’amore, \ndov’è offesa che io porti il perdono"
+      "Nacque nel mondo un sole, /nFrancesco era il suo nome /ne subito al suo sorgere /nsentì tutta la terra il suo calore."
     },
-
-    {
-      "nome": "Strofa 2 (CON CONTRALTI)",
-      "inizio": 41,
-      "fine": 80,
-      "testo":
-      "dov’è dubbio che io porti la fede, \ndov’è discordia che io porti l’unione, \ndov’è errore che io porti verità, \na chi dispera che io porti la speranza. \nDov’è errore che io porti verità, \na chi dispera che io porti la speranza."
-    },
-
     {
       "nome": "RITORNELLO",
-      "inizio": 82,
-      "fine": 124,
+      "inizio": 42,
+      "fine": 82,
       "testo":
-      "O Maestro, dammi tu un cuore grande, \nche sia goccia di rugiada per il mondo, \nche sia voce di speranza, \nche sia un buon mattino per il giorno d’ogni uomo, \ne con gli ultimi del mondo sia il mio passo lieto nella povertà, \nnella povertà."
+      "Ma lui perdutamente, /nlui s'innamorò di Madonna povertà, /ndi Madonna povertà."
     }
   ]
 }
