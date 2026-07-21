@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="it">
-<link rel="manifest" href="manifest.json">
 
-<meta name="theme-color" content="#1565c0">
 
 <head>
 
@@ -17,10 +15,22 @@ Studio canto
 </title>
 
 
+
 <link rel="stylesheet" href="style.css">
 
 
+<link rel="manifest" href="manifest.json">
+
+
+<meta name="theme-color" content="#1565c0">
+
+
+<script src="https://unpkg.com/lucide@latest"></script>
+
+
 </head>
+
+
 
 
 
@@ -30,13 +40,16 @@ Studio canto
 
 <a href="index.html">
 
-<button>
+<button class="back-button">
 
-← Tutti i canti
+<i data-lucide="arrow-left"></i>
+
+Canti
 
 </button>
 
 </a>
+
 
 
 
@@ -46,14 +59,10 @@ Studio canto
 
 <div class="logo">
 
-🎼
+<i data-lucide="file-music"></i>
 
 </div>
-<button id="tema">
 
-🌙 Tema scuro
-
-</button>
 
 
 <h1 id="titolo">
@@ -70,20 +79,33 @@ Caricamento...
 
 
 
+
+<button id="tema">
+
+<i data-lucide="moon"></i>
+
+</button>
+
+
+
 </header>
 
 
 
 
 
-<!-- Scelta voce -->
 
 
 <h2>
 
-🎤 La tua parte
+<i data-lucide="mic-2"></i>
+
+La tua parte
 
 </h2>
+
+
+
 
 
 
@@ -94,9 +116,12 @@ Caricamento...
 class="voce attiva"
 data-voce="tutti">
 
-🎵 Tutte
+<i data-lucide="music"></i>
+
+Tutte
 
 </button>
+
 
 
 
@@ -104,9 +129,12 @@ data-voce="tutti">
 class="voce"
 data-voce="soprano">
 
-👩 Soprano
+<i data-lucide="mic-2"></i>
+
+Soprano
 
 </button>
+
 
 
 
@@ -114,9 +142,12 @@ data-voce="soprano">
 class="voce"
 data-voce="contralto">
 
-👩 Contralto
+<i data-lucide="mic-2"></i>
+
+Contralto
 
 </button>
+
 
 
 
@@ -124,9 +155,12 @@ data-voce="contralto">
 class="voce"
 data-voce="tenore">
 
-👨 Tenore
+<i data-lucide="mic-2"></i>
+
+Tenore
 
 </button>
+
 
 
 
@@ -134,9 +168,12 @@ data-voce="tenore">
 class="voce"
 data-voce="basso">
 
-👨 Basso
+<i data-lucide="mic-2"></i>
+
+Basso
 
 </button>
+
 
 
 </div>
@@ -146,41 +183,30 @@ data-voce="basso">
 
 
 
-<!-- PLAYER -->
 
 
 <div class="player">
 
 
-
-<audio id="audio">
-
-</audio>
+<audio id="audio"></audio>
 
 
 
-
-<div>
-
+<div class="time">
 
 <span id="tempoAttuale">
-
 00:00
-
 </span>
 
 
 /
 
+
 <span id="durata">
-
 00:00
-
 </span>
 
-
 </div>
-
 
 
 
@@ -188,7 +214,7 @@ data-voce="basso">
 <div class="progress">
 
 
-<div 
+<div
 class="progress-bar"
 id="barra">
 
@@ -201,48 +227,60 @@ id="barra">
 
 
 
-
-
 <div class="controls">
 
 
 <button id="indietro15">
 
-⏪ 15s
+<i data-lucide="rewind"></i>
+
+15
 
 </button>
+
 
 
 
 <button id="indietro5">
 
-◀ 5s
+-5
 
 </button>
+
+
 
 
 
 <button id="play">
 
-▶
+
+<i data-lucide="play"></i>
+
 
 </button>
+
+
 
 
 
 <button id="avanti5">
 
-5s ▶
++5
 
 </button>
+
+
 
 
 
 <button id="avanti15">
 
-15s ⏩
+<i data-lucide="fast-forward"></i>
+
+15
 
 </button>
+
 
 
 </div>
@@ -251,7 +289,9 @@ id="barra">
 
 
 
-<div class="controls">
+
+
+<div class="controls velocita">
 
 
 <button data-speed="0.75">
@@ -261,13 +301,11 @@ id="barra">
 </button>
 
 
-
 <button data-speed="1">
 
 1×
 
 </button>
-
 
 
 <button data-speed="1.25">
@@ -277,12 +315,12 @@ id="barra">
 </button>
 
 
-
 <button data-speed="1.5">
 
 1.5×
 
 </button>
+
 
 
 </div>
@@ -292,13 +330,15 @@ id="barra">
 
 
 
-<label>
+
+<div class="volume-box">
 
 
-🔊 Volume
+<i data-lucide="volume-2"></i>
 
 
-<input 
+
+<input
 type="range"
 id="volume"
 min="0"
@@ -308,7 +348,7 @@ value="1"
 >
 
 
-</label>
+</div>
 
 
 
@@ -321,12 +361,11 @@ value="1"
 
 
 
-<!-- Modalità studio -->
-
-
 <button id="studio">
 
-📖 Modalità studio
+<i data-lucide="book-open"></i>
+
+Modalità studio
 
 </button>
 
@@ -336,18 +375,7 @@ value="1"
 
 
 
-
-<h2>
-
-🎵 Sezioni
-
-</h2>
-
-
-
-
-<div id="sezioni">
-
+<div id="spartito">
 
 </div>
 
@@ -355,7 +383,40 @@ value="1"
 
 
 
+
+
+<h2>
+
+<i data-lucide="list-music"></i>
+
+Sezioni
+
+</h2>
+
+
+
+
+
+<div id="sezioni">
+
+</div>
+
+
+
+
+
+
 <script src="canto.js"></script>
+
+
+
+
+<script>
+
+lucide.createIcons();
+
+</script>
+
 
 
 </body>
