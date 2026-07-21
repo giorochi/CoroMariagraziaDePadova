@@ -1,0 +1,36 @@
+{
+  "titolo": "Canto di Madonna Povertà",
+  
+  "tracce": {
+    "tutti": "audio/povertà/povertà_all.mp3",
+    "soprano": "audio/povertà/povertà_soprano.mp3",
+    "contralto": "audio/povertà/povertà_contralto.mp3",
+    "tenore": "audio/povertà/povertà_tenore.mp3",
+    "basso": "audio/povertà/povertà_basso.mp3"
+  },
+  "sezioni": [
+    {
+      "nome": "Strofa 1 (SOLO SOPRANO)",
+      "inizio": 14,
+      "fine": 41,
+      "testo": 
+      "O Signore fa di me uno strumento, \nfa di me uno strumento della tua pace, \ndov’è odio che io porti l’amore, \ndov’è offesa che io porti il perdono"
+    },
+
+    {
+      "nome": "Strofa 2 (CON CONTRALTI)",
+      "inizio": 41,
+      "fine": 80,
+      "testo":
+      "dov’è dubbio che io porti la fede, \ndov’è discordia che io porti l’unione, \ndov’è errore che io porti verità, \na chi dispera che io porti la speranza. \nDov’è errore che io porti verità, \na chi dispera che io porti la speranza."
+    },
+
+    {
+      "nome": "RITORNELLO",
+      "inizio": 82,
+      "fine": 124,
+      "testo":
+      "O Maestro, dammi tu un cuore grande, \nche sia goccia di rugiada per il mondo, \nche sia voce di speranza, \nche sia un buon mattino per il giorno d’ogni uomo, \ne con gli ultimi del mondo sia il mio passo lieto nella povertà, \nnella povertà."
+    }
+  ]
+}
