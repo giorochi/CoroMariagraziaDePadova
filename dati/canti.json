@@ -1,10 +1,10 @@
 [
   {
-"id": "esempio",
-    "titolo": "Preghiera semplice",
-    "categoria": "Offertorio",
-    "autore": "Frisina",
-    "file": "canti/esempio.json"
+    "id": "povertà",
+    "titolo": "Canto di Madonna Povertà",
+    "autore": "Mons. Marco Frisina",
+    "categoria": "San Francesco",
+    "file": "canti/povertà.json"
   }
 ]
 
