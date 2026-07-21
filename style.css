@@ -3,30 +3,35 @@
 
 :root {
 
-    --primary: #1565c0;
-    --primary-dark: #0d47a1;
-    --secondary: #42a5f5;
+    --primary:#1565c0;
+    --primary-dark:#0d47a1;
+    --secondary:#42a5f5;
 
-    --background: #eef5ff;
-    --card: #ffffff;
+    --background:#eef5ff;
+    --card:#ffffff;
 
-    --text: #1b1b1b;
-    --text-light: #666;
+    --text:#1c1c1c;
+    --muted:#6d6d6d;
 
-    --active: #ffd54f;
+    --active:#ffe082;
 
     --shadow:
-        0 8px 25px rgba(0,0,0,0.12);
+    0 10px 30px rgba(0,0,0,.12);
 
-    --radius: 22px;
+    --radius:24px;
+
 }
+
+
 
 
 
 * {
 
-    box-sizing: border-box;
+    box-sizing:border-box;
+
 }
+
 
 
 
@@ -38,21 +43,28 @@ body {
 
     min-height:100vh;
 
-    font-family:
-        'Poppins',
-        Arial,
-        sans-serif;
 
-    background:
-        linear-gradient(
-            135deg,
-            #eef5ff,
-            #d9eaff
-        );
+    font-family:
+    "Poppins",
+    sans-serif;
+
 
     color:var(--text);
 
+
+    background:
+    linear-gradient(
+        135deg,
+        #eef5ff,
+        #dcecff
+    );
+
+
+    transition:.3s;
+
 }
+
+
 
 
 
@@ -66,32 +78,38 @@ header {
 
 
 
+
+
 .logo {
 
     width:90px;
 
     height:90px;
 
+
     margin:auto;
+
 
     display:flex;
 
+    justify-content:center;
+
     align-items:center;
 
-    justify-content:center;
 
     border-radius:50%;
 
-    background:
-        linear-gradient(
-            135deg,
-            var(--primary),
-            var(--secondary)
-        );
 
     color:white;
 
-    font-size:42px;
+
+    background:
+    linear-gradient(
+        135deg,
+        var(--primary),
+        var(--secondary)
+    );
+
 
     box-shadow:var(--shadow);
 
@@ -99,94 +117,33 @@ header {
 
 
 
-header h1 {
 
-    margin-top:15px;
 
-    margin-bottom:5px;
+.logo svg {
+
+    width:45px;
+
+    height:45px;
+
+}
+
+
+
+
+
+h1 {
 
     color:var(--primary-dark);
 
-    font-size:28px;
-
-}
-
-
-
-header p {
-
-    color:var(--text-light);
-
-    margin:0;
+    font-size:27px;
 
 }
 
 
 
 
-/* Ricerca */
 
-
-#ricerca {
-
-    width:100%;
-
-    padding:16px 20px;
-
-    border:none;
-
-    border-radius:var(--radius);
-
-    font-size:16px;
-
-    outline:none;
-
-    background:white;
-
-    box-shadow:var(--shadow);
-
-    margin-bottom:25px;
-
-}
-
-
-
-/* Card canti */
-
-
-.card {
-
-    background:var(--card);
-
-    border-radius:var(--radius);
-
-    padding:20px;
-
-    margin-bottom:18px;
-
-    box-shadow:var(--shadow);
-
-    transition:
-
-        transform .2s ease,
-
-        box-shadow .2s ease;
-
-}
-
-
-
-.card:hover {
-
-    transform:translateY(-4px);
-
-}
-
-
-
-.card h2 {
-
-    margin-top:0;
+h2 {
 
     color:var(--primary-dark);
 
@@ -194,49 +151,75 @@ header p {
 
 
 
-.card p {
 
-    color:var(--text-light);
+
+p {
+
+    color:var(--muted);
 
 }
 
 
 
-
-/* Pulsanti */
 
 
 button {
 
     border:none;
 
+
     cursor:pointer;
 
-    padding:13px 22px;
+
+    padding:13px 20px;
+
 
     border-radius:18px;
 
-    font-size:16px;
+
+    display:inline-flex;
+
+
+    align-items:center;
+
+
+    justify-content:center;
+
+
+    gap:8px;
+
+
+    font-size:15px;
+
 
     font-weight:600;
 
-    background:
-
-        linear-gradient(
-            135deg,
-            var(--primary),
-            var(--secondary)
-        );
 
     color:white;
 
-    transition:
 
-        transform .15s,
+    background:
+    linear-gradient(
+        135deg,
+        var(--primary),
+        var(--secondary)
+    );
 
-        opacity .15s;
+
+    transition:.2s;
 
 }
+
+
+
+
+
+button:hover {
+
+    transform:translateY(-2px);
+
+}
+
 
 
 
@@ -248,57 +231,182 @@ button:active {
 
 
 
-button:hover {
-
-    opacity:.9;
-
-}
 
 
+button svg {
 
+    width:20px;
 
-/* Link */
-
-
-a {
-
-    text-decoration:none;
+    height:20px;
 
 }
 
 
 
 
-/* Pagina canto */
+
+/* Ricerca */
 
 
-.titolo-canto {
-
-    text-align:center;
-
-}
+.ricerca-box {
 
 
+    display:flex;
 
-select {
 
-    width:100%;
+    align-items:center;
 
-    padding:15px;
 
-    border-radius:18px;
+    gap:10px;
 
-    border:none;
 
     background:white;
 
+
+    padding:15px 18px;
+
+
+    border-radius:22px;
+
+
     box-shadow:var(--shadow);
+
+
+    margin-bottom:25px;
+
+
+}
+
+
+
+.ricerca-box svg {
+
+    color:var(--primary);
+
+}
+
+
+
+
+#ricerca {
+
+
+    width:100%;
+
+
+    border:none;
+
+
+    outline:none;
+
 
     font-size:16px;
 
-    margin-bottom:20px;
+
+    font-family:inherit;
+
 
 }
+
+
+
+
+
+
+/* Card */
+
+
+.card {
+
+
+    background:var(--card);
+
+
+    padding:22px;
+
+
+    border-radius:var(--radius);
+
+
+    margin-bottom:18px;
+
+
+    box-shadow:var(--shadow);
+
+
+    transition:.25s;
+
+
+}
+
+
+
+
+.card:hover {
+
+    transform:translateY(-5px);
+
+}
+
+
+
+
+
+
+/* pulsanti voce */
+
+
+.voci {
+
+
+    display:flex;
+
+
+    flex-wrap:wrap;
+
+
+    gap:10px;
+
+
+    margin-bottom:25px;
+
+
+}
+
+
+
+
+.voce {
+
+
+    background:white;
+
+
+    color:var(--primary);
+
+
+    border:2px solid #90caf9;
+
+
+}
+
+
+
+
+
+.voce.attiva {
+
+
+    background:var(--primary);
+
+
+    color:white;
+
+
+}
+
+
+
 
 
 
@@ -308,51 +416,80 @@ select {
 
 .player {
 
+
     background:white;
 
-    border-radius:25px;
 
     padding:25px;
 
+
+    border-radius:30px;
+
+
     box-shadow:var(--shadow);
 
-    text-align:center;
 
     margin-bottom:25px;
 
+
+    text-align:center;
+
+
 }
+
+
 
 
 
 .progress {
 
-    height:10px;
+
+    width:100%;
+
+
+    height:12px;
+
 
     background:#ddd;
 
+
     border-radius:20px;
+
 
     overflow:hidden;
 
+
+    cursor:pointer;
+
+
+    margin:20px 0;
+
+
 }
+
+
 
 
 
 .progress-bar {
 
+
     height:100%;
+
 
     width:0%;
 
-    background:
 
-        linear-gradient(
-            90deg,
-            var(--primary),
-            var(--secondary)
-        );
+    background:
+    linear-gradient(
+        90deg,
+        var(--primary),
+        var(--secondary)
+    );
+
 
 }
+
 
 
 
@@ -360,66 +497,83 @@ select {
 
 .controls {
 
+
     display:flex;
+
+
+    flex-wrap:wrap;
+
 
     justify-content:center;
 
+
     gap:10px;
 
-    margin-top:20px;
 
-    flex-wrap:wrap;
+    margin:15px 0;
+
 
 }
 
 
 
 
-/* Scelta voci */
+
+.velocita button {
 
 
-.voci {
+    background:#e3f2fd;
 
-    display:flex;
-
-    gap:10px;
-
-    flex-wrap:wrap;
-
-    margin-bottom:25px;
-
-}
-
-
-
-.voce {
-
-    background:white;
 
     color:var(--primary-dark);
 
-    border:2px solid var(--secondary);
 
 }
 
 
 
-.voce.attiva {
 
-    background:var(--primary);
 
-    color:white;
+.volume-box {
+
+
+    display:flex;
+
+
+    align-items:center;
+
+
+    gap:10px;
+
 
 }
 
 
 
-/* Sezioni karaoke */
+
+
+.volume-box input {
+
+
+    width:100%;
+
+
+}
+
+
+
+
+
+
+
+/* Sezioni */
 
 
 .sezione {
 
-    position:relative;
+
+    cursor:pointer;
+
 
 }
 
@@ -427,39 +581,54 @@ select {
 
 .sezione.attiva {
 
+
     background:
+    linear-gradient(
+        135deg,
+        #fff8d6,
+        var(--active)
+    );
 
-        linear-gradient(
-            135deg,
-            #fff4bd,
-            #ffe082
-        );
 
-    transform:scale(1.02);
+    transform:scale(1.03);
+
 
 }
+
+
+
 
 
 
 .testo {
 
+
     white-space:pre-line;
 
-    line-height:1.7;
 
     font-size:18px;
 
+
+    line-height:1.7;
+
+
 }
+
+
 
 
 
 .tempo {
 
-    color:#777;
 
     font-size:14px;
 
+
 }
+
+
+
+
 
 
 
@@ -468,18 +637,48 @@ select {
 
 .study-mode .sezione:not(.attiva) {
 
+
     display:none;
 
+
 }
+
+
 
 
 .study-mode .testo {
 
-    font-size:28px;
+
+    font-size:30px;
+
 
     text-align:center;
 
+
+    line-height:1.8;
+
+
 }
+
+
+
+
+
+
+/* Spartito */
+
+
+#spartito {
+
+
+    margin:20px 0;
+
+
+}
+
+
+
+
 
 
 
@@ -488,15 +687,12 @@ select {
 
 body.dark {
 
-    --background:#121212;
-
-    --card:#1e1e1e;
-
-    --text:#ffffff;
-
-    --text-light:#bbbbbb;
 
     background:#121212;
+
+
+    color:white;
+
 
 }
 
@@ -506,13 +702,14 @@ body.dark .card,
 
 body.dark .player,
 
-body.dark #ricerca,
+body.dark .ricerca-box {
 
-body.dark select {
 
     background:#1e1e1e;
 
+
 }
+
 
 
 
@@ -520,42 +717,128 @@ body.dark h1,
 
 body.dark h2 {
 
+
     color:#90caf9;
+
 
 }
 
 
 
-/* Mobile */
+
+
+body.dark input {
+
+
+    background:transparent;
+
+
+    color:white;
+
+
+}
+
+
+
+
+
+
+/* Animazioni */
+
+
+@keyframes comparsa {
+
+
+from {
+
+opacity:0;
+
+transform:translateY(20px);
+
+}
+
+
+to {
+
+opacity:1;
+
+transform:none;
+
+}
+
+}
+
+
+
+.card {
+
+
+animation:
+
+comparsa .4s ease;
+
+}
+
+
+
+
+
+
+
+/* Smartphone */
 
 
 @media(max-width:600px){
 
-    body {
 
-        padding:15px;
+body {
 
-    }
+padding:15px;
 
-
-    header h1 {
-
-        font-size:23px;
-
-    }
+}
 
 
-    .card {
 
-        padding:17px;
+h1 {
 
-    }
+font-size:23px;
+
+}
 
 
-    .testo {
 
-        font-size:17px;
+.logo {
 
-    }
+width:80px;
+
+height:80px;
+
+}
+
+
+
+.card {
+
+padding:18px;
+
+}
+
+
+
+button {
+
+width:auto;
+
+}
+
+
+
+.testo {
+
+font-size:17px;
+
+}
+
+
 
 }
