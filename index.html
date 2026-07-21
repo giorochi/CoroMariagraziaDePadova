@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="it">
-<link rel="manifest" href="manifest.json">
 
-<meta name="theme-color" content="#1565c0">
 <head>
 
 <meta charset="UTF-8">
@@ -17,6 +15,16 @@ Coro "Mariagrazia De Padova"
 
 <link rel="stylesheet" href="style.css">
 
+
+<link rel="manifest" href="manifest.json">
+
+
+<meta name="theme-color" content="#1565c0">
+
+
+<script src="https://unpkg.com/lucide@latest"></script>
+
+
 </head>
 
 
@@ -29,16 +37,11 @@ Coro "Mariagrazia De Padova"
 
 <div class="logo">
 
-🎵
+<i data-lucide="music-2"></i>
 
 </div>
 
 
-<button id="tema">
-
-🌙 Tema scuro
-
-</button>
 
 <h1>
 Coro "Mariagrazia De Padova"
@@ -50,16 +53,49 @@ Area studio coristi
 </p>
 
 
+
+<button id="tema">
+
+<i data-lucide="moon"></i>
+
+</button>
+
+
 </header>
 
 
 
 
-<input 
+
+<div class="ricerca-box">
+
+
+<i data-lucide="search"></i>
+
+
+<input
 id="ricerca"
 type="search"
-placeholder="🔎 Cerca un canto..."
+placeholder="Cerca un canto..."
 >
+
+
+</div>
+
+
+
+
+
+<section id="preferiti">
+
+</section>
+
+
+
+<section id="recenti">
+
+</section>
+
 
 
 
@@ -71,9 +107,21 @@ placeholder="🔎 Cerca un canto..."
 
 
 
+
+
 <script src="app.js"></script>
 
 
+
+<script>
+
+lucide.createIcons();
+
+</script>
+
+
+
 </body>
+
 
 </html>
