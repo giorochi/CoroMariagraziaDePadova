@@ -7,10 +7,11 @@ const ricerca = document.getElementById("ricerca");
 
 
 
-// Caricamento elenco canti
+
+// Caricamento canti
+
 
 fetch("dati/canti.json")
-
 
 .then(response => {
 
@@ -18,7 +19,7 @@ fetch("dati/canti.json")
     if(!response.ok){
 
         throw new Error(
-            "Impossibile caricare canti.json"
+            "Errore caricamento repertorio"
         );
 
     }
@@ -36,7 +37,7 @@ fetch("dati/canti.json")
     canti = data;
 
 
-    mostraCanti(canti);
+    mostraPagina();
 
 
 })
@@ -50,7 +51,9 @@ fetch("dati/canti.json")
 
     <div class="card">
 
-    <h2>Errore</h2>
+    <h2>
+    Errore
+    </h2>
 
     <p>
     ${error.message}
@@ -69,23 +72,47 @@ fetch("dati/canti.json")
 
 
 
+
+// Mostra tutto
+
+
+function mostraPagina(){
+
+
+    mostraCanti(canti);
+
+
+    mostraPreferiti();
+
+
+    mostraRecenti();
+
+
+}
+
+
+
+
+
+
+
+
+
 function mostraCanti(elenco){
 
 
-    lista.innerHTML = "";
+    lista.innerHTML="";
 
 
 
-    if(elenco.length === 0){
+    if(elenco.length===0){
 
 
-        lista.innerHTML = `
+        lista.innerHTML=`
 
         <div class="card">
 
-        <h2>
         Nessun canto trovato
-        </h2>
 
         </div>
 
@@ -94,36 +121,19 @@ function mostraCanti(elenco){
 
         return;
 
-
     }
 
 
 
 
 
-    // Raggruppamento categorie
-
-    let categorie = {};
+    elenco.forEach(canto=>{
 
 
 
-    elenco.forEach(canto => {
-
-
-
-        let categoria =
-        canto.categoria || "Altri canti";
-
-
-
-        if(!categorie[categoria]){
-
-            categorie[categoria]=[];
-
-        }
-
-
-        categorie[categoria].push(canto);
+        lista.appendChild(
+            creaCard(canto)
+        );
 
 
 
@@ -131,86 +141,116 @@ function mostraCanti(elenco){
 
 
 
+    lucide.createIcons();
 
 
-
-
-    Object.keys(categorie).forEach(categoria => {
-
-
-
-        let titoloCategoria =
-        document.createElement("h2");
-
-
-        titoloCategoria.innerHTML =
-        "📖 " + categoria;
-
-
-
-        lista.appendChild(titoloCategoria);
+}
 
 
 
 
 
 
-        categorie[categoria].forEach(canto => {
 
 
 
-            let card =
-            document.createElement("div");
+function creaCard(canto){
 
 
 
-            card.className="card";
+    let card =
+    document.createElement("div");
 
 
 
-            card.innerHTML = `
-
-
-            <h2>
-            🎼 ${canto.titolo}
-            </h2>
-
-
-            <p>
-
-            ${canto.autore || ""}
-
-            </p>
-
-
-
-            <a href="canto.html?id=${canto.id}">
-
-
-            <button>
-
-            ▶ Studia
-
-            </button>
-
-
-            </a>
-
-
-            `;
+    card.className="card";
 
 
 
 
-            lista.appendChild(card);
+    let preferito =
+    isPreferito(canto.id);
 
 
 
-        });
+
+    card.innerHTML=`
+
+    <h2>
+
+    <i data-lucide="music-2"></i>
+
+    ${canto.titolo}
+
+    </h2>
 
 
 
-    });
+    <p>
+
+    ${canto.autore || ""}
+
+    </p>
+
+
+
+
+    <button class="fav">
+
+
+    <i data-lucide="heart"></i>
+
+    ${preferito ? "Preferito" : ""}
+
+
+    </button>
+
+
+
+
+    <a href="canto.html?id=${canto.id}">
+
+
+    <button>
+
+
+    <i data-lucide="play"></i>
+
+
+    Studia
+
+
+    </button>
+
+
+    </a>
+
+
+    `;
+
+
+
+
+
+
+
+    card.querySelector(".fav")
+    .onclick=function(){
+
+
+        cambiaPreferito(canto.id);
+
+
+        mostraPagina();
+
+
+    };
+
+
+
+
+
+    return card;
 
 
 
@@ -224,7 +264,311 @@ function mostraCanti(elenco){
 
 
 
-// Ricerca dinamica
+// Preferiti
+
+
+
+function getPreferiti(){
+
+
+return JSON.parse(
+
+localStorage.getItem("preferiti")
+
+|| "[]"
+
+);
+
+
+}
+
+
+
+
+
+
+
+function isPreferito(id){
+
+
+return getPreferiti()
+.includes(id);
+
+
+}
+
+
+
+
+
+
+
+
+function cambiaPreferito(id){
+
+
+
+let lista =
+getPreferiti();
+
+
+
+
+if(lista.includes(id)){
+
+
+lista =
+lista.filter(
+x=>x!==id
+);
+
+
+}
+
+else{
+
+
+lista.push(id);
+
+
+}
+
+
+
+localStorage.setItem(
+
+"preferiti",
+
+JSON.stringify(lista)
+
+);
+
+
+}
+
+
+
+
+
+
+
+
+
+function mostraPreferiti(){
+
+
+
+let box =
+document.getElementById("preferiti");
+
+
+
+if(!box)
+return;
+
+
+
+
+let pref =
+canti.filter(
+c=>isPreferito(c.id)
+);
+
+
+
+
+if(pref.length===0){
+
+
+box.innerHTML="";
+
+
+return;
+
+
+}
+
+
+
+
+
+box.innerHTML=`
+
+
+<h2>
+
+<i data-lucide="heart"></i>
+
+I tuoi preferiti
+
+</h2>
+
+
+`;
+
+
+
+pref.forEach(canto=>{
+
+
+box.appendChild(
+creaCard(canto)
+);
+
+
+});
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// Ultimi ascoltati
+
+
+function salvaRecente(id){
+
+
+let recenti =
+JSON.parse(
+
+localStorage.getItem("recenti")
+
+|| "[]"
+
+);
+
+
+
+recenti =
+recenti.filter(
+x=>x!==id
+);
+
+
+
+recenti.unshift(id);
+
+
+
+recenti =
+recenti.slice(0,5);
+
+
+
+localStorage.setItem(
+
+"recenti",
+
+JSON.stringify(recenti)
+
+);
+
+
+
+}
+
+
+
+
+
+
+function mostraRecenti(){
+
+
+let box =
+document.getElementById("recenti");
+
+
+
+if(!box)
+return;
+
+
+
+let ids =
+JSON.parse(
+
+localStorage.getItem("recenti")
+
+|| "[]"
+
+);
+
+
+
+let recenti =
+ids.map(
+id=>canti.find(
+c=>c.id===id
+)
+
+)
+.filter(Boolean);
+
+
+
+
+
+if(recenti.length===0){
+
+
+box.innerHTML="";
+
+return;
+
+
+}
+
+
+
+
+box.innerHTML=`
+
+
+<h2>
+
+<i data-lucide="history"></i>
+
+Ultimi studiati
+
+</h2>
+
+
+`;
+
+
+
+recenti.forEach(canto=>{
+
+
+box.appendChild(
+creaCard(canto)
+);
+
+
+});
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// Ricerca
 
 
 ricerca.addEventListener(
@@ -232,102 +576,131 @@ ricerca.addEventListener(
 function(){
 
 
-    let testo =
-    this.value.toLowerCase();
+let testo =
+this.value.toLowerCase();
 
 
 
-    let risultati =
-    canti.filter(canto => {
+let risultati =
+canti.filter(canto=>{
 
 
-        return (
+return (
 
-            canto.titolo
-            .toLowerCase()
-            .includes(testo)
-
-
-            ||
-
-            (canto.autore &&
-            canto.autore
-            .toLowerCase()
-            .includes(testo))
+canto.titolo
+.toLowerCase()
+.includes(testo)
 
 
-            ||
-
-            (canto.categoria &&
-            canto.categoria
-            .toLowerCase()
-            .includes(testo))
-
-        );
+||
 
 
-    });
+(canto.autore &&
+canto.autore
+.toLowerCase()
+.includes(testo))
+
+
+||
+
+
+(canto.categoria &&
+canto.categoria
+.toLowerCase()
+.includes(testo))
+
+
+);
+
+
+});
 
 
 
-    mostraCanti(risultati);
+mostraCanti(risultati);
 
 
 
 });
-if("serviceWorker" in navigator){
 
 
-navigator.serviceWorker.register(
-"service-worker.js"
-);
-const bottoneTema =
+
+
+
+
+
+
+
+// Tema
+
+
+
+const tema =
 document.getElementById("tema");
 
 
-if(
-localStorage.getItem("tema")=="dark"
-){
+
+if(localStorage.getItem("tema")==="dark"){
+
 
 document.body.classList.add("dark");
 
+
 }
 
 
 
-if(bottoneTema){
+if(tema){
 
 
-bottoneTema.onclick=function(){
+
+tema.onclick=function(){
 
 
-document.body.classList.toggle("dark");
+document.body
+.classList.toggle("dark");
 
 
-if(
-document.body.classList.contains("dark")
-){
 
 localStorage.setItem(
+
 "tema",
+
+document.body
+.classList.contains("dark")
+?
 "dark"
-);
-
-}
-
-else{
-
-localStorage.setItem(
-"tema",
+:
 "light"
+
 );
 
-}
 
 
 };
 
 
+
 }
+
+
+
+
+
+
+
+// PWA
+
+
+
+if(
+"serviceWorker" in navigator
+){
+
+
+navigator.serviceWorker.register(
+"service-worker.js"
+);
+
 
 }
