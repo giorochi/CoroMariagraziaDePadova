@@ -1,0 +1,47 @@
+{
+  "titolo": "Magnificat"
+  
+  "tracce": {
+    "tutti": "audio/magnificat/magnificat_all.mp3",
+    "soprano": "audio/magnificat/magnificat_soprano.mp3",
+    "contralto": "audio/magnificat/magnificat_contralto.mp3",
+    "tenore": "audio/magnificat/magnificat_uomini.mp3",
+  },
+  "sezioni": [
+    {
+      "nome": "RITORNELLO",
+      "inizio": 0,
+      "fine": 49,
+      "testo": 
+      "Magnificat anima mea \nMagnificat Dominum \nEt exsultavit spiritus meus in Deo \nSalutari meo \nMagnificat \nMagnificat"
+    },
+    {
+      "nome": "Strofa 1",
+      "inizio": 49,
+      "fine": 75,
+      "testo":
+      "Quia respexit humilitatem ancillae suae \nEcce enim ex hoc beatam me dicent \nOmnes generationes"
+    },
+    {
+      "nome": "RITORNELLO 2",
+      "inizio": 76,
+      "fine":137,
+      "testo":
+      "Magnificat anima mea \nMagnificat Dominum \nEt exsultavit spiritus meus in Deo \nSalutari meo \nMagnificat \nMagnificat"
+    },
+    {
+      "nome": "Strofa 2",
+      "inizio": 138,
+      "fine": 168,
+      "testo":
+      "Quia fecit mihi magna \nQui potens est \nEt sanctum nomen eius"
+    },
+    {
+      "nome": "RITORNELLO 3",
+      "inizio": 168,
+      "fine": 225,
+      "testo":
+      "Magnificat, magnificat (Dominum) \nEt exsultavit (spiritus meus in Deo) \nSpiritus meus in Deo \nMagnificat (magnificat) \nMagnificat"
+    }
+  ]
+}
