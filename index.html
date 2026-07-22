@@ -143,6 +143,18 @@
       gap: 8px;
     }
 
+    .user-voice-badge {
+      padding: 6px 12px;
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 700;
+      background: var(--primary-light);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
     .icon-btn {
       width: 40px;
       height: 40px;
@@ -163,7 +175,7 @@
     }
 
     /* ==========================================
-       BANNER BENVENUTO & STATISTICHE
+       BANNER BENVENUTO & SELEZIONE RUOLO
     ========================================== */
     .hero-banner {
       background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
@@ -197,6 +209,49 @@
       font-size: 0.9rem;
       opacity: 0.9;
       margin-bottom: 16px;
+    }
+
+    .user-profile-box {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+      margin-bottom: 16px;
+    }
+
+    .user-profile-box label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 700;
+      opacity: 0.9;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .role-buttons {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .role-btn {
+      padding: 6px 12px;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(255,255,255,0.3);
+      background: rgba(0,0,0,0.15);
+      color: white;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .role-btn.active {
+      background: white;
+      color: var(--primary);
+      border-color: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     }
 
     .stats-row {
@@ -820,6 +875,9 @@
       </div>
     </div>
     <div class="header-actions">
+      <div class="user-voice-badge" id="topVoiceBadge">
+        <i data-lucide="mic"></i> <span id="topVoiceText">Tutti</span>
+      </div>
       <button class="icon-btn" id="btnThemeToggle" title="Cambia Tema">
         <i data-lucide="moon" id="themeIcon"></i>
       </button>
@@ -832,10 +890,22 @@
     <!-- VISTA DASHBOARD / HOME -->
     <section id="viewDashboard" class="view-page active">
       
-      <!-- Banner di Benvenuto -->
+      <!-- Banner di Benvenuto e Selezione Voce Corista -->
       <div class="hero-banner">
         <h2>Esercitati con il Coro</h2>
-        <p>Ascolta le tracce isolate per sezione vocale e impara il tuo spartito.</p>
+        <p>Seleziona la tua voce per caricare in automatico la tua parte audio quando studi un canto.</p>
+        
+        <div class="user-profile-box">
+          <label><i data-lucide="user-check" style="width:14px; height:14px; display:inline;"></i> La tua sezione vocale:</label>
+          <div class="role-buttons">
+            <button class="role-btn active" data-role="tutti">Tutte le voci</button>
+            <button class="role-btn" data-role="soprano">Soprano</button>
+            <button class="role-btn" data-role="contralto">Contralto</button>
+            <button class="role-btn" data-role="tenore">Tenore</button>
+            <button class="role-btn" data-role="basso">Basso</button>
+          </div>
+        </div>
+
         <div class="stats-row">
           <div class="stat-pill">
             <i data-lucide="disc"></i> <span id="totalSongsCount">0</span> Canti
@@ -906,7 +976,7 @@
 
       <!-- Selettore della Parte Vocale -->
       <div class="voice-selector-box">
-        <h3>Seleziona la tua voce</h3>
+        <h3>Seleziona la traccia vocale</h3>
         <div class="voice-grid">
           <button class="voice-btn active" data-voce="tutti">Tutte</button>
           <button class="voice-btn" data-voce="soprano">Soprano</button>
@@ -1007,8 +1077,9 @@
         <div class="sheet-music-box" style="text-align: left; background: var(--bg-main);">
           <h4 style="margin-bottom: 6px;">💡 Come utilizzare l'app:</h4>
           <ul style="padding-left: 20px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.8;">
+            <li>Scegli la tua voce nel banner in alto.</li>
             <li>Scegli un canto dal repertorio o cerca per titolo.</li>
-            <li>Seleziona la tua parte vocale in alto.</li>
+            <li>L'audio della tua sezione si caricherà in automatico.</li>
             <li>Rallenta l'audio se la sezione è complessa.</li>
             <li>Usa il tasto "Modalità Studio" durante le prove.</li>
           </ul>
@@ -1071,7 +1142,7 @@
     let canti = [];
     let cantoInfo = null;       // Info base da dati/canti.json
     let cantoDettagli = null;   // Dettagli completi da canti/{id}.json
-    let voceCorrente = "tutti";
+    let voceCorrente = getRuoloPredefinito();
     let sezioneAttivaIndex = -1;
     let isLoopEnabled = false;
 
@@ -1096,9 +1167,36 @@
     window.addEventListener("DOMContentLoaded", () => {
       lucide.createIcons();
       initTheme();
+      initRuoloCorista();
       caricaRepertorioJson();
       setupEventListeners();
     });
+
+    // GESTIONE RUOLO CORISTA (Soprano, Contralto, Tenore, Basso) SENZA LOGIN
+    function getRuoloPredefinito() {
+      return localStorage.getItem("ruoloCorista") || "tutti";
+    }
+
+    function setRuoloCorista(ruolo) {
+      localStorage.setItem("ruoloCorista", ruolo);
+      voceCorrente = ruolo;
+      initRuoloCorista();
+    }
+
+    function initRuoloCorista() {
+      const ruolo = getRuoloPredefinito();
+      
+      // Aggiorna bottoni del banner
+      document.querySelectorAll(".role-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.role === ruolo);
+      });
+
+      // Aggiorna Badge in alto
+      const badgeText = document.getElementById("topVoiceText");
+      if (badgeText) {
+        badgeText.textContent = ruolo === "tutti" ? "Tutti" : ruolo.charAt(0).toUpperCase() + ruolo.slice(1);
+      }
+    }
 
     // CARICAMENTO REPERTORIO GENERALE (dati/canti.json)
     async function caricaRepertorioJson() {
@@ -1235,7 +1333,9 @@
       if (!cantoInfo) return;
 
       salvainRecenti(id);
-      voceCorrente = "tutti";
+      
+      // Imposta in automatico la voce preferita dal corista
+      voceCorrente = getRuoloPredefinito();
       sezioneAttivaIndex = -1;
 
       // Percorso del file specifico del canto
@@ -1262,9 +1362,9 @@
       document.getElementById("playerSongTitle").textContent = cantoDettagli.titolo || cantoInfo.titolo;
       document.getElementById("playerSongAuthor").textContent = cantoInfo.autore || cantoInfo.categoria || "";
 
-      // Reset Selezione Voci
+      // Evidenzia la voce attiva nel selettore del canto
       document.querySelectorAll(".voice-btn").forEach(btn => {
-        btn.classList.toggle("active", btn.dataset.voce === "tutti");
+        btn.classList.toggle("active", btn.dataset.voce === voceCorrente);
       });
       aggiornaLabelVoce();
 
@@ -1418,6 +1518,13 @@
 
     // EVENT LISTENERS & BINDING
     function setupEventListeners() {
+      // Cambio Sezione Vocale Corista dal Banner
+      document.querySelectorAll(".role-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          setRuoloCorista(btn.dataset.role);
+        });
+      });
+
       // Ricerca & Filtri
       inputSearch.addEventListener("input", aggiornaDashboard);
       
@@ -1449,7 +1556,7 @@
         switchView("dashboard");
       });
 
-      // Cambio Voci
+      // Cambio Voci nel Player
       document.querySelectorAll(".voice-btn").forEach(btn => {
         btn.addEventListener("click", () => {
           document.querySelectorAll(".voice-btn").forEach(b => b.classList.remove("active"));
