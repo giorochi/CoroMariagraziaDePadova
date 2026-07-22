@@ -13,16 +13,13 @@ Coro "Mariagrazia De Padova"
 </title>
 
 
+<meta name="theme-color" content="#1e88e5">
+
+
 <link rel="stylesheet" href="style.css">
 
 
 <link rel="manifest" href="manifest.json">
-
-
-<meta name="theme-color" content="#1565c0">
-
-
-<script src="https://unpkg.com/lucide@latest"></script>
 
 
 </head>
@@ -32,15 +29,15 @@ Coro "Mariagrazia De Padova"
 <body>
 
 
-<header>
+<div class="app">
 
 
-<div class="logo">
+<header class="hero">
 
-<i data-lucide="music-2"></i>
 
+<div class="hero-icon">
+♪ 
 </div>
-
 
 
 <h1>
@@ -49,16 +46,8 @@ Coro "Mariagrazia De Padova"
 
 
 <p>
-Area studio coristi
+Preparati alle prove del coro.
 </p>
-
-
-
-<button id="tema">
-
-<i data-lucide="moon"></i>
-
-</button>
 
 
 </header>
@@ -67,10 +56,7 @@ Area studio coristi
 
 
 
-<div class="ricerca-box">
-
-
-<i data-lucide="search"></i>
+<section class="search-container">
 
 
 <input
@@ -80,48 +66,141 @@ placeholder="Cerca un canto..."
 >
 
 
+</section>
+
+
+
+
+
+<section id="recenti" class="section">
+
+
+</section>
+
+
+
+
+
+<section id="preferiti" class="section">
+
+
+</section>
+
+
+
+
+
+<section class="section">
+
+
+<div class="section-title">
+
+<h2>
+Tutti i canti
+</h2>
+
+
 </div>
-
-
-
-
-
-<section id="preferiti">
-
-</section>
-
-
-
-<section id="recenti">
-
-</section>
-
-
-
 
 
 <div id="listaCanti">
 
+
 </div>
 
 
+</section>
 
+
+
+
+
+</div>
 
 
 
 <script src="app.js"></script>
 
 
+</body>
+
+
+</html>
+
+<!-- Navigazione inferiore -->
+
+<nav class="bottom-nav">
+
+
+<button class="nav-item active">
+
+<span>
+⌂
+</span>
+
+Home
+
+</button>
+
+
+
+<button class="nav-item">
+
+<span>
+♫
+</span>
+
+Canti
+
+</button>
+
+
+
+
+<button class="nav-item">
+
+<span>
+☆
+</span>
+
+Preferiti
+
+</button>
+
+
+
+
+<button class="nav-item">
+
+<span>
+ⓘ
+</span>
+
+Info
+
+</button>
+
+
+
+</nav>
+
+
 
 <script>
 
-lucide.createIcons();
+if(
+"serviceWorker" in navigator
+){
+
+navigator.serviceWorker.register(
+"service-worker.js"
+);
+
+}
 
 </script>
 
 
-
 </body>
-
 
 </html>
