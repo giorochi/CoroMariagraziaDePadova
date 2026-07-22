@@ -1,91 +1,160 @@
-let dati = null;
+// =====================================
+// CORO "MARIAGRAZIA DE PADOVA"
+// Canto.js - versione Player V2
+// =====================================
+
+
+let datiCanto = null;
 
 let audio = document.getElementById("audio");
 
-let voceCorrente = "tutti";
+let tracciaAttuale = "tutti";
 
-let sezioneAttiva = null;
+let sezioneAttuale = null;
 
-let riproduciSezione = false;
-
-let ripeti = false;
+let ripetiSezione = false;
 
 
 
-const idCanto =
-new URLSearchParams(location.search)
-.get("id");
+// elementi pagina
 
+const titolo = document.getElementById("titolo");
+const autore = document.getElementById("autore");
 
+const parteCorrente = document.getElementById("parteCorrente");
 
+const playBtn = document.getElementById("play");
 
+const barra = document.getElementById("barra");
 
+const tempoAttuale = document.getElementById("tempoAttuale");
 
-// Carica canto
+const durata = document.getElementById("durata");
 
+const volume = document.getElementById("volume");
 
-
-fetch("canti/" + idCanto + ".json")
-
-
-.then(r => r.json())
-
-
-.then(json => {
-
-
-dati=json;
-
-
-
-document.getElementById("titolo")
-.innerHTML=dati.titolo;
-
-
-
-document.getElementById("autore")
-.innerHTML=dati.autore || "";
-
-
-
-caricaAudio();
-
-
-
-creaSezioni();
-
-
-
-caricaSpartito();
-
-
-
-salvaRecente(idCanto);
-
-
-
-});
+const ripetiBtn = document.getElementById("ripeti");
 
 
 
 
 
+// recupera il canto scelto dalla dashboard
+
+const parametro = new URLSearchParams(
+    window.location.search
+);
+
+const fileCanto =
+    parametro.get("canto");
 
 
 
 
-// Audio
+
+// caricamento JSON
+
+async function caricaCanto(){
 
 
+    if(!fileCanto){
+
+        console.error(
+            "Nessun canto selezionato"
+        );
+
+        return;
+
+    }
+
+
+
+    try{
+
+
+        const risposta =
+        await fetch(
+            "canti/" + fileCanto + ".json"
+        );
+
+
+
+        datiCanto =
+        await risposta.json();
+
+
+
+        titolo.textContent =
+        datiCanto.titolo;
+
+
+
+        if(autore){
+
+            autore.textContent =
+            datiCanto.autore || "";
+
+        }
+
+
+
+
+        caricaAudio();
+
+
+
+        creaSezioni();
+
+
+
+        creaSpartito();
+
+
+
+    }
+
+    catch(errore){
+
+
+        console.error(
+            "Errore caricamento canto:",
+            errore
+        );
+
+
+    }
+
+
+}
+
+
+
+
+
+// caricamento audio iniziale
 
 function caricaAudio(){
 
 
-audio.src =
-dati.tracce[voceCorrente];
+    audio.src =
+    datiCanto.tracce[tracciaAttuale];
 
 
-audio.load();
+
+    audio.load();
+
+
+
+    audio.playbackRate = 1;
+
+
+
+    if(parteCorrente){
+
+        parteCorrente.textContent =
+        "Tutte le voci";
+
+    }
 
 
 }
@@ -95,59 +164,250 @@ audio.load();
 
 
 
-
-
-
-// Cambio voce
-
-
+// cambio voce
 
 document
 .querySelectorAll(".voce")
-.forEach(btn=>{
+.forEach(btn => {
 
 
-btn.onclick=function(){
+    btn.addEventListener(
+        "click",
+        ()=>{
 
 
-document
-.querySelectorAll(".voce")
-.forEach(v=>
-v.classList.remove("attiva")
+            document
+            .querySelectorAll(".voce")
+            .forEach(
+                b =>
+                b.classList.remove("attiva")
+            );
+
+
+
+            btn.classList.add(
+                "attiva"
+            );
+
+
+
+            tracciaAttuale =
+            btn.dataset.voce;
+
+
+
+            audio.pause();
+
+
+
+            audio.currentTime = 0;
+
+
+
+            audio.src =
+            datiCanto.tracce[
+                tracciaAttuale
+            ];
+
+
+
+            audio.load();
+
+
+
+            if(parteCorrente){
+
+                parteCorrente.textContent =
+                btn.textContent;
+
+            }
+
+
+            playBtn.textContent =
+            "▶";
+
+
+        }
+    );
+
+
+});
+
+
+
+
+
+
+caricaCanto();
+// =====================================
+// PLAYER
+// =====================================
+
+
+// PLAY / PAUSA
+
+playBtn.addEventListener(
+    "click",
+    ()=>{
+
+
+        if(audio.paused){
+
+
+            audio.play();
+
+
+            playBtn.textContent =
+            "❚❚";
+
+
+        } else {
+
+
+            audio.pause();
+
+
+            playBtn.textContent =
+            "▶";
+
+
+        }
+
+
+    }
 );
 
 
 
-this.classList.add("attiva");
 
 
 
-let tempo =
-audio.currentTime;
+// aggiornamento barra e tempo
+
+audio.addEventListener(
+    "timeupdate",
+    ()=>{
+
+
+        if(audio.duration){
+
+
+            let percentuale =
+            (audio.currentTime / audio.duration) * 100;
+
+
+            barra.style.width =
+            percentuale + "%";
 
 
 
-voceCorrente =
-this.dataset.voce;
+            tempoAttuale.textContent =
+            formattaTempo(
+                audio.currentTime
+            );
+
+
+        }
 
 
 
-audio.src =
-dati.tracce[voceCorrente];
+        controlloFineSezione();
+
+
+    }
+);
 
 
 
-audio.currentTime =
-tempo;
 
 
 
-audio.play();
+
+// durata totale
+
+audio.addEventListener(
+    "loadedmetadata",
+    ()=>{
+
+
+        durata.textContent =
+        formattaTempo(
+            audio.duration
+        );
+
+
+    }
+);
 
 
 
-};
 
+
+
+
+// clic sulla barra
+
+document
+.querySelector(".progress")
+.addEventListener(
+    "click",
+    (event)=>{
+
+
+        let larghezza =
+        event.currentTarget.clientWidth;
+
+
+
+        let posizione =
+        event.offsetX;
+
+
+
+        audio.currentTime =
+        (posizione / larghezza)
+        *
+        audio.duration;
+
+
+
+    }
+);
+
+
+
+
+
+
+
+
+// avanti e indietro 5 secondi
+
+
+document
+.getElementById("indietro5")
+.addEventListener(
+"click",
+()=>{
+
+
+    audio.currentTime -= 5;
+
+
+});
+
+
+
+
+
+document
+.getElementById("avanti5")
+.addEventListener(
+"click",
+()=>{
+
+
+    audio.currentTime += 5;
 
 
 });
@@ -159,58 +419,494 @@ audio.play();
 
 
 
-// Play
+// volume
+
+
+volume.addEventListener(
+    "input",
+    ()=>{
+
+
+        audio.volume =
+        volume.value;
+
+
+    }
+);
 
 
 
-const playButton =
-document.getElementById("play");
 
 
 
-playButton.onclick=function(){
+
+
+// velocità
+
+
+document
+.querySelectorAll("[data-speed]")
+.forEach(
+btn=>{
+
+
+btn.addEventListener(
+"click",
+()=>{
+
+
+    let velocita =
+    Number(
+        btn.dataset.speed
+    );
 
 
 
-if(audio.paused){
+    audio.playbackRate =
+    velocita;
 
 
-audio.play();
 
 
-playButton.innerHTML=
-'<i data-lucide="pause"></i>';
+    document
+    .querySelectorAll("[data-speed]")
+    .forEach(
+        b =>
+        b.classList.remove(
+            "selezionata"
+        )
+    );
+
+
+
+    btn.classList.add(
+        "selezionata"
+    );
+
+
+
+});
+
+
+}
+);
+
+
+
+
+
+
+
+
+
+// ripetizione sezione
+
+
+ripetiBtn.addEventListener(
+"click",
+()=>{
+
+
+    ripetiSezione =
+    !ripetiSezione;
+
+
+
+    if(ripetiSezione){
+
+
+        ripetiBtn.classList.add(
+            "attivo"
+        );
+
+
+        ripetiBtn.textContent =
+        "🔁 Ripeti ON";
+
+
+    } else {
+
+
+        ripetiBtn.classList.remove(
+            "attivo"
+        );
+
+
+        ripetiBtn.textContent =
+        "🔁 Ripeti sezione";
+
+
+    }
+
+
+}
+);
+
+
+
+
+
+
+
+
+
+// controllo fine sezione
+
+function controlloFineSezione(){
+
+
+
+    if(
+        !sezioneAttuale
+    )
+
+    return;
+
+
+
+
+
+    if(
+        audio.currentTime >=
+        sezioneAttuale.fine
+    ){
+
+
+
+        if(ripetiSezione){
+
+
+
+            audio.currentTime =
+            sezioneAttuale.inizio;
+
+
+
+            audio.play();
+
+
+
+        } else {
+
+
+
+            audio.pause();
+
+
+            playBtn.textContent =
+            "▶";
+
+
+
+        }
+
+
+    }
+
+
 
 }
 
-else{
 
 
-audio.pause();
 
 
-playButton.innerHTML=
-'<i data-lucide="play"></i>';
+
+
+
+// formato minuti:secondi
+
+function formattaTempo(secondi){
+
+
+    if(
+        isNaN(secondi)
+    )
+
+    return "00:00";
+
+
+
+    let minuti =
+    Math.floor(
+        secondi / 60
+    );
+
+
+    let secondiRimasti =
+    Math.floor(
+        secondi % 60
+    );
+
+
+
+    return (
+        minuti
+        .toString()
+        .padStart(2,"0")
+        +
+        ":"
+        +
+        secondiRimasti
+        .toString()
+        .padStart(2,"0")
+    );
+
+
+}
+// =====================================
+// SEZIONI KARAOKE
+// =====================================
+
+
+function creaSezioni(){
+
+
+    const contenitore =
+    document.getElementById("sezioni");
+
+
+
+    contenitore.innerHTML = "";
+
+
+
+    if(
+        !datiCanto.sezioni
+    )
+    return;
+
+
+
+
+    datiCanto.sezioni.forEach(
+    (sezione,index)=>{
+
+
+        const box =
+        document.createElement("div");
+
+
+
+        box.className =
+        "sezione";
+
+
+
+
+
+        box.innerHTML = `
+
+        <h2>
+        ${sezione.nome}
+        </h2>
+
+
+        <div class="testo">
+        ${sezione.testo}
+        </div>
+
+
+        <p>
+        ${formattaTempo(sezione.inizio)}
+        →
+        ${formattaTempo(sezione.fine)}
+        </p>
+
+
+        <button class="riproduci-sezione">
+        ▶ Riproduci sezione
+        </button>
+
+        `;
+
+
+
+
+
+        const pulsante =
+        box.querySelector(
+            ".riproduci-sezione"
+        );
+
+
+
+
+
+        pulsante.addEventListener(
+        "click",
+        ()=>{
+
+
+            avviaSezione(
+                sezione,
+                box
+            );
+
+
+        });
+
+
+
+
+
+        contenitore.appendChild(
+            box
+        );
+
+
+
+    });
+
+
 
 }
 
 
 
-lucide.createIcons();
-
-
-};
 
 
 
 
 
+function avviaSezione(
+    sezione,
+    elemento
+){
+
+
+
+    sezioneAttuale =
+    sezione;
+
+
+
+    parteCorrente.textContent =
+    sezione.nome;
+
+
+
+    audio.currentTime =
+    sezione.inizio;
+
+
+
+    audio.play();
+
+
+
+    playBtn.textContent =
+    "❚❚";
 
 
 
 
-// Aggiornamento barra
 
+    document
+    .querySelectorAll(".sezione")
+    .forEach(
+        s =>
+        s.classList.remove(
+            "attiva"
+        )
+    );
+
+
+
+    elemento.classList.add(
+        "attiva"
+    );
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// =====================================
+// SPARTITO PDF
+// =====================================
+
+
+function creaSpartito(){
+
+
+
+    const contenitore =
+    document.getElementById(
+        "spartito"
+    );
+
+
+
+    if(
+        !contenitore
+    )
+    return;
+
+
+
+
+    if(
+        datiCanto.spartito
+    ){
+
+
+
+        contenitore.innerHTML = `
+
+        <a
+        href="${datiCanto.spartito}"
+        target="_blank"
+        >
+
+
+        <button>
+
+        Apri spartito PDF
+
+        </button>
+
+
+        </a>
+
+        `;
+
+
+    } else {
+
+
+
+        contenitore.innerHTML = `
+
+        <p>
+        Spartito non disponibile
+        </p>
+
+        `;
+
+
+    }
+
+
+
+}
+
+
+
+
+
+
+
+// =====================================
+// SCROLL AUTOMATICO KARAOKE
+// =====================================
 
 
 audio.addEventListener(
@@ -218,632 +914,45 @@ audio.addEventListener(
 ()=>{
 
 
+    if(
+        !sezioneAttuale
+    )
+    return;
 
-let percentuale =
-audio.currentTime /
-audio.duration *
-100;
 
 
 
-document.getElementById("barra")
-.style.width =
-percentuale+"%";
+    let sezioni =
+    document.querySelectorAll(
+        ".sezione"
+    );
 
 
 
+    sezioni.forEach(
+    elemento=>{
 
-document.getElementById("tempoAttuale")
-.innerHTML =
-tempo(audio.currentTime);
 
+        if(
+            elemento.innerText
+            .includes(
+                sezioneAttuale.nome
+            )
+        ){
 
 
-document.getElementById("durata")
-.innerHTML =
-tempo(audio.duration);
+            elemento.scrollIntoView(
+            {
+                behavior:"smooth",
+                block:"center"
+            }
+            );
 
 
+        }
 
-evidenzia();
 
-
-
-salvaPosizione();
-
-
-
-
-
-if(
-riproduciSezione &&
-sezioneAttiva &&
-audio.currentTime >= sezioneAttiva.fine
-){
-
-
-
-if(ripeti){
-
-
-audio.currentTime =
-sezioneAttiva.inizio;
-
-
-audio.play();
-
-
-
-}
-
-else{
-
-
-audio.pause();
-
-
-audio.currentTime =
-sezioneAttiva.inizio;
-
-
-riproduciSezione=false;
-
-
-}
-
-
-
-}
-
-
-});
-
-
-
-
-
-
-
-
-
-function tempo(sec){
-
-
-if(isNaN(sec))
-return "00:00";
-
-
-
-let m =
-Math.floor(sec/60);
-
-
-
-let s =
-Math.floor(sec%60);
-
-
-
-return (
-
-m.toString()
-.padStart(2,"0")
-
-+
-
-":"
-
-+
-
-s.toString()
-.padStart(2,"0")
-
-);
-
-
-}
-
-
-
-
-
-
-
-
-
-// Barra cliccabile
-
-
-
-document
-.querySelector(".progress")
-.onclick=function(e){
-
-
-let percentuale =
-e.offsetX /
-this.offsetWidth;
-
-
-
-audio.currentTime =
-percentuale *
-audio.duration;
-
-
-};
-
-
-
-
-
-
-
-
-// Avanti indietro
-
-
-
-indietro5.onclick=
-()=>audio.currentTime-=5;
-
-
-avanti5.onclick=
-()=>audio.currentTime+=5;
-
-
-indietro15.onclick=
-()=>audio.currentTime-=15;
-
-
-avanti15.onclick=
-()=>audio.currentTime+=15;
-
-
-
-
-
-
-
-
-
-// Velocità
-
-
-
-document
-.querySelectorAll("[data-speed]")
-.forEach(btn=>{
-
-
-btn.onclick=()=>{
-
-
-audio.playbackRate =
-Number(btn.dataset.speed);
-
-
-};
-
-
-});
-
-
-
-
-
-
-
-
-// Volume
-
-
-volume.oninput=function(){
-
-
-audio.volume=this.value;
-
-
-};
-
-
-
-
-
-
-
-
-
-// Crea sezioni
-
-
-
-function creaSezioni(){
-
-
-
-let box =
-document.getElementById("sezioni");
-
-
-
-box.innerHTML="";
-
-
-
-dati.sezioni.forEach((s,index)=>{
-
-
-let div =
-document.createElement("div");
-
-
-
-div.className=
-"card sezione";
-
-
-
-div.innerHTML=`
-
-
-<h2>
-
-${s.nome}
-
-</h2>
-
-
-
-<p class="testo">
-
-${s.testo}
-
-</p>
-
-
-
-<p>
-
-${tempo(s.inizio)}
--
-${tempo(s.fine)}
-
-</p>
-
-
-
-<button>
-
-<i data-lucide="play"></i>
-
-Riproduci
-
-</button>
-
-
-
-`;
-
-
-
-
-
-div.querySelector("button")
-.onclick=function(){
-
-
-sezioneAttiva=s;
-
-
-riproduciSezione=true;
-
-
-audio.currentTime=s.inizio;
-
-
-audio.play();
-
-
-
-};
-
-
-
-box.appendChild(div);
-
-
-
-});
-
-
-
-lucide.createIcons();
-
-
-}
-
-
-
-
-
-
-
-
-
-function evidenzia(){
-
-
-document
-.querySelectorAll(".sezione")
-.forEach((el,i)=>{
-
-
-let s =
-dati.sezioni[i];
-
-
-
-if(
-audio.currentTime>=s.inizio &&
-audio.currentTime<s.fine
-){
-
-
-el.classList.add("attiva");
-
-
-}
-
-else{
-
-
-el.classList.remove("attiva");
-
-
-}
-
-
-
-});
-
-
-}
-
-
-
-
-
-
-
-
-
-// Ripeti sezione
-
-
-
-let bottoneRipeti =
-document.createElement("button");
-
-
-
-bottoneRipeti.innerHTML=
-`
-<i data-lucide="repeat"></i>
-Ripeti sezione
-`;
-
-
-
-bottoneRipeti.onclick=function(){
-
-
-ripeti=!ripeti;
-
-
-
-this.classList.toggle(
-"attiva",
-ripeti
-);
-
-
-
-};
-
-
-
-document
-.querySelector(".player")
-.appendChild(bottoneRipeti);
-
-
-
-
-
-
-
-
-// Modalità studio
-
-
-
-studio.onclick=function(){
-
-
-document.body
-.classList.toggle(
-"study-mode"
-);
-
-
-};
-
-
-
-
-
-
-
-
-
-// PDF
-
-
-
-function caricaSpartito(){
-
-
-
-let box =
-document.getElementById("spartito");
-
-
-
-if(
-dati.spartito
-){
-
-
-
-box.innerHTML=`
-
-<a href="${dati.spartito}" target="_blank">
-
-
-<button>
-
-<i data-lucide="file-text"></i>
-
-Apri spartito
-
-</button>
-
-
-</a>
-
-
-`;
-
-
-
-lucide.createIcons();
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// Memoria posizione
-
-
-
-function salvaPosizione(){
-
-
-localStorage.setItem(
-
-"posizione_"+idCanto,
-
-audio.currentTime
-
-);
-
-
-}
-
-
-
-
-
-
-
-
-
-// ultimi studiati
-
-
-
-function salvaRecente(id){
-
-
-
-let recenti =
-JSON.parse(
-
-localStorage.getItem("recenti")
-
-||"[]"
-
-);
-
-
-
-recenti =
-recenti.filter(
-x=>x!==id
-);
-
-
-
-recenti.unshift(id);
-
-
-
-localStorage.setItem(
-
-"recenti",
-
-JSON.stringify(
-recenti.slice(0,5)
-)
-
-);
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// Recupera posizione
-
-
-
-let ultima =
-localStorage.getItem(
-"posizione_"+idCanto
-);
-
-
-
-audio.addEventListener(
-"loadedmetadata",
-()=>{
-
-
-if(ultima){
-
-audio.currentTime =
-Number(ultima);
-
-}
+    });
 
 
 });
