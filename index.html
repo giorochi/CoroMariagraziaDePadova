@@ -163,7 +163,7 @@
     }
 
     /* ==========================================
-       BANNER BENVENUTO & STATS
+       BANNER BENVENUTO & STATISTICHE
     ========================================== */
     .hero-banner {
       background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
@@ -855,6 +855,7 @@
       <!-- Filtri Rapidi -->
       <div class="filter-pills" id="categoryFilters">
         <button class="filter-pill active" data-filter="all">Tutti</button>
+        <button class="filter-pill" data-filter="San Francesco">San Francesco</button>
         <button class="filter-pill" data-filter="Mariano">Mariani</button>
         <button class="filter-pill" data-filter="Liturgico">Liturgici</button>
         <button class="filter-pill" data-filter="Natale">Natale</button>
@@ -950,7 +951,7 @@
           </button>
         </div>
 
-        <!-- Controlli Secondari (Velocità, Loop, Studio) -->
+        <!-- Controlli Secondari (Velocità, Loop) -->
         <div class="secondary-controls">
           <div class="control-group">
             <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">Velocità:</span>
@@ -1068,9 +1069,10 @@
   <script>
     // STATE DELL'APPLICAZIONE
     let canti = [];
-    let cantoCorrente = null;
+    let cantoInfo = null;       // Info base da dati/canti.json
+    let cantoDettagli = null;   // Dettagli completi da canti/{id}.json
     let voceCorrente = "tutti";
-    let sezioneAttivaIndex = 0;
+    let sezioneAttivaIndex = -1;
     let isLoopEnabled = false;
 
     // RIFERIMENTI ELEMENTI DOM
@@ -1105,11 +1107,11 @@
         if (res.ok) {
           canti = await res.json();
         } else {
-          throw new Error("Errore nel caricamento del repertorio");
+          throw new Error("Errore durante il caricamento del repertorio");
         }
       } catch (err) {
-        console.error("Errore durante il recupero dei canti:", err);
-        listaTuttiCantiEl.innerHTML = `<div style="text-align:center; padding:20px; color:var(--text-muted);">Impossibile caricare il repertorio.</div>`;
+        console.error("Errore caricamento repertorio:", err);
+        listaTuttiCantiEl.innerHTML = `<div style="text-align:center; padding:20px; color:var(--text-muted);">Impossibile caricare il repertorio. Controlla il file dati/canti.json</div>`;
       }
       aggiornaDashboard();
     }
@@ -1134,7 +1136,7 @@
       let rec = JSON.parse(localStorage.getItem("recenti") || "[]");
       rec = rec.filter(x => x !== id);
       rec.unshift(id);
-      rec = rec.slice(0, 4);
+      rec = rec.slice(0, 5);
       localStorage.setItem("recenti", JSON.stringify(rec));
     }
 
@@ -1216,4 +1218,360 @@
 
         card.querySelector(".btn-fav").addEventListener("click", (e) => {
           e.stopPropagation();
-          togglePreferito(c
+          togglePreferito(canto.id);
+        });
+
+        card.querySelector(".btn-study").addEventListener("click", () => {
+          apriCanto(canto.id);
+        });
+
+        container.appendChild(card);
+      });
+    }
+
+    // APERTURA ED ESECUZIONE CANTO (Fetch da canti/{id}.json)
+    async function apriCanto(id) {
+      cantoInfo = canti.find(c => c.id === id);
+      if (!cantoInfo) return;
+
+      salvainRecenti(id);
+      voceCorrente = "tutti";
+      sezioneAttivaIndex = -1;
+
+      // Percorso del file specifico del canto
+      const fileJson = cantoInfo.file || `canti/${id}.json`;
+
+      try {
+        const res = await fetch(fileJson);
+        if (res.ok) {
+          cantoDettagli = await res.json();
+        } else {
+          throw new Error("File del canto non trovato");
+        }
+      } catch (err) {
+        console.error("Errore nel caricamento dettagli canto:", err);
+        cantoDettagli = {
+          titolo: cantoInfo.titolo,
+          spartito: "",
+          tracce: {},
+          sezioni: []
+        };
+      }
+
+      // Aggiorna Interfaccia Dettaglio
+      document.getElementById("playerSongTitle").textContent = cantoDettagli.titolo || cantoInfo.titolo;
+      document.getElementById("playerSongAuthor").textContent = cantoInfo.autore || cantoInfo.categoria || "";
+
+      // Reset Selezione Voci
+      document.querySelectorAll(".voice-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.voce === "tutti");
+      });
+      aggiornaLabelVoce();
+
+      // Render Sezioni Testo
+      renderSezioniTesto();
+
+      // Gestione Spartito PDF
+      const sheetBox = document.getElementById("sheetMusicBox");
+      const sheetLink = document.getElementById("sheetMusicLink");
+      if (cantoDettagli.spartito) {
+        sheetBox.style.display = "block";
+        sheetLink.href = cantoDettagli.spartito;
+      } else {
+        sheetBox.style.display = "none";
+      }
+
+      // Mostra la schermata player
+      switchView("canto");
+      caricaTracciaAudio();
+    }
+
+    function renderSezioniTesto() {
+      const container = document.getElementById("lyricsSectionsContainer");
+      container.innerHTML = "";
+
+      if (!cantoDettagli || !cantoDettagli.sezioni || cantoDettagli.sezioni.length === 0) {
+        container.innerHTML = `<p style="color:var(--text-muted); text-align:center;">Nessun testo sincronizzato disponibile per questo canto.</p>`;
+        return;
+      }
+
+      cantoDettagli.sezioni.forEach((sez, idx) => {
+        const block = document.createElement("div");
+        block.className = "section-block";
+        block.dataset.index = idx;
+        block.innerHTML = `
+          <div class="section-header-row">
+            <span class="section-name">${sez.nome}</span>
+            <span class="section-time">${formatTime(sez.inizio)} - ${formatTime(sez.fine)}</span>
+          </div>
+          <div class="section-text">${sez.testo}</div>
+        `;
+        block.addEventListener("click", () => {
+          selezionaSezione(idx);
+        });
+        container.appendChild(block);
+      });
+    }
+
+    function selezionaSezione(idx) {
+      if (!cantoDettagli || !cantoDettagli.sezioni || !cantoDettagli.sezioni[idx]) return;
+
+      sezioneAttivaIndex = idx;
+      document.querySelectorAll(".section-block").forEach((b, i) => {
+        b.classList.toggle("active", i === idx);
+      });
+
+      const sez = cantoDettagli.sezioni[idx];
+      audioEl.currentTime = sez.inizio;
+      playAudio();
+      aggiornaModalitaStudioText();
+    }
+
+    function caricaTracciaAudio() {
+      stopAudio();
+      if (!cantoDettagli || !cantoDettagli.tracce) return;
+
+      const tracciaUrl = cantoDettagli.tracce[voceCorrente] || cantoDettagli.tracce["tutti"] || "";
+
+      if (tracciaUrl && tracciaUrl.trim() !== "") {
+        audioEl.src = tracciaUrl;
+        audioEl.load();
+      } else {
+        audioEl.src = "";
+      }
+      updateProgressDisplay();
+    }
+
+    function playAudio() {
+      if (audioEl.src && audioEl.src !== window.location.href) {
+        audioEl.play().catch(err => console.log("Riproduzione bloccata o file non trovato:", err));
+        setPlayIconState(true);
+      }
+    }
+
+    function pauseAudio() {
+      audioEl.pause();
+      setPlayIconState(false);
+    }
+
+    function stopAudio() {
+      pauseAudio();
+      audioEl.currentTime = 0;
+      updateProgressDisplay();
+    }
+
+    function togglePlay() {
+      if (audioEl.paused) {
+        playAudio();
+      } else {
+        pauseAudio();
+      }
+    }
+
+    function setPlayIconState(isPlaying) {
+      playIcon.setAttribute("data-lucide", isPlaying ? "pause" : "play");
+      document.getElementById("studyPlayIcon").setAttribute("data-lucide", isPlaying ? "pause" : "play");
+      lucide.createIcons();
+    }
+
+    function updateProgressDisplay() {
+      const cur = audioEl.currentTime || 0;
+      const dur = audioEl.duration || 0;
+
+      const percent = dur > 0 ? (cur / dur) * 100 : 0;
+      progressBarFill.style.width = `${percent}%`;
+      currentTimeLabel.textContent = formatTime(cur);
+      durationTimeLabel.textContent = formatTime(dur);
+
+      // Controllo avanzamento e sincronizzazione sezioni
+      if (cantoDettagli && cantoDettagli.sezioni) {
+        // Controllo Loop Sezione
+        if (isLoopEnabled && sezioneAttivaIndex >= 0 && cantoDettagli.sezioni[sezioneAttivaIndex]) {
+          const sezLoop = cantoDettagli.sezioni[sezioneAttivaIndex];
+          if (cur >= sezLoop.fine) {
+            audioEl.currentTime = sezLoop.inizio;
+            return;
+          }
+        }
+
+        // Evidenzia la sezione corrente
+        cantoDettagli.sezioni.forEach((s, idx) => {
+          if (cur >= s.inizio && cur <= s.fine) {
+            if (sezioneAttivaIndex !== idx) {
+              sezioneAttivaIndex = idx;
+              document.querySelectorAll(".section-block").forEach((b, i) => {
+                b.classList.toggle("active", i === idx);
+              });
+              aggiornaModalitaStudioText();
+            }
+          }
+        });
+      }
+    }
+
+    function formatTime(sec) {
+      if (isNaN(sec) || sec === null) return "00:00";
+      const m = Math.floor(sec / 60);
+      const s = Math.floor(sec % 60);
+      return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    }
+
+    // EVENT LISTENERS & BINDING
+    function setupEventListeners() {
+      // Ricerca & Filtri
+      inputSearch.addEventListener("input", aggiornaDashboard);
+      
+      document.querySelectorAll(".filter-pill").forEach(pill => {
+        pill.addEventListener("click", () => {
+          document.querySelectorAll(".filter-pill").forEach(p => p.classList.remove("active"));
+          pill.classList.add("active");
+          aggiornaDashboard();
+        });
+      });
+
+      // Navigazione Tab Bottom Bar
+      document.querySelectorAll(".nav-button").forEach(btn => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll(".nav-button").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          const tab = btn.dataset.tab;
+          if (tab === "dashboard" || tab === "canti" || tab === "preferiti") {
+            switchView("dashboard");
+          } else if (tab === "info") {
+            switchView("info");
+          }
+        });
+      });
+
+      // Back to Home
+      document.getElementById("btnBackToHome").addEventListener("click", () => {
+        stopAudio();
+        switchView("dashboard");
+      });
+
+      // Cambio Voci
+      document.querySelectorAll(".voice-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll(".voice-btn").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          voceCorrente = btn.dataset.voce;
+          aggiornaLabelVoce();
+          caricaTracciaAudio();
+        });
+      });
+
+      // Controlli Player
+      btnPlayPause.addEventListener("click", togglePlay);
+      document.getElementById("btnStudyPlayPause").addEventListener("click", togglePlay);
+
+      document.getElementById("btnRewind5").addEventListener("click", () => {
+        audioEl.currentTime = Math.max(0, audioEl.currentTime - 5);
+        updateProgressDisplay();
+      });
+
+      document.getElementById("btnForward5").addEventListener("click", () => {
+        audioEl.currentTime = Math.min(audioEl.duration || 0, audioEl.currentTime + 5);
+        updateProgressDisplay();
+      });
+
+      // Seeking su Progress Bar
+      document.getElementById("progressBarBg").addEventListener("click", (e) => {
+        if (!audioEl.duration) return;
+        const rect = e.currentTarget.getBoundingClientRect();
+        const clickX = e.clientX - rect.left;
+        const ratio = clickX / rect.width;
+        audioEl.currentTime = ratio * audioEl.duration;
+        updateProgressDisplay();
+      });
+
+      // Audio HTML events
+      audioEl.addEventListener("timeupdate", updateProgressDisplay);
+      audioEl.addEventListener("loadedmetadata", updateProgressDisplay);
+      audioEl.addEventListener("ended", () => setPlayIconState(false));
+
+      // Velocità
+      document.querySelectorAll("[data-speed]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll("[data-speed]").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          const speed = parseFloat(btn.dataset.speed);
+          audioEl.playbackRate = speed;
+        });
+      });
+
+      // Loop Toggle
+      btnLoopToggle.addEventListener("click", () => {
+        isLoopEnabled = !isLoopEnabled;
+        btnLoopToggle.classList.toggle("active", isLoopEnabled);
+      });
+
+      // Modalità Studio Overlay
+      document.getElementById("btnOpenStudyMode").addEventListener("click", () => {
+        document.getElementById("studyTitle").textContent = (cantoDettagli && cantoDettagli.titolo) || (cantoInfo && cantoInfo.titolo) || "Studio Canto";
+        aggiornaModalitaStudioText();
+        document.getElementById("studyOverlay").classList.add("active");
+      });
+
+      document.getElementById("btnCloseStudyMode").addEventListener("click", () => {
+        document.getElementById("studyOverlay").classList.remove("active");
+      });
+
+      // Dark Mode
+      document.getElementById("btnThemeToggle").addEventListener("click", toggleTheme);
+    }
+
+    function aggiornaLabelVoce() {
+      const labels = {
+        tutti: "Tutte le voci",
+        soprano: "Soprano",
+        contralto: "Contralto",
+        tenore: "Tenore",
+        basso: "Basso"
+      };
+      const text = labels[voceCorrente] || "Tutte le voci";
+      document.getElementById("playerVoiceLabel").textContent = text;
+      document.getElementById("studyVoice").textContent = text;
+    }
+
+    function aggiornaModalitaStudioText() {
+      if (!cantoDettagli || !cantoDettagli.sezioni) return;
+      const sez = cantoDettagli.sezioni[sezioneAttivaIndex];
+      if (sez) {
+        document.getElementById("studyActiveSectionName").textContent = sez.nome;
+        document.getElementById("studyActiveText").textContent = sez.testo;
+      } else {
+        document.getElementById("studyActiveSectionName").textContent = "";
+        document.getElementById("studyActiveText").textContent = "Seleziona una sezione per iniziare le prove";
+      }
+    }
+
+    function switchView(viewName) {
+      document.querySelectorAll(".view-page").forEach(v => v.classList.remove("active"));
+      if (viewName === "dashboard") {
+        document.getElementById("viewDashboard").classList.add("active");
+      } else if (viewName === "canto") {
+        document.getElementById("viewCanto").classList.add("active");
+      } else if (viewName === "info") {
+        document.getElementById("viewInfo").classList.add("active");
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // TEMI LIGHT / DARK
+    function initTheme() {
+      const savedTheme = localStorage.getItem("tema");
+      if (savedTheme === "dark") {
+        document.body.classList.add("dark");
+        document.getElementById("themeIcon").setAttribute("data-lucide", "sun");
+      }
+    }
+
+    function toggleTheme() {
+      const isDark = document.body.classList.toggle("dark");
+      localStorage.setItem("tema", isDark ? "dark" : "light");
+      document.getElementById("themeIcon").setAttribute("data-lucide", isDark ? "sun" : "moon");
+      lucide.createIcons();
+    }
+  </script>
+</body>
+</html>
