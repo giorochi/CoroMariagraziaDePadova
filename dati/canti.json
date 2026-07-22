@@ -12,6 +12,13 @@
     "autore": "Mons. Marco Frisina",
     "categoria": "San Francesco",
     "file": "canti/povertà.json"
+  },
+  {
+    "id": "magnificat",
+    "titolo": "Magnificat",
+    "autore": "Mons. Marco Frisina",
+    "categoria": "Maria",
+    "file": "canti/magnificat.json"
   }
 ]
 
