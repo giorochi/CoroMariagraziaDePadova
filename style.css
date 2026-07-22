@@ -1,24 +1,36 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+/* ==========================
+   CORO MARIAGRAZIA DE PADOVA
+   Nuova interfaccia app
+========================== */
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 
 
 :root {
 
-    --primary:#1565c0;
-    --primary-dark:#0d47a1;
-    --secondary:#42a5f5;
 
-    --background:#eef5ff;
-    --card:#ffffff;
+--primary:#1565c0;
 
-    --text:#1c1c1c;
-    --muted:#6d6d6d;
+--primary-light:#e3f2fd;
 
-    --active:#ffe082;
+--background:#f5f7fb;
 
-    --shadow:
-    0 10px 30px rgba(0,0,0,.12);
+--surface:#ffffff;
 
-    --radius:24px;
+--text:#202124;
+
+--secondary:#6b7280;
+
+--border:#e5e7eb;
+
+--success:#2e7d32;
+
+
+--radius:20px;
+
 
 }
 
@@ -28,7 +40,7 @@
 
 * {
 
-    box-sizing:border-box;
+box-sizing:border-box;
 
 }
 
@@ -37,30 +49,38 @@
 
 body {
 
-    margin:0;
 
-    padding:20px;
-
-    min-height:100vh;
+margin:0;
 
 
-    font-family:
-    "Poppins",
-    sans-serif;
+padding:0;
 
 
-    color:var(--text);
+background:var(--background);
 
 
-    background:
-    linear-gradient(
-        135deg,
-        #eef5ff,
-        #dcecff
-    );
+color:var(--text);
 
 
-    transition:.3s;
+font-family:"Inter",sans-serif;
+
+
+}
+
+
+
+
+.app {
+
+
+max-width:700px;
+
+
+margin:auto;
+
+
+padding:20px;
+
 
 }
 
@@ -68,11 +88,58 @@ body {
 
 
 
-header {
 
-    text-align:center;
+/* ==========================
+ HEADER DASHBOARD
+========================== */
 
-    margin-bottom:30px;
+
+
+.hero {
+
+
+text-align:center;
+
+
+padding:30px 10px 20px;
+
+
+}
+
+
+
+.hero-icon {
+
+
+width:70px;
+
+
+height:70px;
+
+
+margin:auto;
+
+
+border-radius:50%;
+
+
+background:var(--primary);
+
+
+color:white;
+
+
+display:flex;
+
+
+align-items:center;
+
+
+justify-content:center;
+
+
+font-size:38px;
+
 
 }
 
@@ -80,38 +147,35 @@ header {
 
 
 
-.logo {
-
-    width:90px;
-
-    height:90px;
+.hero h1 {
 
 
-    margin:auto;
+margin:20px 0 8px;
 
 
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
+font-size:28px;
 
 
-    border-radius:50%;
+font-weight:700;
 
 
-    color:white;
+color:var(--primary);
+
+}
 
 
-    background:
-    linear-gradient(
-        135deg,
-        var(--primary),
-        var(--secondary)
-    );
+
+.hero p {
 
 
-    box-shadow:var(--shadow);
+margin:0;
+
+
+color:var(--secondary);
+
+
+font-size:15px;
+
 
 }
 
@@ -119,11 +183,46 @@ header {
 
 
 
-.logo svg {
+/* ==========================
+ CERCA
+========================== */
 
-    width:45px;
 
-    height:45px;
+
+.search-container {
+
+
+margin:20px 0;
+
+
+}
+
+
+
+
+.search-container input {
+
+
+width:100%;
+
+
+padding:16px 20px;
+
+
+border-radius:18px;
+
+
+border:1px solid var(--border);
+
+
+background:white;
+
+
+font-size:16px;
+
+
+outline:none;
+
 
 }
 
@@ -131,11 +230,11 @@ header {
 
 
 
-h1 {
+.search-container input:focus {
 
-    color:var(--primary-dark);
 
-    font-size:27px;
+border-color:var(--primary);
+
 
 }
 
@@ -143,9 +242,32 @@ h1 {
 
 
 
-h2 {
 
-    color:var(--primary-dark);
+
+/* ==========================
+ TITOLI SEZIONE
+========================== */
+
+
+
+.section {
+
+
+margin-top:30px;
+
+
+}
+
+
+
+.section h2 {
+
+
+font-size:21px;
+
+
+margin-bottom:15px;
+
 
 }
 
@@ -153,60 +275,134 @@ h2 {
 
 
 
-p {
+/* ==========================
+ CARD CANTI
+========================== */
 
-    color:var(--muted);
+
+
+#listaCanti,
+#preferiti,
+#recenti {
+
+
+display:flex;
+
+
+flex-direction:column;
+
+
+gap:14px;
+
 
 }
 
 
+
+
+
+.card {
+
+
+background:var(--surface);
+
+
+border-radius:var(--radius);
+
+
+padding:20px;
+
+
+border:1px solid var(--border);
+
+
+transition:.2s;
+
+
+}
+
+
+
+
+
+.card:hover {
+
+
+transform:translateY(-2px);
+
+
+}
+
+
+
+
+.card h2 {
+
+
+margin:0 0 8px;
+
+
+font-size:20px;
+
+
+}
+
+
+
+
+
+.card p {
+
+
+color:var(--secondary);
+
+
+margin:0;
+
+
+}
+
+
+
+
+
+
+
+/* ==========================
+ BOTTONI
+========================== */
 
 
 
 button {
 
-    border:none;
+
+border:none;
 
 
-    cursor:pointer;
+background:var(--primary);
 
 
-    padding:13px 20px;
+color:white;
 
 
-    border-radius:18px;
+padding:12px 18px;
 
 
-    display:inline-flex;
+border-radius:14px;
 
 
-    align-items:center;
+font-size:15px;
 
 
-    justify-content:center;
+font-weight:600;
 
 
-    gap:8px;
+cursor:pointer;
 
 
-    font-size:15px;
+transition:.2s;
 
-
-    font-weight:600;
-
-
-    color:white;
-
-
-    background:
-    linear-gradient(
-        135deg,
-        var(--primary),
-        var(--secondary)
-    );
-
-
-    transition:.2s;
 
 }
 
@@ -216,94 +412,86 @@ button {
 
 button:hover {
 
-    transform:translateY(-2px);
+
+opacity:.9;
+
 
 }
+
 
 
 
 
 button:active {
 
-    transform:scale(.95);
 
-}
-
-
-
-
-
-button svg {
-
-    width:20px;
-
-    height:20px;
-
-}
-
-
-
-
-
-/* Ricerca */
-
-
-.ricerca-box {
-
-
-    display:flex;
-
-
-    align-items:center;
-
-
-    gap:10px;
-
-
-    background:white;
-
-
-    padding:15px 18px;
-
-
-    border-radius:22px;
-
-
-    box-shadow:var(--shadow);
-
-
-    margin-bottom:25px;
+transform:scale(.96);
 
 
 }
 
 
 
-.ricerca-box svg {
 
-    color:var(--primary);
+
+/* ==========================
+   PAGINA CANTO
+========================== */
+
+
+
+.song-header {
+
+
+padding:20px 0;
+
 
 }
 
 
 
-
-#ricerca {
-
-
-    width:100%;
+.back-link {
 
 
-    border:none;
+text-decoration:none;
 
 
-    outline:none;
+color:var(--primary);
 
 
-    font-size:16px;
+font-weight:600;
 
 
-    font-family:inherit;
+font-size:15px;
+
+
+}
+
+
+
+.song-header h1 {
+
+
+font-size:30px;
+
+
+margin:25px 0 5px;
+
+
+color:var(--primary);
+
+
+}
+
+
+
+.song-header p {
+
+
+margin:0;
+
+
+color:var(--secondary);
 
 
 }
@@ -313,28 +501,48 @@ button svg {
 
 
 
-/* Card */
+
+/* ==========================
+   BOX GENERALI
+========================== */
 
 
-.card {
+
+.box,
+.player-box,
+.spartito-box,
+.sections-box {
 
 
-    background:var(--card);
+background:white;
 
 
-    padding:22px;
+border-radius:var(--radius);
 
 
-    border-radius:var(--radius);
+padding:22px;
 
 
-    margin-bottom:18px;
+margin-top:20px;
 
 
-    box-shadow:var(--shadow);
+border:1px solid var(--border);
 
 
-    transition:.25s;
+}
+
+
+
+.box h2,
+.player-box h2,
+.spartito-box h2,
+.sections-box h2 {
+
+
+font-size:20px;
+
+
+margin-top:0;
 
 
 }
@@ -342,101 +550,89 @@ button svg {
 
 
 
-.card:hover {
-
-    transform:translateY(-5px);
-
-}
 
 
+/* ==========================
+   SCELTA VOCE
+========================== */
 
-
-
-
-/* pulsanti voce */
 
 
 .voci {
 
 
-    display:flex;
+display:flex;
 
 
-    flex-wrap:wrap;
+flex-wrap:wrap;
 
 
-    gap:10px;
-
-
-    margin-bottom:25px;
+gap:10px;
 
 
 }
-
 
 
 
 .voce {
 
 
-    background:white;
+background:var(--primary-light);
 
 
-    color:var(--primary);
-
-
-    border:2px solid #90caf9;
+color:var(--primary);
 
 
 }
-
-
 
 
 
 .voce.attiva {
 
 
-    background:var(--primary);
+background:var(--primary);
 
 
-    color:white;
+color:white;
+
+
+}
+
+
+
+
+
+
+
+/* ==========================
+   PLAYER
+========================== */
+
+
+
+.player-box {
+
+
+text-align:center;
 
 
 }
 
 
 
+.time-display {
 
 
+font-size:14px;
 
 
-/* Player */
+color:var(--secondary);
 
 
-.player {
-
-
-    background:white;
-
-
-    padding:25px;
-
-
-    border-radius:30px;
-
-
-    box-shadow:var(--shadow);
-
-
-    margin-bottom:25px;
-
-
-    text-align:center;
+margin-bottom:15px;
 
 
 }
-
 
 
 
@@ -444,25 +640,19 @@ button svg {
 .progress {
 
 
-    width:100%;
+height:10px;
 
 
-    height:12px;
+background:#e0e0e0;
 
 
-    background:#ddd;
+border-radius:20px;
 
 
-    border-radius:20px;
+overflow:hidden;
 
 
-    overflow:hidden;
-
-
-    cursor:pointer;
-
-
-    margin:20px 0;
+cursor:pointer;
 
 
 }
@@ -470,92 +660,16 @@ button svg {
 
 
 
-
-.progress-bar {
-
-
-    height:100%;
+#barra {
 
 
-    width:0%;
+height:100%;
 
 
-    background:
-    linear-gradient(
-        90deg,
-        var(--primary),
-        var(--secondary)
-    );
+width:0;
 
 
-}
-
-
-
-
-
-
-.controls {
-
-
-    display:flex;
-
-
-    flex-wrap:wrap;
-
-
-    justify-content:center;
-
-
-    gap:10px;
-
-
-    margin:15px 0;
-
-
-}
-
-
-
-
-
-.velocita button {
-
-
-    background:#e3f2fd;
-
-
-    color:var(--primary-dark);
-
-
-}
-
-
-
-
-
-.volume-box {
-
-
-    display:flex;
-
-
-    align-items:center;
-
-
-    gap:10px;
-
-
-}
-
-
-
-
-
-.volume-box input {
-
-
-    width:100%;
+background:var(--primary);
 
 
 }
@@ -566,13 +680,154 @@ button svg {
 
 
 
-/* Sezioni */
+.main-controls {
+
+
+display:flex;
+
+
+justify-content:center;
+
+
+gap:15px;
+
+
+margin:25px 0;
+
+
+}
+
+
+
+#play {
+
+
+width:65px;
+
+
+height:65px;
+
+
+border-radius:50%;
+
+
+font-size:24px;
+
+
+}
+
+
+
+
+
+
+
+.speed-controls {
+
+
+display:flex;
+
+
+justify-content:center;
+
+
+gap:10px;
+
+
+margin-bottom:20px;
+
+
+}
+
+
+
+.speed-controls button {
+
+
+background:var(--primary-light);
+
+
+color:var(--primary);
+
+
+}
+
+
+
+#volume {
+
+
+width:100%;
+
+
+}
+
+
+
+
+
+
+
+/* ==========================
+   SPARTITO
+========================== */
+
+
+
+#spartito button {
+
+
+width:100%;
+
+
+}
+
+
+
+.spartito-box {
+
+
+text-align:center;
+
+
+}
+
+
+
+
+
+
+
+/* ==========================
+   SEZIONI KARAOKE
+========================== */
+
+
+
+.sections-box {
+
+
+margin-bottom:20px;
+
+
+}
+
 
 
 .sezione {
 
 
-    cursor:pointer;
+cursor:pointer;
+
+
+}
+
+
+
+.sezione h2 {
+
+
+font-size:18px;
 
 
 }
@@ -582,19 +837,13 @@ button svg {
 .sezione.attiva {
 
 
-    background:
-    linear-gradient(
-        135deg,
-        #fff8d6,
-        var(--active)
-    );
+border:2px solid var(--primary);
 
 
-    transform:scale(1.03);
+background:#eef6ff;
 
 
 }
-
 
 
 
@@ -603,25 +852,13 @@ button svg {
 .testo {
 
 
-    white-space:pre-line;
+white-space:pre-line;
 
 
-    font-size:18px;
+line-height:1.7;
 
 
-    line-height:1.7;
-
-
-}
-
-
-
-
-
-.tempo {
-
-
-    font-size:14px;
+font-size:17px;
 
 
 }
@@ -630,48 +867,44 @@ button svg {
 
 
 
+.sezione button {
 
 
-/* Modalità studio */
+margin-top:15px;
+
+
+}
+
+
+
+
+
+/* ==========================
+ MODALITÀ STUDIO
+========================== */
+
 
 
 .study-mode .sezione:not(.attiva) {
 
 
-    display:none;
+display:none;
 
 
 }
-
 
 
 
 .study-mode .testo {
 
 
-    font-size:30px;
+font-size:25px;
 
 
-    text-align:center;
+text-align:center;
 
 
-    line-height:1.8;
-
-
-}
-
-
-
-
-
-
-/* Spartito */
-
-
-#spartito {
-
-
-    margin:20px 0;
+line-height:2;
 
 
 }
@@ -681,44 +914,139 @@ button svg {
 
 
 
+/* ==========================
+ NAVIGAZIONE INFERIORE
+========================== */
 
-/* Dark mode */
+
+
+.bottom-nav {
+
+
+position:fixed;
+
+
+bottom:0;
+
+
+left:0;
+
+
+right:0;
+
+
+height:70px;
+
+
+background:white;
+
+
+border-top:1px solid var(--border);
+
+
+display:flex;
+
+
+justify-content:space-around;
+
+
+align-items:center;
+
+
+}
+
+
+
+.nav-item {
+
+
+background:none;
+
+
+color:var(--secondary);
+
+
+font-size:13px;
+
+
+padding:8px;
+
+
+}
+
+
+
+.nav-item.active {
+
+
+color:var(--primary);
+
+
+}
+
+
+
+.nav-item span {
+
+
+display:block;
+
+
+font-size:22px;
+
+
+margin-bottom:4px;
+
+
+}
+/* ==========================
+   MODALITÀ SCURA
+========================== */
 
 
 body.dark {
 
 
-    background:#121212;
+--background:#121212;
 
+--surface:#1e1e1e;
 
-    color:white;
+--text:#ffffff;
+
+--secondary:#b0b0b0;
+
+--border:#333333;
 
 
 }
 
+
+
+body.dark .search-container input,
+
+
+body.dark .box,
+
+
+body.dark .player-box,
+
+
+body.dark .spartito-box,
+
+
+body.dark .sections-box,
 
 
 body.dark .card,
 
-body.dark .player,
 
-body.dark .ricerca-box {
-
-
-    background:#1e1e1e;
+body.dark .bottom-nav {
 
 
-}
+background:#1e1e1e;
 
 
-
-
-body.dark h1,
-
-body.dark h2 {
-
-
-    color:#90caf9;
+color:white;
 
 
 }
@@ -727,13 +1055,48 @@ body.dark h2 {
 
 
 
-body.dark input {
+body.dark .search-container input {
 
 
-    background:transparent;
+color:white;
 
 
-    color:white;
+}
+
+
+
+
+body.dark .voce {
+
+
+background:#263238;
+
+
+color:#90caf9;
+
+
+}
+
+
+
+
+body.dark .voce.attiva {
+
+
+background:#1565c0;
+
+
+color:white;
+
+
+}
+
+
+
+body.dark .sezione.attiva {
+
+
+background:#263238;
 
 
 }
@@ -743,39 +1106,63 @@ body.dark input {
 
 
 
-/* Animazioni */
 
-
-@keyframes comparsa {
-
-
-from {
-
-opacity:0;
-
-transform:translateY(20px);
-
-}
-
-
-to {
-
-opacity:1;
-
-transform:none;
-
-}
-
-}
+/* ==========================
+   ANIMAZIONI LEGGERE
+========================== */
 
 
 
-.card {
+.card,
+
+
+.box,
+
+
+.player-box,
+
+
+.sezione {
 
 
 animation:
 
-comparsa .4s ease;
+apparizione .25s ease;
+
+
+}
+
+
+
+
+@keyframes apparizione {
+
+
+from {
+
+
+opacity:0;
+
+
+transform:translateY(8px);
+
+
+}
+
+
+
+to {
+
+
+opacity:1;
+
+
+transform:none;
+
+
+}
+
+
 
 }
 
@@ -785,33 +1172,41 @@ comparsa .4s ease;
 
 
 
-/* Smartphone */
+/* ==========================
+   MOBILE
+========================== */
+
 
 
 @media(max-width:600px){
 
 
-body {
+
+.app {
+
 
 padding:15px;
 
-}
-
-
-
-h1 {
-
-font-size:23px;
 
 }
 
 
 
-.logo {
+.hero h1 {
 
-width:80px;
 
-height:80px;
+font-size:24px;
+
+
+}
+
+
+
+.song-header h1 {
+
+
+font-size:25px;
+
 
 }
 
@@ -819,7 +1214,29 @@ height:80px;
 
 .card {
 
+
+padding:17px;
+
+
+}
+
+
+
+
+.box,
+
+
+.player-box,
+
+
+.spartito-box,
+
+
+.sections-box {
+
+
 padding:18px;
+
 
 }
 
@@ -827,18 +1244,66 @@ padding:18px;
 
 button {
 
-width:auto;
+
+font-size:14px;
+
+
+padding:11px 15px;
+
 
 }
 
 
 
-.testo {
+.voci button {
 
-font-size:17px;
+
+flex:1;
+
+
+min-width:100px;
+
 
 }
 
+
+
+.speed-controls button {
+
+
+flex:1;
+
+
+}
+
+
+
+.study-mode .testo {
+
+
+font-size:22px;
+
+
+}
+
+
+
+}
+
+
+
+
+
+/* ==========================
+   SPAZIO PER BOTTOM NAV
+========================== */
+
+
+
+body {
+
+
+padding-bottom:90px;
 
 
 }
