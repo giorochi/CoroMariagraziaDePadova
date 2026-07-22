@@ -18,13 +18,13 @@
     {
       "nome": "Strofa 1",
       "inizio": 49,
-      "fine": 75,
+      "fine": 85,
       "testo":
       "Quia respexit humilitatem ancillae suae \nEcce enim ex hoc beatam me dicent \nOmnes generationes"
     },
     {
       "nome": "RITORNELLO 2",
-      "inizio": 76,
+      "inizio": 86,
       "fine":137,
       "testo":
       "Magnificat anima mea \nMagnificat Dominum \nEt exsultavit spiritus meus in Deo \nSalutari meo \nMagnificat \nMagnificat"
