@@ -1,206 +1,1714 @@
 <!DOCTYPE html>
 <html lang="it">
-
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coro "Mariagrazia De Padova" - App Prove</title>
+  <meta name="theme-color" content="#1e40af">
+  
+  <!-- Font Google Inter & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Icone Lucide -->
+  <script src="https://unpkg.com/lucide@latest"></script>
 
-<meta charset="UTF-8">
+  <style>
+    /* ==========================================
+       VARIABLES & TEMA
+    ========================================== */
+    :root {
+      --primary: #1e40af;
+      --primary-light: #dbeafe;
+      --primary-dark: #1e3a8a;
+      --accent: #d97706;
+      --accent-light: #fef3c7;
+      
+      --bg-main: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-card: #ffffff;
+      
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      
+      /* Colori Voci Corali */
+      --voce-soprano: #ec4899;
+      --voce-contralto: #f59e0b;
+      --voce-tenore: #10b981;
+      --voce-basso: #6366f1;
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+      --radius-sm: 10px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-full: 9999px;
+      
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 14px rgba(0,0,0,0.08);
+      --shadow-lg: 0 10px 25px rgba(30, 64, 175, 0.12);
+    }
 
+    body.dark {
+      --bg-main: #0f172a;
+      --bg-surface: #1e293b;
+      --bg-card: #1e293b;
+      
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-color: #334155;
+      
+      --primary-light: #1e3a8a;
+      --accent-light: #78350f;
+    }
 
-<title>
-Coro "Mariagrazia De Padova"
-</title>
+    /* ==========================================
+       RESET & BASE STYLES
+    ========================================== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
 
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.5;
+      padding-bottom: 90px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
 
-<meta name="theme-color" content="#1e88e5">
+    h1, h2, h3, .font-heading {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
 
+    .container {
+      max-width: 768px;
+      margin: 0 auto;
+      padding: 16px;
+    }
 
-<link rel="stylesheet" href="style.css">
+    /* ==========================================
+       HEADER & TOP BAR
+    ========================================== */
+    .top-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(10px);
+    }
 
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
 
-<link rel="manifest" href="manifest.json">
+    .brand-logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(30, 64, 175, 0.3);
+    }
 
+    .brand-info h1 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.2;
+    }
 
+    .brand-info p {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .icon-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border-color);
+      background: var(--bg-surface);
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .icon-btn:hover {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    /* ==========================================
+       BANNER BENVERNUTO & STATS
+    ========================================== */
+    .hero-banner {
+      background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+      color: white;
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-banner::after {
+      content: "♪";
+      position: absolute;
+      right: -10px;
+      bottom: -20px;
+      font-size: 140px;
+      opacity: 0.15;
+      font-family: serif;
+      pointer-events: none;
+    }
+
+    .hero-banner h2 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .hero-banner p {
+      font-size: 0.9rem;
+      opacity: 0.9;
+      margin-bottom: 16px;
+    }
+
+    .stats-row {
+      display: flex;
+      gap: 12px;
+    }
+
+    .stat-pill {
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(8px);
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* ==========================================
+       SEARCH & FILTERS
+    ========================================== */
+    .search-box {
+      position: relative;
+      margin-bottom: 16px;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 14px 16px 14px 48px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
+      background: var(--bg-surface);
+      color: var(--text-main);
+      font-size: 0.95rem;
+      outline: none;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+    }
+
+    .search-box input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-light);
+    }
+
+    .search-box i {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    .filter-pills {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+      scrollbar-width: none;
+    }
+
+    .filter-pill {
+      white-space: nowrap;
+      padding: 8px 16px;
+      border-radius: var(--radius-full);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-pill.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+      box-shadow: 0 4px 10px rgba(30, 64, 175, 0.25);
+    }
+
+    /* ==========================================
+       SECTION HEADERS
+    ========================================== */
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      margin-top: 10px;
+    }
+
+    .section-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-main);
+    }
+
+    .section-title i {
+      color: var(--primary);
+    }
+
+    /* ==========================================
+       CARDS CANTO
+    ========================================== */
+    .songs-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .song-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      transition: all 0.25s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .song-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--primary-light);
+    }
+
+    .song-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .song-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .song-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .category-badge {
+      background: var(--primary-light);
+      color: var(--primary);
+      padding: 2px 8px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 0.75rem;
+    }
+
+    .song-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-fav {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 8px;
+      border-radius: var(--radius-full);
+      transition: all 0.2s;
+    }
+
+    .btn-fav.active {
+      color: #ef4444;
+      fill: #ef4444;
+    }
+
+    .btn-study {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(30, 64, 175, 0.2);
+      transition: all 0.2s;
+    }
+
+    .btn-study:hover {
+      background: var(--primary-dark);
+      transform: scale(1.02);
+    }
+
+    /* ==========================================
+       PAGINA DETTAGLIO / PLAYER CANTO
+    ========================================== */
+    .view-page {
+      display: none;
+    }
+
+    .view-page.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .back-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .btn-back {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 8px 14px;
+      border-radius: var(--radius-full);
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+
+    /* Box Selezione Voce */
+    .voice-selector-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .voice-selector-box h3 {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .voice-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+      gap: 8px;
+    }
+
+    .voice-btn {
+      padding: 10px 6px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-color);
+      background: var(--bg-main);
+      color: var(--text-main);
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .voice-btn[data-voce="tutti"].active { background: var(--primary); color: white; border-color: var(--primary); }
+    .voice-btn[data-voce="soprano"].active { background: var(--voce-soprano); color: white; border-color: var(--voce-soprano); }
+    .voice-btn[data-voce="contralto"].active { background: var(--voce-contralto); color: white; border-color: var(--voce-contralto); }
+    .voice-btn[data-voce="tenore"].active { background: var(--voce-tenore); color: white; border-color: var(--voce-tenore); }
+    .voice-btn[data-voce="basso"].active { background: var(--voce-basso); color: white; border-color: var(--voce-basso); }
+
+    /* Player Box Main */
+    .player-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      text-align: center;
+      box-shadow: var(--shadow-md);
+      margin-bottom: 20px;
+    }
+
+    .song-header-detail h2 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .song-header-detail p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+    }
+
+    .playing-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--primary-light);
+      color: var(--primary);
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    /* Waveform / Progress bar */
+    .progress-wrapper {
+      margin: 16px 0 8px;
+    }
+
+    .progress-bar-bg {
+      width: 100%;
+      height: 10px;
+      background: var(--border-color);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .progress-bar-fill {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), #3b82f6);
+      border-radius: var(--radius-full);
+      transition: width 0.1s linear;
+    }
+
+    .time-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* Main Player Controls */
+    .player-controls-main {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .btn-circle {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border-color);
+      background: var(--bg-main);
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-circle:hover {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .btn-play-lg {
+      width: 72px;
+      height: 72px;
+      border-radius: var(--radius-full);
+      background: var(--primary);
+      color: white;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(30, 64, 175, 0.35);
+      transition: transform 0.2s, background-color 0.2s;
+    }
+
+    .btn-play-lg:hover {
+      transform: scale(1.06);
+      background: var(--primary-dark);
+    }
+
+    /* Secondary Controls */
+    .secondary-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-pill-sm {
+      padding: 6px 12px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border-color);
+      background: var(--bg-main);
+      color: var(--text-main);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-pill-sm.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    /* Sezioni Testo & Karaoke */
+    .lyrics-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .section-block {
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin-bottom: 12px;
+      background: var(--bg-main);
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+
+    .section-block.active {
+      border-color: var(--primary);
+      background: var(--primary-light);
+      box-shadow: 0 4px 12px rgba(30, 64, 175, 0.1);
+    }
+
+    body.dark .section-block.active {
+      background: rgba(30, 64, 175, 0.3);
+    }
+
+    .section-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .section-name {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--primary);
+    }
+
+    .section-time {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .section-text {
+      font-size: 1rem;
+      line-height: 1.6;
+      white-space: pre-line;
+      color: var(--text-main);
+    }
+
+    /* Modalità Studio Fullscreen */
+    .study-mode-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: var(--bg-main);
+      z-index: 100;
+      padding: 24px;
+      overflow-y: auto;
+      flex-direction: column;
+    }
+
+    .study-mode-overlay.active {
+      display: flex;
+    }
+
+    .study-mode-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .study-text-display {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    .study-text-display .huge-text {
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1.6;
+      color: var(--primary);
+      margin-bottom: 20px;
+    }
+
+    /* Spartito PDF Box */
+    .sheet-music-box {
+      background: var(--bg-surface);
+      border: 1px dashed var(--primary);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      text-align: center;
+      margin-top: 16px;
+    }
+
+    /* ==========================================
+       BOTTOM NAVIGATION BAR
+    ========================================== */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 70px;
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      z-index: 50;
+      backdrop-filter: blur(12px);
+    }
+
+    .nav-button {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      width: 25%;
+      padding: 8px 0;
+      transition: color 0.2s ease;
+    }
+
+    .nav-button.active {
+      color: var(--primary);
+    }
+
+    .nav-button i {
+      width: 22px;
+      height: 22px;
+    }
+
+    /* Responsive adjustment */
+    @media (min-width: 768px) {
+      body {
+        padding-bottom: 0;
+      }
+      .bottom-nav {
+        top: 0;
+        bottom: auto;
+        left: auto;
+        width: auto;
+        height: 60px;
+        border-top: none;
+        border-bottom: 1px solid var(--border-color);
+        background: transparent;
+        position: relative;
+      }
+      .container {
+        padding-top: 24px;
+      }
+    }
+  </style>
 </head>
-
-
-
 <body>
 
+  <!-- TOP HEADER -->
+  <header class="top-header">
+    <div class="brand">
+      <div class="brand-logo">
+        <i data-lucide="music"></i>
+      </div>
+      <div class="brand-info">
+        <h1>Coro "M. De Padova"</h1>
+        <p>App Prove & Repertorio</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="icon-btn" id="btnThemeToggle" title="Cambia Tema">
+        <i data-lucide="moon" id="themeIcon"></i>
+      </button>
+    </div>
+  </header>
 
-<div class="app">
+  <!-- CONTENUTO PRINCIPALE -->
+  <main class="container">
 
+    <!-- VISTA DASHBOARD / HOME -->
+    <section id="viewDashboard" class="view-page active">
+      
+      <!-- Banner di Benvenuto -->
+      <div class="hero-banner">
+        <h2>Esercitati con il Coro</h2>
+        <p>Ascolta le tracce isolate per sezione vocale e impara il tuo spartito.</p>
+        <div class="stats-row">
+          <div class="stat-pill">
+            <i data-lucide="disc"></i> <span id="totalSongsCount">6</span> Canti
+          </div>
+          <div class="stat-pill">
+            <i data-lucide="heart"></i> <span id="favSongsCount">0</span> Preferiti
+          </div>
+        </div>
+      </div>
 
-<header class="hero">
+      <!-- Barra di Ricerca -->
+      <div class="search-box">
+        <i data-lucide="search"></i>
+        <input type="search" id="inputSearch" placeholder="Cerca canto, autore o momento liturgico...">
+      </div>
 
+      <!-- Filtri Rapidi -->
+      <div class="filter-pills" id="categoryFilters">
+        <button class="filter-pill active" data-filter="all">Tutti</button>
+        <button class="filter-pill" data-filter="Mariano">Mariani</button>
+        <button class="filter-pill" data-filter="Liturgico">Liturgici</button>
+        <button class="filter-pill" data-filter="Natale">Natale</button>
+        <button class="filter-pill" data-filter="Pasqua">Pasqua</button>
+      </div>
 
-<div class="hero-icon">
-♪ 
-</div>
+      <!-- Sezione Ultimi Studiati -->
+      <div id="sectionRecenti" style="display: none;">
+        <div class="section-header">
+          <div class="section-title">
+            <i data-lucide="history"></i> Ultimi Studiati
+          </div>
+        </div>
+        <div class="songs-grid" id="listaRecenti"></div>
+        <div style="height: 20px;"></div>
+      </div>
 
+      <!-- Sezione Preferiti -->
+      <div id="sectionPreferiti" style="display: none;">
+        <div class="section-header">
+          <div class="section-title">
+            <i data-lucide="heart"></i> I Tuoi Preferiti
+          </div>
+        </div>
+        <div class="songs-grid" id="listaPreferiti"></div>
+        <div style="height: 20px;"></div>
+      </div>
 
-<h1>
-Coro "Mariagrazia De Padova"
-</h1>
+      <!-- Tutti i Canti -->
+      <div class="section-header">
+        <div class="section-title">
+          <i data-lucide="list-music"></i> Repertorio Canti
+        </div>
+      </div>
+      <div class="songs-grid" id="listaTuttiCanti"></div>
 
+    </section>
 
-<p>
-Preparati alle prove del coro.
-</p>
+    <!-- VISTA PLAYER DETTAGLIO CANTO -->
+    <section id="viewCanto" class="view-page">
+      
+      <!-- Navigazione Ritorno -->
+      <div class="back-bar">
+        <button class="btn-back" id="btnBackToHome">
+          <i data-lucide="arrow-left"></i> Torna ai Canti
+        </button>
+      </div>
 
+      <!-- Selettore della Parte Vocale -->
+      <div class="voice-selector-box">
+        <h3>Seleziona la tua voce</h3>
+        <div class="voice-grid">
+          <button class="voice-btn active" data-voce="tutti">Tutte</button>
+          <button class="voice-btn" data-voce="soprano">Soprano</button>
+          <button class="voice-btn" data-voce="contralto">Contralto</button>
+          <button class="voice-btn" data-voce="tenore">Tenore</button>
+          <button class="voice-btn" data-voce="basso">Basso</button>
+        </div>
+      </div>
 
-</header>
+      <!-- Player Musicale principale -->
+      <div class="player-card">
+        <div class="song-header-detail">
+          <h2 id="playerSongTitle">Titolo Canto</h2>
+          <p id="playerSongAuthor">Autore / Categoria</p>
+        </div>
 
+        <div class="playing-status">
+          <i data-lucide="mic"></i> <span id="playerVoiceLabel">Tutte le voci</span>
+        </div>
 
+        <!-- Barra temporale -->
+        <div class="progress-wrapper">
+          <div class="progress-bar-bg" id="progressBarBg">
+            <div class="progress-bar-fill" id="progressBarFill"></div>
+          </div>
+          <div class="time-labels">
+            <span id="currentTimeLabel">00:00</span>
+            <span id="durationTimeLabel">00:00</span>
+          </div>
+        </div>
 
+        <!-- Controlli Principali Play/Pausa -->
+        <div class="player-controls-main">
+          <button class="btn-circle" id="btnRewind5" title="-5 Secondi">
+            <i data-lucide="rotate-ccw"></i>
+          </button>
+          <button class="btn-play-lg" id="btnPlayPause" title="Riproduci/Pausa">
+            <i data-lucide="play" id="playIcon"></i>
+          </button>
+          <button class="btn-circle" id="btnForward5" title="+5 Secondi">
+            <i data-lucide="rotate-cw"></i>
+          </button>
+        </div>
 
+        <!-- Controlli Secondari (Velocità, Loop, Studio) -->
+        <div class="secondary-controls">
+          <div class="control-group">
+            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">Velocità:</span>
+            <button class="btn-pill-sm active" data-speed="1">1x</button>
+            <button class="btn-pill-sm" data-speed="0.75">0.75x</button>
+            <button class="btn-pill-sm" data-speed="1.25">1.25x</button>
+          </div>
 
-<section class="search-container">
+          <button class="btn-pill-sm" id="btnLoopToggle">
+            <i data-lucide="repeat" style="width: 14px; height: 14px; display: inline;"></i> Loop Sezione
+          </button>
+        </div>
+      </div>
 
+      <!-- Karaoke & Testo con Sezioni -->
+      <div class="lyrics-card">
+        <div class="section-header">
+          <div class="section-title">
+            <i data-lucide="align-left"></i> Testo e Sezioni
+          </div>
+          <button class="btn-pill-sm" id="btnOpenStudyMode" style="background: var(--primary-light); color: var(--primary);">
+            <i data-lucide="maximize-2" style="width: 14px; height: 14px; display: inline;"></i> Modalità Studio
+          </button>
+        </div>
 
-<input
-id="ricerca"
-type="search"
-placeholder="Cerca un canto..."
->
+        <div id="lyricsSectionsContainer"></div>
 
+        <!-- Box Spartito PDF -->
+        <div class="sheet-music-box" id="sheetMusicBox">
+          <i data-lucide="file-text" style="color: var(--primary); margin-bottom: 6px;"></i>
+          <p style="font-size: 0.85rem; font-weight: 600;" id="sheetMusicText">Spartito PDF disponibile</p>
+          <a id="sheetMusicLink" href="#" target="_blank" style="display: inline-block; margin-top: 8px;" class="btn-pill-sm">
+            Apri Spartito PDF
+          </a>
+        </div>
+      </div>
 
-</section>
+    </section>
 
+    <!-- VISTA INFO / CHI SIAMO -->
+    <section id="viewInfo" class="view-page">
+      <div class="player-card" style="text-align: left;">
+        <div class="brand" style="margin-bottom: 16px;">
+          <div class="brand-logo" style="width: 54px; height: 54px; font-size: 1.5rem;">♪</div>
+          <div class="brand-info">
+            <h2 style="font-size: 1.3rem;">Coro "Mariagrazia De Padova"</h2>
+            <p>Applicazione Ufficiale Prove</p>
+          </div>
+        </div>
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 16px;">
+          Questa piattaforma permette a tutti i coristi di studiare i propri brani musicali comodamente da casa, ascoltando le tracce audio della propria sezione vocale (Soprano, Contralto, Tenore, Basso).
+        </p>
+        <div class="sheet-music-box" style="text-align: left; background: var(--bg-main);">
+          <h4 style="margin-bottom: 6px;">💡 Come utilizzare l'app:</h4>
+          <ul style="padding-left: 20px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.8;">
+            <li>Scegli un canto dal repertorio o cerca per titolo.</li>
+            <li>Seleziona la tua parte vocale in alto.</li>
+            <li>Rallenta l'audio se la sezione è complessa.</li>
+            <li>Usa il tasto "Modalità Studio" durante le prove.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
+  </main>
 
+  <!-- OVERLAY MODALITÀ STUDIO FULLSCREEN -->
+  <div class="study-mode-overlay" id="studyOverlay">
+    <div class="study-mode-header">
+      <div>
+        <h3 id="studyTitle" style="font-size: 1.2rem;">Titolo Canto</h3>
+        <p id="studyVoice" style="font-size: 0.85rem; color: var(--primary);">Soprano</p>
+      </div>
+      <button class="icon-btn" id="btnCloseStudyMode">
+        <i data-lucide="x"></i>
+      </button>
+    </div>
 
+    <div class="study-text-display">
+      <p id="studyActiveSectionName" style="font-size: 1rem; color: var(--text-muted); font-weight: 700; margin-bottom: 10px;"></p>
+      <div id="studyActiveText" class="huge-text">Seleziona una sezione per iniziare le prove</div>
+    </div>
 
-<section id="recenti" class="section">
+    <div style="text-align: center; padding-top: 20px;">
+      <button class="btn-play-lg" id="btnStudyPlayPause" style="margin: 0 auto;">
+        <i data-lucide="play" id="studyPlayIcon"></i>
+      </button>
+    </div>
+  </div>
 
+  <!-- NAVIGATION BAR INFERIORE -->
+  <nav class="bottom-nav">
+    <button class="nav-button active" data-tab="dashboard">
+      <i data-lucide="home"></i>
+      Home
+    </button>
+    <button class="nav-button" data-tab="canti">
+      <i data-lucide="music"></i>
+      Canti
+    </button>
+    <button class="nav-button" data-tab="preferiti">
+      <i data-lucide="heart"></i>
+      Preferiti
+    </button>
+    <button class="nav-button" data-tab="info">
+      <i data-lucide="info"></i>
+      Info
+    </button>
+  </nav>
 
-</section>
+  <!-- AUDIO ELEMENT NASCOSTO -->
+  <audio id="audioPlayer"></audio>
 
+  <!-- REPERTORIO & LOGICA DI GESTIONE APPLICAZIONE -->
+  <script>
+    // =========================================================
+    // DATASET REPERTORIO CANTI (Sostituibile con dati/canti.json)
+    // =========================================================
+    const REPERTORIO_DEFAULT = [
+      {
+        id: "ave-maria",
+        titolo: "Ave Maria",
+        autore: "Arcadelt / Canto Mariano",
+        categoria: "Mariano",
+        spartito: "spartiti/ave-maria.pdf",
+        tracce: {
+          tutti: "",
+          soprano: "",
+          contralto: "",
+          tenore: "",
+          basso: ""
+        },
+        sezioni: [
+          { nome: "Intro & Strofa 1", inizio: 0, fine: 15, testo: "Ave Maria, gratia plena\nDominus tecum" },
+          { nome: "Strofa 2", inizio: 15, fine: 30, testo: "Benedicta tu in mulieribus\nEt benedictus fructus ventris tui" },
+          { nome: "Finale", inizio: 30, fine: 45, testo: "Sancta Maria, Mater Dei\nOra pro nobis peccatoribus" }
+        ]
+      },
+      {
+        id: "panis-angelicus",
+        titolo: "Panis Angelicus",
+        autore: "C. Franck",
+        categoria: "Liturgico",
+        spartito: "spartiti/panis-angelicus.pdf",
+        tracce: { tutti: "", soprano: "", contralto: "", tenore: "", basso: "" },
+        sezioni: [
+          { nome: "Parte A", inizio: 0, fine: 20, testo: "Panis angelicus fit panis hominum\nDat panis coelicus figuris terminum" },
+          { nome: "Parte B", inizio: 20, fine: 40, testo: "O res mirabilis manducat Dominum\nPauper, servus et humilis" }
+        ]
+      },
+      {
+        id: "symbolum-77",
+        titolo: "Symbolum 77 (Tu sei la mia vita)",
+        autore: "P. Sequeri",
+        categoria: "Liturgico",
+        spartito: "spartiti/symbolum-77.pdf",
+        tracce: { tutti: "", soprano: "", contralto: "", tenore: "", basso: "" },
+        sezioni: [
+          { nome: "Strofa 1", inizio: 0, fine: 20, testo: "Tu sei la mia vita altro io non ho\nTu sei la mia strada, la mia verità" },
+          { nome: "Ritornello", inizio: 20, fine: 40, testo: "E credere in te ci fa vivere in te\nE con te saremo un solo corpo" }
+        ]
+      },
+      {
+        id: "gloria-excelsis",
+        titolo: "Gloria in Excelsis Deo",
+        autore: "Canto di Natale",
+        categoria: "Natale",
+        spartito: "",
+        tracce: { tutti: "", soprano: "", contralto: "", tenore: "", basso: "" },
+        sezioni: [
+          { nome: "Strofa 1", inizio: 0, fine: 18, testo: "Gli angeli delle campagne\nCantano l'inno di lassù" },
+          { nome: "Ritornello", inizio: 18, fine: 35, testo: "Glo...ria in excelsis Deo!" }
+        ]
+      },
+      {
+        id: "regina-caeli",
+        titolo: "Regina Caeli",
+        autore: "Tradizionale Pasquale",
+        categoria: "Pasqua",
+        spartito: "",
+        tracce: { tutti: "", soprano: "", contralto: "", tenore: "", basso: "" },
+        sezioni: [
+          { nome: "Inno", inizio: 0, fine: 25, testo: "Regina caeli, laetare, alleluia\nQuia quem meruisti portare, alleluia" }
+        ]
+      },
+      {
+        id: "fratello-sole",
+        titolo: "Fratello Sole Sorella Luna",
+        autore: "R. Ortolani",
+        categoria: "Liturgico",
+        spartito: "",
+        tracce: { tutti: "", soprano: "", contralto: "", tenore: "", basso: "" },
+        sezioni: [
+          { nome: "Strofa", inizio: 0, fine: 22, testo: "Dolce è sentire come nel mio cuore\nOra umilmente sta nascendo l'amore" }
+        ]
+      }
+    ];
 
+    // STATE DELL'APPLICAZIONE
+    let canti = REPERTORIO_DEFAULT;
+    let cantoCorrente = null;
+    let voceCorrente = "tutti";
+    let sezioneAttivaIndex = 0;
+    let isLoopEnabled = false;
+    let isSynthPlaying = false;
 
+    // SINTETIZZATORE AUDIO PER ANTEPRIMA (WEB AUDIO API)
+    let audioCtx = null;
+    let synthTimer = null;
 
+    // RIFERIMENTI ELEMENTI DOM
+    const audioEl = document.getElementById("audioPlayer");
+    const listaTuttiCantiEl = document.getElementById("listaTuttiCanti");
+    const listaPreferitiEl = document.getElementById("listaPreferiti");
+    const listaRecentiEl = document.getElementById("listaRecenti");
+    const sectionPreferiti = document.getElementById("sectionPreferiti");
+    const sectionRecenti = document.getElementById("sectionRecenti");
+    const inputSearch = document.getElementById("inputSearch");
 
-<section id="preferiti" class="section">
+    // PLAYER ELEMENTS
+    const btnPlayPause = document.getElementById("btnPlayPause");
+    const playIcon = document.getElementById("playIcon");
+    const progressBarFill = document.getElementById("progressBarFill");
+    const currentTimeLabel = document.getElementById("currentTimeLabel");
+    const durationTimeLabel = document.getElementById("durationTimeLabel");
+    const btnLoopToggle = document.getElementById("btnLoopToggle");
 
+    // INIZIALIZZAZIONE
+    window.addEventListener("DOMContentLoaded", () => {
+      lucide.createIcons();
+      initTheme();
+      caricaRepertorioJson();
+      setupEventListeners();
+    });
 
-</section>
+    // CARICAMENTO DINAMICO REPERTORIO (Fetch con Fallback)
+    async function caricaRepertorioJson() {
+      try {
+        const res = await fetch("dati/canti.json");
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.length) canti = data;
+        }
+      } catch (err) {
+        console.log("Utilizzo repertorio predefinito per la simulazione.");
+      }
+      aggiornaDashboard();
+    }
 
+    // PREFERITI & RECENTI IN LOCALSTORAGE
+    function getPreferiti() {
+      return JSON.parse(localStorage.getItem("preferiti") || "[]");
+    }
 
+    function togglePreferito(id) {
+      let pref = getPreferiti();
+      if (pref.includes(id)) {
+        pref = pref.filter(x => x !== id);
+      } else {
+        pref.push(id);
+      }
+      localStorage.setItem("preferiti", JSON.stringify(pref));
+      aggiornaDashboard();
+    }
 
+    function salvainRecenti(id) {
+      let rec = JSON.parse(localStorage.getItem("recenti") || "[]");
+      rec = rec.filter(x => x !== id);
+      rec.unshift(id);
+      rec = rec.slice(0, 4);
+      localStorage.setItem("recenti", JSON.stringify(rec));
+    }
 
+    // RENDERING DASHBOARD
+    function aggiornaDashboard() {
+      const query = inputSearch.value.toLowerCase().trim();
+      const activeFilterBtn = document.querySelector(".filter-pill.active");
+      const filterCat = activeFilterBtn ? activeFilterBtn.dataset.filter : "all";
 
-<section class="section">
+      const prefIds = getPreferiti();
+      const recIds = JSON.parse(localStorage.getItem("recenti") || "[]");
 
+      document.getElementById("totalSongsCount").textContent = canti.length;
+      document.getElementById("favSongsCount").textContent = prefIds.length;
 
-<div class="section-title">
+      // Filtra Canti
+      const cantiFiltrati = canti.filter(c => {
+        const matchText = c.titolo.toLowerCase().includes(query) ||
+                          (c.autore && c.autore.toLowerCase().includes(query)) ||
+                          (c.categoria && c.categoria.toLowerCase().includes(query));
+        const matchCat = filterCat === "all" || c.categoria === filterCat;
+        return matchText && matchCat;
+      });
 
-<h2>
-Tutti i canti
-</h2>
+      // Render Tutti
+      renderGrid(listaTuttiCantiEl, cantiFiltrati);
 
+      // Render Preferiti
+      const cantiPref = canti.filter(c => prefIds.includes(c.id));
+      if (cantiPref.length > 0 && query === "") {
+        sectionPreferiti.style.display = "block";
+        renderGrid(listaPreferitiEl, cantiPref);
+      } else {
+        sectionPreferiti.style.display = "none";
+      }
 
-</div>
+      // Render Recenti
+      const cantiRec = recIds.map(id => canti.find(c => c.id === id)).filter(Boolean);
+      if (cantiRec.length > 0 && query === "") {
+        sectionRecenti.style.display = "block";
+        renderGrid(listaRecentiEl, cantiRec);
+      } else {
+        sectionRecenti.style.display = "none";
+      }
 
+      lucide.createIcons();
+    }
 
-<div id="listaCanti">
+    function renderGrid(container, list) {
+      container.innerHTML = "";
+      if (list.length === 0) {
+        container.innerHTML = `<div style="text-align:center; padding:30px; color:var(--text-muted);">Nessun canto trovato</div>`;
+        return;
+      }
 
+      const prefIds = getPreferiti();
 
-</div>
+      list.forEach(canto => {
+        const isFav = prefIds.includes(canto.id);
+        const card = document.createElement("div");
+        card.className = "song-card";
+        card.innerHTML = `
+          <div class="song-info">
+            <div class="song-title">${canto.titolo}</div>
+            <div class="song-meta">
+              <span class="category-badge">${canto.categoria || 'Generale'}</span>
+              <span>${canto.autore || ''}</span>
+            </div>
+          </div>
+          <div class="song-actions">
+            <button class="btn-fav ${isFav ? 'active' : ''}" data-id="${canto.id}" title="Preferito">
+              <i data-lucide="heart"></i>
+            </button>
+            <button class="btn-study" data-id="${canto.id}">
+              <i data-lucide="play"></i> Studia
+            </button>
+          </div>
+        `;
 
+        card.querySelector(".btn-fav").addEventListener("click", (e) => {
+          e.stopPropagation();
+          togglePreferito(canto.id);
+        });
 
-</section>
+        card.querySelector(".btn-study").addEventListener("click", () => {
+          apriCanto(canto.id);
+        });
 
+        container.appendChild(card);
+      });
+    }
 
+    // APERTURA ED ESECUZIONE CANTO
+    function apriCanto(id) {
+      cantoCorrente = canti.find(c => c.id === id);
+      if (!cantoCorrente) return;
 
+      salvainRecenti(id);
+      voceCorrente = "tutti";
+      sezioneAttivaIndex = 0;
 
+      // Aggiorna Interfaccia Dettaglio
+      document.getElementById("playerSongTitle").textContent = cantoCorrente.titolo;
+      document.getElementById("playerSongAuthor").textContent = cantoCorrente.autore || cantoCorrente.categoria;
+      
+      // Reset Bottone Voci
+      document.querySelectorAll(".voice-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.voce === "tutti");
+      });
+      aggiornaLabelVoce();
 
-</div>
+      // Render Sezioni Testo
+      renderSezioniTesto();
 
+      // Gestione Spartito PDF
+      const sheetBox = document.getElementById("sheetMusicBox");
+      const sheetLink = document.getElementById("sheetMusicLink");
+      if (cantoCorrente.spartito) {
+        sheetBox.style.display = "block";
+        sheetLink.href = cantoCorrente.spartito;
+      } else {
+        sheetBox.style.display = "none";
+      }
 
+      // Switch alle viste
+      switchView("canto");
+      caricaTracciaAudio();
+    }
 
-<script src="app.js"></script>
+    function renderSezioniTesto() {
+      const container = document.getElementById("lyricsSectionsContainer");
+      container.innerHTML = "";
 
+      if (!cantoCorrente.sezioni || cantoCorrente.sezioni.length === 0) {
+        container.innerHTML = `<p style="color:var(--text-muted)">Nessun testo sincronizzato presente.</p>`;
+        return;
+      }
 
+      cantoCorrente.sezioni.forEach((sez, idx) => {
+        const block = document.createElement("div");
+        block.className = `section-block ${idx === 0 ? 'active' : ''}`;
+        block.innerHTML = `
+          <div class="section-header-row">
+            <span class="section-name">${sez.nome}</span>
+            <span class="section-time">${formatTime(sez.inizio)} - ${formatTime(sez.fine)}</span>
+          </div>
+          <div class="section-text">${sez.testo}</div>
+        `;
+        block.addEventListener("click", () => {
+          selezionaSezione(idx);
+        });
+        container.appendChild(block);
+      });
+    }
+
+    function selezionaSezione(idx) {
+      sezioneAttivaIndex = idx;
+      document.querySelectorAll(".section-block").forEach((b, i) => {
+        b.classList.toggle("active", i === idx);
+      });
+
+      const sez = cantoCorrente.sezioni[idx];
+      if (sez) {
+        if (audioEl.src) {
+          audioEl.currentTime = sez.inizio;
+        } else {
+          simulaTempoSynth = sez.inizio;
+        }
+        playAudio();
+      }
+    }
+
+    // GESTIONE AUDIO REAL & SINTETIZZATORE WEB AUDIO PER ANTEPRIMA
+    let simulaTempoSynth = 0;
+    let durataSimulata = 45;
+
+    function caricaTracciaAudio() {
+      stopAudio();
+      const tracciaUrl = cantoCorrente.tracce ? cantoCorrente.tracce[voceCorrente] : null;
+
+      if (tracciaUrl && tracciaUrl.trim() !== "") {
+        audioEl.src = tracciaUrl;
+        audioEl.load();
+      } else {
+        audioEl.src = "";
+        simulaTempoSynth = 0;
+        durationTimeLabel.textContent = formatTime(durataSimulata);
+      }
+      updateProgressDisplay();
+    }
+
+    function playAudio() {
+      if (audioEl.src && audioEl.src !== window.location.href) {
+        audioEl.play().catch(() => {});
+      } else {
+        startSynthAudio();
+      }
+      setPlayIconState(true);
+    }
+
+    function pauseAudio() {
+      if (audioEl.src) {
+        audioEl.pause();
+      }
+      stopSynthAudio();
+      setPlayIconState(false);
+    }
+
+    function stopAudio() {
+      pauseAudio();
+      if (audioEl.src) audioEl.currentTime = 0;
+      simulaTempoSynth = 0;
+      updateProgressDisplay();
+    }
+
+    function togglePlay() {
+      const isPlaying = !audioEl.paused || isSynthPlaying;
+      if (isPlaying) {
+        pauseAudio();
+      } else {
+        playAudio();
+      }
+    }
+
+    function setPlayIconState(isPlaying) {
+      playIcon.setAttribute("data-lucide", isPlaying ? "pause" : "play");
+      document.getElementById("studyPlayIcon").setAttribute("data-lucide", isPlaying ? "pause" : "play");
+      lucide.createIcons();
+    }
+
+    // SINTETIZZATORE TONE PER ANTEPRIMA LIVE (Web Audio API)
+    function startSynthAudio() {
+      if (isSynthPlaying) return;
+      isSynthPlaying = true;
+
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+
+      synthTimer = setInterval(() => {
+        simulaTempoSynth += 0.2;
+        if (simulaTempoSynth >= durataSimulata) {
+          simulaTempoSynth = 0;
+          if (!isLoopEnabled) pauseAudio();
+        }
+
+        // Controllo Loop Sezione
+        if (cantoCorrente && cantoCorrente.sezioni && cantoCorrente.sezioni[sezioneAttivaIndex]) {
+          const sez = cantoCorrente.sezioni[sezioneAttivaIndex];
+          if (simulaTempoSynth >= sez.fine) {
+            if (isLoopEnabled) {
+              simulaTempoSynth = sez.inizio;
+            } else {
+              pauseAudio();
+            }
+          }
+        }
+
+        // Suona nota armonica
+        playTone();
+        updateProgressDisplay();
+      }, 200);
+    }
+
+    function stopSynthAudio() {
+      isSynthPlaying = false;
+      if (synthTimer) clearInterval(synthTimer);
+    }
+
+    function playTone() {
+      if (!audioCtx) return;
+      try {
+        let freq = 440; // Frequenza base
+        if (voceCorrente === "soprano") freq = 523.25; // C5
+        else if (voceCorrente === "contralto") freq = 440.00; // A4
+        else if (voceCorrente === "tenore") freq = 329.63; // E4
+        else if (voceCorrente === "basso") freq = 220.00; // A3
+
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = "sine";
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.18);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.2);
+      } catch (e) {}
+    }
+
+    function updateProgressDisplay() {
+      let cur = 0;
+      let dur = durataSimulata;
+
+      if (audioEl.src && audioEl.duration) {
+        cur = audioEl.currentTime;
+        dur = audioEl.duration;
+      } else {
+        cur = simulaTempoSynth;
+      }
+
+      const percent = (cur / dur) * 100;
+      progressBarFill.style.width = `${percent}%`;
+      currentTimeLabel.textContent = formatTime(cur);
+      durationTimeLabel.textContent = formatTime(dur);
+
+      // Sincronizza Sezione Attiva in base al tempo
+      if (cantoCorrente && cantoCorrente.sezioni) {
+        cantoCorrente.sezioni.forEach((s, idx) => {
+          if (cur >= s.inizio && cur <= s.fine) {
+            if (sezioneAttivaIndex !== idx) {
+              sezioneAttivaIndex = idx;
+              document.querySelectorAll(".section-block").forEach((b, i) => {
+                b.classList.toggle("active", i === idx);
+              });
+              aggiornaModalitaStudioText();
+            }
+          }
+        });
+      }
+    }
+
+    function formatTime(sec) {
+      if (isNaN(sec)) return "00:00";
+      const m = Math.floor(sec / 60);
+      const s = Math.floor(sec % 60);
+      return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    }
+
+    // EVENT LISTENERS & BINDING
+    function setupEventListeners() {
+      // Ricerca & Filtri
+      inputSearch.addEventListener("input", aggiornaDashboard);
+      
+      document.querySelectorAll(".filter-pill").forEach(pill => {
+        pill.addEventListener("click", () => {
+          document.querySelectorAll(".filter-pill").forEach(p => p.classList.remove("active"));
+          pill.classList.add("active");
+          aggiornaDashboard();
+        });
+      });
+
+      // Navigazione Tab Bottom Bar
+      document.querySelectorAll(".nav-button").forEach(btn => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll(".nav-button").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          const tab = btn.dataset.tab;
+          if (tab === "dashboard" || tab === "canti" || tab === "preferiti") {
+            switchView("dashboard");
+          } else if (tab === "info") {
+            switchView("info");
+          }
+        });
+      });
+
+      // Back to Home
+      document.getElementById("btnBackToHome").addEventListener("click", () => {
+        stopAudio();
+        switchView("dashboard");
+      });
+
+      // Cambio Voci
+      document.querySelectorAll(".voice-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll(".voice-btn").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          voceCorrente = btn.dataset.voce;
+          aggiornaLabelVoce();
+          caricaTracciaAudio();
+        });
+      });
+
+      // Controlli Player
+      btnPlayPause.addEventListener("click", togglePlay);
+      document.getElementById("btnStudyPlayPause").addEventListener("click", togglePlay);
+
+      document.getElementById("btnRewind5").addEventListener("click", () => {
+        if (audioEl.src) audioEl.currentTime = Math.max(0, audioEl.currentTime - 5);
+        else simulaTempoSynth = Math.max(0, simulaTempoSynth - 5);
+        updateProgressDisplay();
+      });
+
+      document.getElementById("btnForward5").addEventListener("click", () => {
+        if (audioEl.src) audioEl.currentTime += 5;
+        else simulaTempoSynth += 5;
+        updateProgressDisplay();
+      });
+
+      // Seeking su Progress Bar
+      document.getElementById("progressBarBg").addEventListener("click", (e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const clickX = e.clientX - rect.left;
+        const ratio = clickX / rect.width;
+        
+        let dur = audioEl.src && audioEl.duration ? audioEl.duration : durataSimulata;
+        const targetTime = ratio * dur;
+
+        if (audioEl.src) audioEl.currentTime = targetTime;
+        else simulaTempoSynth = targetTime;
+        updateProgressDisplay();
+      });
+
+      // Audio HTML events
+      audioEl.addEventListener("timeupdate", updateProgressDisplay);
+      audioEl.addEventListener("ended", () => setPlayIconState(false));
+
+      // Velocità
+      document.querySelectorAll("[data-speed]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll("[data-speed]").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          const speed = parseFloat(btn.dataset.speed);
+          audioEl.playbackRate = speed;
+        });
+      });
+
+      // Loop Toggle
+      btnLoopToggle.addEventListener("click", () => {
+        isLoopEnabled = !isLoopEnabled;
+        btnLoopToggle.classList.toggle("active", isLoopEnabled);
+      });
+
+      // Modalità Studio Overlay
+      document.getElementById("btnOpenStudyMode").addEventListener("click", () => {
+        document.getElementById("studyTitle").textContent = cantoCorrente.titolo;
+        aggiornaModalitaStudioText();
+        document.getElementById("studyOverlay").classList.add("active");
+      });
+
+      document.getElementById("btnCloseStudyMode").addEventListener("click", () => {
+        document.getElementById("studyOverlay").classList.remove("active");
+      });
+
+      // Dark Mode
+      document.getElementById("btnThemeToggle").addEventListener("click", toggleTheme);
+    }
+
+    function aggiornaLabelVoce() {
+      const labels = {
+        tutti: "Tutte le voci",
+        soprano: "Soprano",
+        contralto: "Contralto",
+        tenore: "Tenore",
+        basso: "Basso"
+      };
+      const text = labels[voceCorrente] || "Tutte le voci";
+      document.getElementById("playerVoiceLabel").textContent = text;
+      document.getElementById("studyVoice").textContent = text;
+    }
+
+    function aggiornaModalitaStudioText() {
+      if (!cantoCorrente || !cantoCorrente.sezioni) return;
+      const sez = cantoCorrente.sezioni[sezioneAttivaIndex];
+      if (sez) {
+        document.getElementById("studyActiveSectionName").textContent = sez.nome;
+        document.getElementById("studyActiveText").textContent = sez.testo;
+      }
+    }
+
+    function switchView(viewName) {
+      document.querySelectorAll(".view-page").forEach(v => v.classList.remove("active"));
+      if (viewName === "dashboard") {
+        document.getElementById("viewDashboard").classList.add("active");
+      } else if (viewName === "canto") {
+        document.getElementById("viewCanto").classList.add("active");
+      } else if (viewName === "info") {
+        document.getElementById("viewInfo").classList.add("active");
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // TEMI LIGHT / DARK
+    function initTheme() {
+      const savedTheme = localStorage.getItem("tema");
+      if (savedTheme === "dark") {
+        document.body.classList.add("dark");
+        document.getElementById("themeIcon").setAttribute("data-lucide", "sun");
+      }
+    }
+
+    function toggleTheme() {
+      const isDark = document.body.classList.toggle("dark");
+      localStorage.setItem("tema", isDark ? "dark" : "light");
+      document.getElementById("themeIcon").setAttribute("data-lucide", isDark ? "sun" : "moon");
+      lucide.createIcons();
+    }
+  </script>
 </body>
-
-
-</html>
-
-<!-- Navigazione inferiore -->
-
-<nav class="bottom-nav">
-
-
-<button class="nav-item active">
-
-<span>
-⌂
-</span>
-
-Home
-
-</button>
-
-
-
-<button class="nav-item">
-
-<span>
-♫
-</span>
-
-Canti
-
-</button>
-
-
-
-
-<button class="nav-item">
-
-<span>
-☆
-</span>
-
-Preferiti
-
-</button>
-
-
-
-
-<button class="nav-item">
-
-<span>
-ⓘ
-</span>
-
-Info
-
-</button>
-
-
-
-</nav>
-
-
-
-<script>
-
-if(
-"serviceWorker" in navigator
-){
-
-navigator.serviceWorker.register(
-"service-worker.js"
-);
-
-}
-
-</script>
-
-
-</body>
-
 </html>
