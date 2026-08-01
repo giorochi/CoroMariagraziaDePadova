@@ -19,6 +19,13 @@
     "autore": "Mons. Marco Frisina",
     "categoria": "Maria",
     "file": "canti/magnificat.json"
+  },
+  {
+    "id": "tramonto",
+    "titolo": "Dall'Aurora al Tramonto",
+    "autore": "M. Balduzzi",
+    "categoria": "Ordinario",
+    "file": "canti/tramonto.json"
   }
 ]
 
