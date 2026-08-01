@@ -1,0 +1,41 @@
+{
+  "titolo": "Dall'Aurora al Tramonto",
+  "spartito": "spartiti/tramonto.pdf",
+  
+  "tracce": {
+    "tutti": "audio/tramonto/tramonto_all.mp3",
+    "soprano": "audio/tramonto/tramonto_soprano.mp3",
+    "contralto": "audio/tramonto/tramonto_contralto.mp3",
+    "tenore": "audio/tramonto/tramonto_uomini.mp3"
+  },
+  "sezioni": [
+    {
+      "nome": "Ritornello1 (SOLO UOMINI)",
+      "inizio": 18,
+      "fine": 39,
+      "testo": 
+      "Dall’aurora io cerco te \nfino al tramonto ti chiamo \nha sete solo di te \nl’anima mia come terra deserta"
+    },
+    {
+      "nome": "Ritornello2 (SOLO DONNE)",
+      "inizio": 40,
+      "fine": 60,
+      "testo":
+      "Dall’aurora io cerco te \nfino al tramonto ti chiamo \nha sete solo di te \nl’anima mia come terra deserta"
+    },
+    {
+      "nome": "Strofa",
+      "inizio": 61,
+      "fine": 85,
+      "testo":
+      "Non mi fermerò un solo istante \nsempre canterò la tua lode \nperchè sei il mio Dio \nil mio riparo \nmi proteggerai all’ombra delle tue ali. "
+    },
+    {
+      "nome": "RITORNELLO",
+      "inizio": 85,
+      "fine": 106,
+      "testo":
+      "Dall’aurora io cerco te \nfino al tramonto ti chiamo \nha sete solo di te \nl’anima mia come terra deserta"
+    },
+  ]
+}
