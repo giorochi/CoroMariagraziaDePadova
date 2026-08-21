@@ -1,0 +1,34 @@
+{
+  "titolo": "Come un Prodigio",
+  
+  "tracce": {
+    "tutti": "audio/prodigio/prodigio_all.mp3",
+    "soprano": "audio/prodigio/prodigio_soprano.mp3",
+    "contralto": "audio/prodigio/prodigio_contralto.mp3",
+    "tenore": "audio/prodigio/prodigio_tenore.mp3",
+    "basso": "audio/prodigio/prodigio_basso.mp3"
+  },
+  "sezioni": [
+    {
+      "nome": "Strofa 1 (SOLO SOPRANO)",
+      "inizio": 21,
+      "fine": 44.8,
+      "testo": 
+      "Signore tu mi scruti e conosci \nSai quando seggo e quando mi alzo. \nRiesci a vedere i miei pensieri \nSai quando io cammino e quando riposo"
+    },
+    {
+      "nome": "Strofa 2 (CON CONTRALTI)",
+      "inizio": 44.9,
+      "fine": 62,
+      "testo": 
+      "Ti sono note tutte le mie vie \nLa mia parola non è ancora sulla lingua \nE tu, Signore, già la conosci tutta"
+    },
+    {
+      "nome": "RITORNELLO",
+      "inizio": 62,
+      "fine": 31,
+      "testo":
+      "Sei tu che mi hai creato \nE mi hai tessuto nel seno di mia madre \nTu mi hai fatto come un prodigio \nLe tue opere sono stupende \nE per questo ti lodo"
+    }
+  ]
+}
