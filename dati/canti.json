@@ -26,6 +26,13 @@
     "autore": "M. Balduzzi",
     "categoria": "Ordinario",
     "file": "canti/tramonto.json"
+  },
+  {
+    "id": "prodigio",
+    "titolo": "Come un Prodigio",
+    "autore": "D. Vezzani",
+    "categoria": "Ordinario",
+    "file": "canti/prodigio.json"
   }
 ]
 
