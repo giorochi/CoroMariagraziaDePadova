@@ -1,39 +1,34 @@
 {
   "titolo": "Alla Societate",
-  
   "tracce": {
     "tutti": "audio/societate/societate_all.mp3",
     "soprano": "audio/societate/societate_soprano.mp3",
-    "contralto": "audio/societate/societate_contralto.mp3",
+    "contralto": "audio/societate/societate_contralto.mp3"
   },
   "sezioni": [
     {
       "nome": "Parte1",
       "inizio": 9,
       "fine": 13,
-      "testo": 
-      "Onne giorno vi affannate, combattete, faticate"
+      "testo": "Onne giorno vi affannate, combattete, faticate"
     },
     {
       "nome": "Parte2",
       "inizio": 14,
       "fine": 18,
-      "testo":
-      "per denaro accumulare e benessere affermare"
+      "testo": "per denaro accumulare e benessere affermare"
     },
     {
       "nome": "Parte3",
       "inizio": 18.4,
       "fine": 22.3,
-      "testo":
-      "e la notte non dormite per pensare all’indomane"
+      "testo": "e la notte non dormite per pensare all’indomane"
     },
     {
       "nome": "Parte4",
       "inizio": 22.3,
       "fine": 26.5,
-      "testo":
-      "come meglio poter fare lo denaro moltiplicare."
+      "testo": "come meglio poter fare lo denaro moltiplicare."
     }
   ]
 }
