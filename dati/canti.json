@@ -33,6 +33,13 @@
     "autore": "D. Vezzani",
     "categoria": "Ordinario",
     "file": "canti/prodigio.json"
+  }, 
+  {
+    "id": "societate",
+    "titolo": "Alla Societate",
+    "autore": "S. Varnavà",
+    "categoria": "San Francesco",
+    "file": "canti/societate.json"
   }
 ]
 
