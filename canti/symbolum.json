@@ -1,1 +1,20 @@
-
+{
+  "titolo": "Symbolum 77",
+  
+  "tracce": {
+    "tutti": "audio/symbolum/symbolum_all.mp3",
+    "soprano": "audio/symbolum/symbolum_soprano.mp3",
+    "contralto": "audio/symbolum/symbolum_contralto.mp3",
+    "tenore": "audio/symbolum/symbolum_tenore.mp3",
+    "basso": "audio/symbolum/symbolum_basso.mp3"
+  },
+  "sezioni": [
+    {
+      "nome": "1",
+      "inizio": 0,
+      "fine": 41,
+      "testo": 
+      "Tu sei la mia vita, altro io non ho \nTu sei la mia strada, la mia verità \nNella Tua parola io camminerò \nFinché avrò respiro, fino a quando Tu vorrai \nNon avrò paura, sai, se Tu sei con me \nIo Ti prego, resta con me"
+    }
+  ]
+}
