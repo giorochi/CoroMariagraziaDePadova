@@ -40,6 +40,13 @@
     "autore": "S. Varnavà",
     "categoria": "San Francesco",
     "file": "canti/societate.json"
+  },
+  {
+    "id": "symbolum",
+    "titolo": "Symbolum 77",
+    "autore": "P. Sequeri",
+    "categoria": "Ordinario",
+    "file": "canti/symbolum.json"
   }
 ]
 
