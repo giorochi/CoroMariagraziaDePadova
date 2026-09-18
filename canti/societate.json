@@ -8,26 +8,26 @@
   "sezioni": [
     {
       "nome": "Parte1",
-      "inizio": 9,
-      "fine": 13,
+      "inizio": 16,
+      "fine": 24,
       "testo": "Onne giorno vi affannate, combattete, faticate"
     },
     {
       "nome": "Parte2",
-      "inizio": 14,
-      "fine": 18,
+      "inizio": 26,
+      "fine": 34,
       "testo": "per denaro accumulare e benessere affermare"
     },
     {
       "nome": "Parte3",
-      "inizio": 18.4,
-      "fine": 22.3,
+      "inizio": 34.5,
+      "fine": 42,
       "testo": "e la notte non dormite per pensare all’indomane"
     },
     {
       "nome": "Parte4",
-      "inizio": 22.3,
-      "fine": 26.5,
+      "inizio": 42,
+      "fine": 51,
       "testo": "come meglio poter fare lo denaro moltiplicare."
     }
   ]
