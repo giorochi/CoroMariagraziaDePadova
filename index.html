@@ -522,15 +522,48 @@
       }
     }
 
-    // GENERATORE LYRICS RIGO PER RIGO (Stile Spotify)
-    function generaLyricsSpotify() {
+  function generaLyricsSpotify() {
       const container = document.getElementById("spotifyLyricsBox");
       container.innerHTML = "";
 
-      if (!cantoCorrente.sezioni && !cantoCorrente.righe) {
+      // Controlla se il JSON usa la nuova struttura "righe" o la vecchia "sezioni"
+      let listaRighe = cantoCorrente.righe || [];
+
+      if (listaRighe.length === 0 && cantoCorrente.sezioni) {
+        // Fallback di compatibilità se usi ancora le sezioni a blocchi
+        cantoCorrente.sezioni.forEach(sez => {
+          listaRighe.push({ tempo: sez.inizio, testo: `--- ${sez.nome} ---`, isTag: true });
+          sez.testo.split("\n").forEach((r, idx) => {
+            listaRighe.push({ tempo: sez.inizio + (idx * 3), testo: r });
+          });
+        });
+      }
+
+      if (listaRighe.length === 0) {
         container.innerHTML = `<p style="color:var(--text-muted)">Testo non disponibile</p>`;
         return;
       }
+
+      let ultimaSezione = "";
+
+      listaRighe.forEach((item) => {
+        // Se c'è un cambio di sezione, inseriamo l'etichetta (es. STROFA 1 / RITORNELLO)
+        if (item.sezione && item.sezione !== ultimaSezione) {
+          ultimaSezione = item.sezione;
+          const tag = document.createElement("div");
+          tag.className = "lyric-section-tag";
+          tag.textContent = ultimaSezione;
+          container.appendChild(tag);
+        }
+
+        const div = document.createElement("div");
+        div.className = "lyric-line";
+        div.textContent = item.testo;
+        div.dataset.time = item.tempo;
+        div.onclick = () => saltaAlTempo(item.tempo);
+        container.appendChild(div);
+      });
+    }
 
       // Se nel json hai sezioni, estraiamo le righe rigo per rigo
       let lineeGlobali = [];
