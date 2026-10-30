@@ -310,7 +310,7 @@
           <i data-lucide="sliders"></i> Voce in primo piano: <span id="labelVoceAttiva">Soprano</span>
         </div>
 
-        <!-- Selettore Voci Mix (Sempre 4 tracce attive, una alta, le altre al 15%) -->
+        <!-- Selettore Voci Mix -->
         <div class="mix-selector">
           <button class="mix-btn" data-mix="soprano" onclick="cambiaVoceMix('soprano')">Soprano</button>
           <button class="mix-btn" data-mix="contralto" onclick="cambiaVoceMix('contralto')">Contralto</button>
@@ -501,7 +501,7 @@
       }
     }
 
-    // GESTIONE MIX AUDIO (Tutte e 4 suonano insieme: la prescelta al 100%, le altre al 15%)
+    // GESTIONE MIX AUDIO
     function cambiaVoceMix(voce) {
       voceSelezionata = voce;
       applicaMixVolumi();
@@ -522,15 +522,14 @@
       }
     }
 
-  function generaLyricsSpotify() {
+    // GENERATORE LYRICS RIGO PER RIGO
+    function generaLyricsSpotify() {
       const container = document.getElementById("spotifyLyricsBox");
       container.innerHTML = "";
 
-      // Controlla se il JSON usa la nuova struttura "righe" o la vecchia "sezioni"
       let listaRighe = cantoCorrente.righe || [];
 
       if (listaRighe.length === 0 && cantoCorrente.sezioni) {
-        // Fallback di compatibilità se usi ancora le sezioni a blocchi
         cantoCorrente.sezioni.forEach(sez => {
           listaRighe.push({ tempo: sez.inizio, testo: `--- ${sez.nome} ---`, isTag: true });
           sez.testo.split("\n").forEach((r, idx) => {
@@ -547,7 +546,6 @@
       let ultimaSezione = "";
 
       listaRighe.forEach((item) => {
-        // Se c'è un cambio di sezione, inseriamo l'etichetta (es. STROFA 1 / RITORNELLO)
         if (item.sezione && item.sezione !== ultimaSezione) {
           ultimaSezione = item.sezione;
           const tag = document.createElement("div");
@@ -565,46 +563,7 @@
       });
     }
 
-      // Se nel json hai sezioni, estraiamo le righe rigo per rigo
-      let lineeGlobali = [];
-      if (cantoCorrente.sezioni) {
-        cantoCorrente.sezioni.forEach(sez => {
-          lineeGlobali.push({ isTag: true, testo: sez.nome });
-          const righeSez = sez.testo.split("\n");
-          // Distribuiamo il tempo della sezione equamente tra le righe se non specificato
-          let durataSezione = (sez.fine - sez.inizio);
-          let passoTempo = durataSezione / righeSez.length;
-          
-          righeSez.forEach((riga, i) => {
-            if (riga.trim() !== "") {
-              lineeGlobali.push({
-                isTag: false,
-                testo: riga,
-                tempo: sez.inizio + (i * passoTempo)
-              });
-            }
-          });
-        });
-      }
-
-      lineeGlobali.forEach((item, idx) => {
-        if (item.isTag) {
-          const tag = document.createElement("div");
-          tag.className = "lyric-section-tag";
-          tag.textContent = item.testo;
-          container.appendChild(tag);
-        } else {
-          const div = document.createElement("div");
-          div.className = "lyric-line";
-          div.textContent = item.testo;
-          div.dataset.time = item.tempo;
-          div.onclick = () => saltaAlTempo(item.tempo);
-          container.appendChild(div);
-        }
-      });
-    }
-
-    // PLAY / PAUSA SINCRONIZZATO SU TUTTI E 4 I CANALI AUDIO
+    // PLAY / PAUSA SINCRONIZZATO SU TUTTI I 4 CANALI AUDIO
     function togglePlay() {
       const audioPrincipale = audios[voceSelezionata];
       if (audioPrincipale.paused) {
@@ -717,7 +676,7 @@
       };
     }
 
-    document.getElementById("searchSearch")?.addEventListener("input", (e) => {
+    document.getElementById("inputSearch")?.addEventListener("input", (e) => {
       const q = e.target.value.toLowerCase();
       const filtrati = canti.filter(c => c.titolo.toLowerCase().includes(q) || (c.autore && c.autore.toLowerCase().includes(q)));
       renderListaCanti(filtrati);
