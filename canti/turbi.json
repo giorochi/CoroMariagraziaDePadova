@@ -4,7 +4,6 @@
     "soprano": "audio/turbi/turbi_soprano.mp3",
     "contralto": "audio/turbi/turbi_contralto.mp3",
     "tenore": "audio/turbi/turbi_tenore.mp3",
-    "basso": "audio/turbi/turbi_basso.mp3",
     "tutti": "audio/turbi/turbi_all.mp3"
   },
   "righe": [
