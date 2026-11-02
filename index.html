@@ -141,7 +141,6 @@
       padding: 4px 12px; border-radius: var(--radius-full); font-size: 0.8rem; font-weight: 700; margin-bottom: 16px;
     }
 
-    /* Pulsanti selettore mix (con opzione 'tutti') */
     .mix-selector { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; margin-bottom: 16px; }
     .mix-btn {
       padding: 8px 2px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-main);
@@ -267,7 +266,6 @@
           <i data-lucide="sliders"></i> Modalità ascolto: <span id="labelVoceAttiva">Soprano</span>
         </div>
 
-        <!-- Selettore Voci (Inclusa opzione TUTTI) -->
         <div class="mix-selector">
           <button class="mix-btn" data-mix="tutti" onclick="cambiaVoceMix('tutti')">Tutte</button>
           <button class="mix-btn" data-mix="soprano" onclick="cambiaVoceMix('soprano')">Soprano</button>
@@ -344,7 +342,6 @@
       window.addEventListener("popstate", gestisciRoutingURL);
       gestisciRoutingURL();
 
-      // Progress bar click
       document.getElementById("progressBarBg").onclick = (e) => {
         const rect = e.currentTarget.getBoundingClientRect();
         const pos = (e.clientX - rect.left) / rect.width;
@@ -419,53 +416,35 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-async function caricaDettagliCanto(cantoBase) {
-      console.log("Tentativo di apertura canto:", cantoBase);
-
-      // Determina il percorso corretto del file JSON del canto
+    async function caricaDettagliCanto(cantoBase) {
       let fileJson = cantoBase.file;
       if (!fileJson && cantoBase.id) {
         fileJson = `canti/${cantoBase.id}.json`;
       }
 
-      if (!fileJson) {
-        console.error("Errore: nessun file JSON associato a questo canto!", cantoBase);
-        return;
-      }
-
       try {
-        console.log("Faccio fetch di:", fileJson);
         const res = await fetch(fileJson);
         if (res.ok) {
           cantoCorrente = await res.json();
-          console.log("JSON del canto caricato con successo:", cantoCorrente);
         } else {
-          console.error("Errore HTTP nel recupero del JSON:", res.status);
           cantoCorrente = cantoBase;
         }
-      } catch (e) {
-        console.error("Errore di rete o sintassi nel JSON:", e);
-        cantoCorrente = cantoBase;
-      }
+      } catch (e) { cantoCorrente = cantoBase; }
 
-      // Imposta titolo e autore con fallback di sicurezza
-      document.getElementById("playerSongTitle").textContent = cantoCorrente.titolo || cantoBase.titolo || "Senza Titolo";
-      document.getElementById("playerSongAuthor").textContent = cantoCorrente.autore || cantoBase.autore || cantoBase.categoria || "";
+      document.getElementById("playerSongTitle").textContent = cantoCorrente.titolo || cantoBase.titolo;
+      document.getElementById("playerSongAuthor").textContent = cantoBase.autore || cantoBase.categoria || "";
 
-      // Carica Tracce Audio nei 4 elementi
-      const tracce = cantoCorrente.tracce || {};
-      for (let voce in audios) {
-        const urlTraccia = tracce[voce] || tracce["tutti"] || "";
-        audios[voce].src = urlTraccia;
-        if (urlTraccia) {
-          audios[voce].load();
+      if (cantoCorrente.tracce) {
+        for (let voce in audios) {
+          const urlTraccia = cantoCorrente.tracce[voce] || cantoCorrente.tracce["tutti"] || "";
+          audios[voce].src = urlTraccia;
+          if (urlTraccia) audios[voce].load();
         }
       }
 
       applicaMixVolumi();
       generaLyricsSpotify();
 
-      // Gestione Spartito PDF
       const boxSpartito = document.getElementById("boxSpartito");
       const pdfUrl = cantoCorrente.spartito || cantoBase.spartito;
       if (pdfUrl) {
@@ -475,7 +454,6 @@ async function caricaDettagliCanto(cantoBase) {
         boxSpartito.style.display = "none";
       }
 
-      // Gestione Commento / Note
       const boxCommento = document.getElementById("boxCommento");
       const notaTesto = cantoCorrente.commento || cantoCorrente.note;
       if (notaTesto) {
@@ -486,7 +464,6 @@ async function caricaDettagliCanto(cantoBase) {
       }
     }
 
-    // REGOLAZIONE VOLUMI MIX (Opzione 'tutti' -> 100% su tutti)
     function cambiaVoceMix(voce) {
       voceSelezionata = voce;
       applicaMixVolumi();
@@ -502,16 +479,15 @@ async function caricaDettagliCanto(cantoBase) {
 
       for (let v in audios) {
         if (voceSelezionata === "tutti") {
-          audios[v].volume = 1.0; // Pieno volume su tutte le voci
+          audios[v].volume = 1.0;
         } else if (v === voceSelezionata) {
-          audios[v].volume = 1.0; // 100% sulla voce selezionata
+          audios[v].volume = 1.0;
         } else {
-          audios[v].volume = 0.15; // 15% sulle altre voci di sottofondo
+          audios[v].volume = 0.15;
         }
       }
     }
 
-    // GENERATORE LYRICS (Legge sia righe che sezioni)
     function generaLyricsSpotify() {
       const container = document.getElementById("spotifyLyricsBox");
       container.innerHTML = "";
@@ -572,18 +548,36 @@ async function caricaDettagliCanto(cantoBase) {
 
     function avviaTuttiGliAudio(tempoInizio) {
       let t = tempoInizio || 0;
+
       for (let v in audios) {
         if (audios[v].src) {
+          audios[v].pause();
           audios[v].currentTime = t;
-          audios[v].play().catch(() => {});
         }
       }
-      isPlaying = true;
-      document.getElementById("playIcon").setAttribute("data-lucide", "pause");
-      lucide.createIcons();
-      
-      if (updateInterval) clearInterval(updateInterval);
-      updateInterval = setInterval(aggiornaStatoPlayer, 200);
+
+      setTimeout(() => {
+        let playPromises = [];
+        for (let v in audios) {
+          if (audios[v].src) {
+            let p = audios[v].play();
+            if (p !== undefined) {
+              playPromises.push(p);
+            }
+          }
+        }
+
+        Promise.all(playPromises).then(() => {
+          isPlaying = true;
+          document.getElementById("playIcon").setAttribute("data-lucide", "pause");
+          lucide.createIcons();
+          
+          if (updateInterval) clearInterval(updateInterval);
+          updateInterval = setInterval(aggiornaStatoPlayer, 200);
+        }).catch(e => {
+          console.log("Errore riproduzione:", e);
+        });
+      }, 50);
     }
 
     function fermaTutto() {
@@ -629,7 +623,6 @@ async function caricaDettagliCanto(cantoBase) {
         document.getElementById("durationTimeLabel").textContent = formatTime(dur);
       }
 
-      // Sincronizzazione Rigo per Rigo
       const linee = document.querySelectorAll(".lyric-line");
       let rigoAttivo = null;
 
