@@ -1,0 +1,44 @@
+{
+  "titolo": "Magnificat",
+  "spartito": "spartiti/magnificat.pdf",
+  
+  "tracce": {
+    "soprano": "audio/magnificat/magnificat_soprano.mp3",
+    "contralto": "audio/magnificat/magnificat_contralto.mp3",
+    "tenore": "audio/magnificat/magnificat_tenore.mp3",
+    "basso": "audio/magnificat/magnificat_basso.mp3",
+    "tutti": "audio/magnificat/magnificat_all.mp3"
+  },
+  
+  "righe": [
+    { "tempo": 0.0,  "testo": "Magnificat anima mea magnificat": "RITORNELLO" },
+    { "tempo": 13.0, "testo": "Dominum et exultavit", "sezione": "RITORNELLO" },
+    { "tempo": 21.0, "testo": "Spritus meus in deo", "sezione": "RITORNELLO" },
+    { "tempo": 29.0, "testo": "Salutari meo Magnificat", "sezione": "RITORNELLO" },
+    { "tempo": 40.0, "testo": "Magnificat", "sezione": "RITORNELLO" },
+    
+    { "tempo": 49.0, "testo": "Quia respexit humilitatem", "sezione": "STROFA 1" },
+    { "tempo": 56.5, "testo": "ancillae suae", "sezione": "STROFA 1" },
+    { "tempo": 66.0, "testo": "Ecce enim ex hoc", "sezione": "STROFA 1" }
+    { "tempo": 70.5, "testo": "beatam me dicent", "sezione": "STROFA 1" }
+    { "tempo": 75.0, "testo": "Omnes generationes", "sezione": "STROFA 1" }
+    
+    { "tempo": 86.0,  "testo": "Magnificat anima mea magnificat": "RITORNELLO" },
+    { "tempo": 101.0, "testo": "Dominum et exultavit", "sezione": "RITORNELLO" },
+    { "tempo": 109.0, "testo": "Spritus meus in deo", "sezione": "RITORNELLO" },
+    { "tempo": 117.0, "testo": "Salutari meo Magnificat", "sezione": "RITORNELLO" },
+    { "tempo": 128.0, "testo": "Magnificat", "sezione": "RITORNELLO" },
+
+    { "tempo": 138.0, "testo": "Quia fecit mihi magna", "sezione": "STROFA 2" },
+    { "tempo": 144.5, "testo": "Qui potens est", "sezione": "STROFA 2" },
+    { "tempo": 154.0, "testo": "Et sanctum", "sezione": "STROFA 2" }
+    { "tempo": 161.0, "testo": "nomen eius", "sezione": "STROFA 2" }
+
+    { "tempo": 168.0,  "testo": "Magnificat, magnificat (Magnificat anima mea magnificat)": "RITORNELLO" },
+    { "tempo": 181.0, "testo": "Et exsultavit (Dominum et exultavit)", "sezione": "RITORNELLO" },
+    { "tempo": 189.0, "testo": "Spritus meus in deo (Spiritus meus in Deo)", "sezione": "RITORNELLO" },
+    { "tempo": 197.0, "testo": "Magnificat (Salutari meo Magnificat Magnificat)", "sezione": "RITORNELLO" },
+    { "tempo": 217.0, "testo": "Magnificat", "sezione": "RITORNELLO" },
+  ]
+  
+}
