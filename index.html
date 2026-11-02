@@ -143,11 +143,12 @@
 
     .mix-selector { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 16px; }
     .mix-btn {
-      flex: 1; min-width: 70px; padding: 10px 8px; border-radius: 10px; border: 1px solid var(--border-color);
-      background: var(--bg-main); color: var(--text-main); font-size: 0.8rem; font-weight: 700; cursor: pointer; text-align: center;
+      flex: 1; min-width: 65px; padding: 10px 6px; border-radius: 10px; border: 1px solid var(--border-color);
+      background: var(--bg-main); color: var(--text-main); font-size: 0.75rem; font-weight: 700; cursor: pointer; text-align: center;
       transition: all 0.2s;
     }
     .mix-btn.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 4px 10px rgba(30, 64, 175, 0.25); }
+    .mix-btn.solo-btn { background: #d97706; color: white; border-color: #d97706; }
 
     .spotify-lyrics-container {
       padding: 10px 0 40px 0; margin-bottom: 24px; text-align: center;
@@ -322,14 +323,15 @@
     let canti = [];
     let cantoCorrente = null;
     let voceSelezionata = localStorage.getItem("ruoloCorista") || "soprano";
+    let isSoloMode = false; // Flag per la modalità solo voce (azzera il mixer)
     let isPlaying = false;
     let updateInterval = null;
     
     let utenteStaScorrendo = false;
     let timeoutScorrimento = null;
 
-    // Volume di sottofondo impostato al 25% (0.25)
-    const VOLUME_SFONDO = 0.25;
+    // Sottofondo impostato al 20% (0.20)
+    const VOLUME_SFONDO = 0.20;
 
     const audios = {
       soprano: document.getElementById("audioSoprano"),
@@ -456,6 +458,7 @@
         }
       }
 
+      isSoloMode = false;
       generaSelettoreVociDinamico(traccePresenti);
       applicaMixVolumi();
       generaLyricsSpotify();
@@ -481,22 +484,46 @@
 
       const vociDisponibili = Object.keys(tracce).filter(v => tracce[v]);
 
+      // Tasto TUTTE
       const btnTutti = document.createElement("button");
       btnTutti.className = "mix-btn";
       btnTutti.dataset.mix = "tutti";
       btnTutti.textContent = "Tutte";
-      btnTutti.onclick = () => cambiaVoceMix("tutti");
+      btnTutti.onclick = () => { isSoloMode = false; cambiaVoceMix("tutti"); };
       container.appendChild(btnTutti);
 
+      // Tasti singole voci
       vociDisponibili.forEach(v => {
         if (v === "tutti") return;
         const btn = document.createElement("button");
         btn.className = "mix-btn";
         btn.dataset.mix = v;
         btn.textContent = v.charAt(0).toUpperCase() + v.slice(1);
-        btn.onclick = () => cambiaVoceMix(v);
+        btn.onclick = () => {
+          if (voceSelezionata === v) {
+            // Se clicchi di nuovo sulla stessa voce, attivi/disattivi la modalità SOLO (Mute mixer)
+            isSoloMode = !isSoloMode;
+          } else {
+            voceSelezionata = v;
+            isSoloMode = false;
+          }
+          applicaMixVolumi();
+        };
         container.appendChild(btn);
       });
+
+      // Tasto rapido "SOLO VOCE" (Azzera le altre)
+      const btnSolo = document.createElement("button");
+      btnSolo.className = "mix-btn solo-btn";
+      btnSolo.id = "btnToggleSolo";
+      btnSolo.textContent = "Solo";
+      btnSolo.title = "Lascia solo la voce selezionata (azzera le altre)";
+      btnSolo.onclick = () => {
+        if (voceSelezionata === "tutti") voceSelezionata = "soprano";
+        isSoloMode = !isSoloMode;
+        applicaMixVolumi();
+      };
+      container.appendChild(btnSolo);
 
       if (voceSelezionata !== "tutti" && !tracce[voceSelezionata]) {
         voceSelezionata = "tutti";
@@ -505,23 +532,41 @@
 
     function cambiaVoceMix(voce) {
       voceSelezionata = voce;
+      isSoloMode = false;
       applicaMixVolumi();
     }
 
     function applicaMixVolumi() {
       document.querySelectorAll(".mix-btn").forEach(b => {
-        b.classList.toggle("active", b.dataset.mix === voceSelezionata);
+        if (b.dataset.mix) {
+          b.classList.toggle("active", b.dataset.mix === voceSelezionata && !isSoloMode);
+        }
       });
 
-      const labelText = voceSelezionata === "tutti" ? "Tutte le voci (100%)" : voceSelezionata.charAt(0).toUpperCase() + voceSelezionata.slice(1);
+      const btnSolo = document.getElementById("btnToggleSolo");
+      if (btnSolo) {
+        btnSolo.classList.toggle("active", isSoloMode);
+      }
+
+      let labelText = "";
+      if (voceSelezionata === "tutti") {
+        labelText = "Tutte le voci (100%)";
+      } else if (isSoloMode) {
+        labelText = `Solo ${voceSelezionata.charAt(0).toUpperCase() + voceSelezionata.slice(1)} (Mix Azzerato)`;
+      } else {
+        labelText = `${voceSelezionata.charAt(0).toUpperCase() + voceSelezionata.slice(1)} (Guida) + 20% Sottofondo`;
+      }
       document.getElementById("labelVoceAttiva").textContent = labelText;
 
       for (let v in audios) {
         if (!audios[v].src) continue;
-        if (voceSelezionata === "tutti" || v === voceSelezionata) {
+
+        if (voceSelezionata === "tutti") {
           audios[v].volume = 1.0;
+        } else if (v === voceSelezionata) {
+          audios[v].volume = 1.0; // Voce principale al 100%
         } else {
-          audios[v].volume = VOLUME_SFONDO;
+          audios[v].volume = isSoloMode ? 0.0 : VOLUME_SFONDO; // 0% se in modalità Solo, altrimenti 20%
         }
       }
     }
