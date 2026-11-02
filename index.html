@@ -419,24 +419,45 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    async function caricaDettagliCanto(cantoBase) {
-      const fileJson = cantoBase.file || `canti/${cantoBase.id}.json`;
+async function caricaDettagliCanto(cantoBase) {
+      console.log("Tentativo di apertura canto:", cantoBase);
+
+      // Determina il percorso corretto del file JSON del canto
+      let fileJson = cantoBase.file;
+      if (!fileJson && cantoBase.id) {
+        fileJson = `canti/${cantoBase.id}.json`;
+      }
+
+      if (!fileJson) {
+        console.error("Errore: nessun file JSON associato a questo canto!", cantoBase);
+        return;
+      }
+
       try {
+        console.log("Faccio fetch di:", fileJson);
         const res = await fetch(fileJson);
         if (res.ok) {
           cantoCorrente = await res.json();
+          console.log("JSON del canto caricato con successo:", cantoCorrente);
         } else {
+          console.error("Errore HTTP nel recupero del JSON:", res.status);
           cantoCorrente = cantoBase;
         }
-      } catch (e) { cantoCorrente = cantoBase; }
+      } catch (e) {
+        console.error("Errore di rete o sintassi nel JSON:", e);
+        cantoCorrente = cantoBase;
+      }
 
-      document.getElementById("playerSongTitle").textContent = cantoCorrente.titolo || cantoBase.titolo;
-      document.getElementById("playerSongAuthor").textContent = cantoBase.autore || cantoBase.categoria || "";
+      // Imposta titolo e autore con fallback di sicurezza
+      document.getElementById("playerSongTitle").textContent = cantoCorrente.titolo || cantoBase.titolo || "Senza Titolo";
+      document.getElementById("playerSongAuthor").textContent = cantoCorrente.autore || cantoBase.autore || cantoBase.categoria || "";
 
-      // Carica Tracce Audio
-      if (cantoCorrente.tracce) {
-        for (let voce in audios) {
-          audios[voce].src = cantoCorrente.tracce[voce] || cantoCorrente.tracce["tutti"] || "";
+      // Carica Tracce Audio nei 4 elementi
+      const tracce = cantoCorrente.tracce || {};
+      for (let voce in audios) {
+        const urlTraccia = tracce[voce] || tracce["tutti"] || "";
+        audios[voce].src = urlTraccia;
+        if (urlTraccia) {
           audios[voce].load();
         }
       }
@@ -444,20 +465,22 @@
       applicaMixVolumi();
       generaLyricsSpotify();
 
-      // Spartito PDF
+      // Gestione Spartito PDF
       const boxSpartito = document.getElementById("boxSpartito");
-      if (cantoCorrente.spartito) {
+      const pdfUrl = cantoCorrente.spartito || cantoBase.spartito;
+      if (pdfUrl) {
         boxSpartito.style.display = "block";
-        document.getElementById("linkSpartitoPdf").href = cantoCorrente.spartito;
+        document.getElementById("linkSpartitoPdf").href = pdfUrl;
       } else {
         boxSpartito.style.display = "none";
       }
 
-      // Commenti / Note
+      // Gestione Commento / Note
       const boxCommento = document.getElementById("boxCommento");
-      if (cantoCorrente.commento || cantoCorrente.note) {
+      const notaTesto = cantoCorrente.commento || cantoCorrente.note;
+      if (notaTesto) {
         boxCommento.style.display = "block";
-        document.getElementById("testoCommento").textContent = cantoCorrente.commento || cantoCorrente.note;
+        document.getElementById("testoCommento").textContent = notaTesto;
       } else {
         boxCommento.style.display = "none";
       }
