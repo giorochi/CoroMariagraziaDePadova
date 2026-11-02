@@ -1,6 +1,5 @@
 {
   "titolo": "Nulla ti turbi",
-  
   "tracce": {
     "soprano": "audio/turbi/turbi_soprano.mp3",
     "contralto": "audio/turbi/turbi_contralto.mp3",
@@ -8,27 +7,25 @@
     "basso": "audio/turbi/turbi_basso.mp3",
     "tutti": "audio/turbi/turbi_all.mp3"
   },
-  
   "righe": [
-    { "tempo": 0.0,  "testo": "Nulla ti turbi, nulla ti spaventi", "sezione": "RITORNELLO" },
+    { "tempo": 0.0, "testo": "Nulla ti turbi, nulla ti spaventi", "sezione": "RITORNELLO" },
     { "tempo": 8.0, "testo": "chi ha Dio nulla gli manca", "sezione": "RITORNELLO" },
-    { "tempo": 16.0,  "testo": "Nulla ti turbi, nulla ti spaventi", "sezione": "RITORNELLO" },
+    { "tempo": 16.0, "testo": "Nulla ti turbi, nulla ti spaventi", "sezione": "RITORNELLO" },
     { "tempo": 24.0, "testo": "solo Dio basta", "sezione": "RITORNELLO" },
-
-    { "tempo": 32.0,  "testo": "Io ti voglio lodare mio Dio", "sezione": "STROFA 1" },
+    
+    { "tempo": 32.0, "testo": "Io ti voglio lodare mio Dio", "sezione": "STROFA 1" },
     { "tempo": 40.0, "testo": "perchè è eterno il tuo amore", "sezione": "STROFA 1" },
     { "tempo": 48.0, "testo": "Rivestito di gloria e splendore", "sezione": "STROFA 1" },
     { "tempo": 56.0, "testo": "Come in un manto sei avvolto di luce", "sezione": "STROFA 1" },
     
-    { "tempo": 64.0,  "testo": "Nulla ti turbi, nulla ti spaventi", "sezione": "RITORNELLO" },
+    { "tempo": 64.0, "testo": "Nulla ti turbi, nulla ti spaventi", "sezione": "RITORNELLO" },
     { "tempo": 72.0, "testo": "chi ha Dio nulla gli manca", "sezione": "RITORNELLO" },
-    { "tempo": 80.0,  "testo": "Nulla ti turbi, nulla ti spaventi", "sezione": "RITORNELLO" },
+    { "tempo": 80.0, "testo": "Nulla ti turbi, nulla ti spaventi", "sezione": "RITORNELLO" },
     { "tempo": 88.0, "testo": "solo Dio basta", "sezione": "RITORNELLO" },
-
-    { "tempo": 96.0,  "testo": "Sono grandi su tutta la terra", "sezione": "STROFA 2" },
+    
+    { "tempo": 96.0, "testo": "Sono grandi su tutta la terra", "sezione": "STROFA 2" },
     { "tempo": 104.0, "testo": "le tue opere o Signore", "sezione": "STROFA 2" },
     { "tempo": 112.0, "testo": "con sapienza hai creato l'universo", "sezione": "STROFA 2" },
     { "tempo": 120.0, "testo": "tutto ci parla di te o Creatore", "sezione": "STROFA 2" }
   ]
-  
 }
