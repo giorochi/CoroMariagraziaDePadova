@@ -5,5 +5,12 @@
     "autore": "Mons. Marco Frisina",
     "categoria": "Mariano",
     "file": "canti/magnificat.json"
+  },
+  {
+    "id": "turbi",
+    "titolo": "Nulla ti turbi",
+    "autore": "Taizè",
+    "categoria": "Ringraziamento",
+    "file": "canti/turbi.json"
   }
 ]
