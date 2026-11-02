@@ -6,7 +6,7 @@
     "contralto": "audio/turbi/turbi_contralto.mp3",
     "tenore": "audio/turbi/turbi_tenore.mp3",
     "basso": "audio/turbi/turbi_basso.mp3",
-    "tutti": "audio/turbi/turbi_all.mp3",
+    "tutti": "audio/turbi/turbi_all.mp3"
   },
   
   "righe": [
@@ -28,7 +28,7 @@
     { "tempo": 96.0,  "testo": "Sono grandi su tutta la terra", "sezione": "STROFA 2" },
     { "tempo": 104.0, "testo": "le tue opere o Signore", "sezione": "STROFA 2" },
     { "tempo": 112.0, "testo": "con sapienza hai creato l'universo", "sezione": "STROFA 2" },
-    { "tempo": 120.0, "testo": "tutto ci parla di te o Creatore", "sezione": "STROFA 2" },
+    { "tempo": 120.0, "testo": "tutto ci parla di te o Creatore", "sezione": "STROFA 2" }
   ]
   
 }
