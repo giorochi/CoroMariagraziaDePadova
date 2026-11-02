@@ -1,4 +1,9 @@
 [
-  
+  {
+    "id": "magnificat",
+    "titolo": "Magnificat",
+    "autore": "Mons. Marco Frisina",
+    "categoria": "Mariano",
+    "file": "canti/magnificat.json"
+  }
 ]
-
