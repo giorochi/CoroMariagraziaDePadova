@@ -131,7 +131,7 @@
 
     .player-card {
       background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-lg);
-      padding: 20px; text-align: center; box-shadow: var(--shadow-md); margin-bottom: 20px;
+      padding: 20px; text-align: center; box-shadow: var(--shadow-md); margin-bottom: 24px;
     }
     .player-card h2 { font-size: 1.4rem; font-weight: 800; margin-bottom: 4px; }
     .player-card p { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 12px; }
@@ -141,7 +141,6 @@
       padding: 4px 12px; border-radius: var(--radius-full); font-size: 0.8rem; font-weight: 700; margin-bottom: 16px;
     }
 
-    /* Contenitore dinamico pulsanti mix */
     .mix-selector { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 16px; }
     .mix-btn {
       flex: 1; min-width: 70px; padding: 10px 8px; border-radius: 10px; border: 1px solid var(--border-color);
@@ -150,27 +149,26 @@
     }
     .mix-btn.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 4px 10px rgba(30, 64, 175, 0.25); }
 
-    /* SPOTIFY LYRICS STYLING */
+    /* SPOTIFY LYRICS STILE FLUIDO (SENZA RIQUADRO INTERNO) */
     .spotify-lyrics-container {
-      background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-lg);
-      padding: 30px 20px; margin-bottom: 20px; max-height: 360px; overflow-y: auto; text-align: center;
-      scroll-behavior: smooth; position: relative; box-shadow: var(--shadow-sm);
+      padding: 10px 0 40px 0; margin-bottom: 24px; text-align: center;
+      scroll-behavior: smooth; position: relative;
     }
     .lyric-line {
-      font-size: 1.15rem; font-weight: 600; color: var(--text-muted); padding: 10px 12px;
-      margin: 4px 0; border-radius: 12px; transition: all 0.3s ease; cursor: pointer; opacity: 0.35;
-      line-height: 1.4;
+      font-size: 1.25rem; font-weight: 600; color: var(--text-muted); padding: 14px 16px;
+      margin: 6px 0; border-radius: 12px; transition: all 0.3s ease; cursor: pointer; opacity: 0.35;
+      line-height: 1.5;
     }
     .lyric-line:hover { opacity: 0.7; }
     .lyric-line.active {
-      font-size: 1.45rem; font-weight: 800; color: var(--primary); opacity: 1;
-      transform: scale(1.05); text-shadow: 0 4px 15px rgba(30,64,175,0.2);
+      font-size: 1.6rem; font-weight: 800; color: var(--primary); opacity: 1;
+      transform: scale(1.03); text-shadow: 0 4px 20px rgba(30,64,175,0.15);
     }
-    body.dark .lyric-line.active { color: #60a5fa; text-shadow: 0 4px 15px rgba(96,165,250,0.3); }
+    body.dark .lyric-line.active { color: #60a5fa; text-shadow: 0 4px 20px rgba(96,165,250,0.25); }
 
     .lyric-section-tag {
-      font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent);
-      font-weight: 800; margin: 24px 0 10px 0; border-top: 1px dashed var(--border-color); padding-top: 16px;
+      font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent);
+      font-weight: 800; margin: 36px 0 16px 0; border-top: 2px solid var(--border-color); padding-top: 20px;
     }
 
     .progress-bar-bg { width: 100%; height: 8px; background: var(--border-color); border-radius: 4px; overflow: hidden; cursor: pointer; margin-bottom: 8px; }
@@ -273,7 +271,6 @@
           <i data-lucide="sliders"></i> Ascolto: <span id="labelVoceAttiva">Soprano</span>
         </div>
 
-        <!-- Generato dinamicamente in base alle tracce nel JSON -->
         <div class="mix-selector" id="mixSelectorBox"></div>
 
         <div class="progress-bar-bg" id="progressBarBg">
@@ -291,7 +288,7 @@
         </div>
       </div>
 
-      <!-- SPOTIFY LYRICS -->
+      <!-- SPOTIFY LYRICS FLUIDO -->
       <div class="spotify-lyrics-container" id="spotifyLyricsBox"></div>
 
       <!-- SPARTITO -->
@@ -328,8 +325,11 @@
     let voceSelezionata = localStorage.getItem("ruoloCorista") || "soprano";
     let isPlaying = false;
     let updateInterval = null;
+    
+    // Controllo per lo scorrimento manuale libero dell'utente
+    let utenteStaScorrendo = false;
+    let timeoutScorrimento = null;
 
-    // Regola qui il volume di sottofondo per le altre voci (0.35 = 35%)
     const VOLUME_SFONDO = 0.35;
 
     const audios = {
@@ -355,7 +355,20 @@
         const dur = getDurataValida();
         if (dur > 0) saltaAlTempo(pos * dur);
       };
+
+      // Intercetta lo scroll manuale dell'utente sul documento o sul contenitore
+      window.addEventListener("wheel", gestisciInterazioneUtente);
+      window.addEventListener("touchstart", gestisciInterazioneUtente);
     });
+
+    function gestisciInterazioneUtente() {
+      utenteStaScorrendo = true;
+      if (timeoutScorrimento) clearTimeout(timeoutScorrimento);
+      // Se l'utente non tocca più lo schermo per 5 secondi, riprende l'auto-scroll
+      timeoutScorrimento = setTimeout(() => {
+        utenteStaScorrendo = false;
+      }, 5000);
+    }
 
     async function caricaRepertorio() {
       try {
@@ -436,7 +449,6 @@
       document.getElementById("playerSongTitle").textContent = cantoCorrente.titolo || cantoBase.titolo;
       document.getElementById("playerSongAuthor").textContent = cantoBase.autore || cantoBase.categoria || "";
 
-      // Carica Tracce e genera selettore dinamico
       const traccePresenti = cantoCorrente.tracce || {};
       for (let voce in audios) {
         if (traccePresenti[voce]) {
@@ -451,7 +463,6 @@
       applicaMixVolumi();
       generaLyricsSpotify();
 
-      // PDF
       const boxSpartito = document.getElementById("boxSpartito");
       const pdfUrl = cantoCorrente.spartito || cantoBase.spartito;
       if (pdfUrl) {
@@ -459,7 +470,6 @@
         document.getElementById("linkSpartitoPdf").href = pdfUrl;
       } else { boxSpartito.style.display = "none"; }
 
-      // Commenti
       const boxCommento = document.getElementById("boxCommento");
       const notaTesto = cantoCorrente.commento || cantoCorrente.note;
       if (notaTesto) {
@@ -468,14 +478,12 @@
       } else { boxCommento.style.display = "none"; }
     }
 
-    // GENERATORE DINAMICO PULSANTI MIX (Nasconde voci assenti)
     function generaSelettoreVociDinamico(tracce) {
       const container = document.getElementById("mixSelectorBox");
       container.innerHTML = "";
 
       const vociDisponibili = Object.keys(tracce).filter(v => tracce[v]);
 
-      // Tasto TUTTE le voci
       const btnTutti = document.createElement("button");
       btnTutti.className = "mix-btn";
       btnTutti.dataset.mix = "tutti";
@@ -483,7 +491,6 @@
       btnTutti.onclick = () => cambiaVoceMix("tutti");
       container.appendChild(btnTutti);
 
-      // Tasti singole voci esistenti
       vociDisponibili.forEach(v => {
         if (v === "tutti") return;
         const btn = document.createElement("button");
@@ -494,7 +501,6 @@
         container.appendChild(btn);
       });
 
-      // Se la voce salvata non è tra quelle disponibili, imposta fallback su "tutti"
       if (voceSelezionata !== "tutti" && !tracce[voceSelezionata]) {
         voceSelezionata = "tutti";
       }
@@ -515,13 +521,10 @@
 
       for (let v in audios) {
         if (!audios[v].src) continue;
-
-        if (voceSelezionata === "tutti") {
-          audios[v].volume = 1.0;
-        } else if (v === voceSelezionata) {
+        if (voceSelezionata === "tutti" || v === voceSelezionata) {
           audios[v].volume = 1.0;
         } else {
-          audios[v].volume = VOLUME_SFONDO; // Volume sottofondo al 35%
+          audios[v].volume = VOLUME_SFONDO;
         }
       }
     }
@@ -584,6 +587,7 @@
       }
     }
 
+    // SINCRONIZZAZIONE FORZATA AUDIO MOBILE
     function avviaTuttiGliAudio(tempoInizio) {
       let t = tempoInizio || 0;
 
@@ -611,9 +615,9 @@
             
             if (updateInterval) clearInterval(updateInterval);
             updateInterval = setInterval(aggiornaStatoPlayer, 150);
-          }).catch(e => console.log("Errore riproduzione:", e));
+          }).catch(e => console.log("Errore riproduzione mobile:", e));
         }
-      }, 50);
+      }, 80);
     }
 
     function fermaTutto() {
@@ -659,7 +663,6 @@
         document.getElementById("durationTimeLabel").textContent = formatTime(dur);
       }
 
-      // Sincronizzazione Rigo per Rigo stile Spotify
       const linee = document.querySelectorAll(".lyric-line");
       let rigoAttivo = null;
 
@@ -671,7 +674,11 @@
       linee.forEach(l => l.classList.remove("active"));
       if (rigoAttivo) {
         rigoAttivo.classList.add("active");
-        rigoAttivo.scrollIntoView({ behavior: "smooth", block: "center" });
+        
+        // Se l'utente NON sta scorrendo manualmente, scrolla in modo fluido sul rigo attivo
+        if (!utenteStaScorrendo) {
+          rigoAttivo.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
       }
     }
 
