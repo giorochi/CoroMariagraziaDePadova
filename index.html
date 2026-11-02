@@ -149,7 +149,6 @@
     }
     .mix-btn.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 4px 10px rgba(30, 64, 175, 0.25); }
 
-    /* SPOTIFY LYRICS STILE FLUIDO (SENZA RIQUADRO INTERNO) */
     .spotify-lyrics-container {
       padding: 10px 0 40px 0; margin-bottom: 24px; text-align: center;
       scroll-behavior: smooth; position: relative;
@@ -326,11 +325,11 @@
     let isPlaying = false;
     let updateInterval = null;
     
-    // Controllo per lo scorrimento manuale libero dell'utente
     let utenteStaScorrendo = false;
     let timeoutScorrimento = null;
 
-    const VOLUME_SFONDO = 0.35;
+    // Volume di sottofondo impostato al 25% (0.25)
+    const VOLUME_SFONDO = 0.25;
 
     const audios = {
       soprano: document.getElementById("audioSoprano"),
@@ -356,7 +355,6 @@
         if (dur > 0) saltaAlTempo(pos * dur);
       };
 
-      // Intercetta lo scroll manuale dell'utente sul documento o sul contenitore
       window.addEventListener("wheel", gestisciInterazioneUtente);
       window.addEventListener("touchstart", gestisciInterazioneUtente);
     });
@@ -364,7 +362,6 @@
     function gestisciInterazioneUtente() {
       utenteStaScorrendo = true;
       if (timeoutScorrimento) clearTimeout(timeoutScorrimento);
-      // Se l'utente non tocca più lo schermo per 5 secondi, riprende l'auto-scroll
       timeoutScorrimento = setTimeout(() => {
         utenteStaScorrendo = false;
       }, 5000);
@@ -587,7 +584,6 @@
       }
     }
 
-    // SINCRONIZZAZIONE FORZATA AUDIO MOBILE
     function avviaTuttiGliAudio(tempoInizio) {
       let t = tempoInizio || 0;
 
@@ -675,7 +671,6 @@
       if (rigoAttivo) {
         rigoAttivo.classList.add("active");
         
-        // Se l'utente NON sta scorrendo manualmente, scrolla in modo fluido sul rigo attivo
         if (!utenteStaScorrendo) {
           rigoAttivo.scrollIntoView({ behavior: "smooth", block: "center" });
         }
