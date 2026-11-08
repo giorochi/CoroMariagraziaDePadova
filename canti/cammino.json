@@ -1,0 +1,17 @@
+{
+  "titolo": "Il pane del cammino",
+  "tracce": {
+    "soprano": "audio/cammino/cammino_soprano.mp3",
+    "contralto": "audio/cammino/cammino_contralto.mp3",
+    "tenore": "audio/cammino/cammino_tenore.mp3",
+    "tutti": "audio/cammino/cammino_all.mp3"
+  },
+  "righe": [
+    { "tempo": 0.0, "testo": "Il tuo popolo in cammino", "sezione": "RITORNELLO" },
+    { "tempo": 6.8, "testo": "cerca in te la guida", "sezione": "RITORNELLO" },
+    { "tempo": 13.7, "testo": "sulla strada verso il regno", "sezione": "RITORNELLO" },
+    { "tempo": 20.5, "testo": "sei sostegno col tuo corpo", "sezione": "RITORNELLO" },
+    { "tempo": 27.4, "testo": "resta sempre con noi", "sezione": "RITORNELLO" },
+    { "tempo": 32.5, "testo": "o Signore", "sezione": "RITORNELLO" }
+  ]
+}
