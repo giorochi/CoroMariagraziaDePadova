@@ -26,5 +26,12 @@
     "autore": "Giorgio Golin",
     "categoria": "Mariano",
     "file": "canti/gloriosa.json"
+  },
+  {
+    "id": "vivente",
+    "titolo": "Cristo Vivente",
+    "autore": "Antonio Parisi",
+    "categoria": "Ingresso",
+    "file": "canti/vivente.json"
   }
 ]
