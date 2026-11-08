@@ -1,0 +1,53 @@
+{
+  "titolo": "Cristo Vivente",
+  "tracce": {
+    "soprano": "audio/vivente/vivente_soprano.mp3",
+    "contralto": "audio/vivente/vivente_contralto.mp3",
+    "tenore": "audio/vivente/vivente_tenore.mp3",
+    "basso": "audio/vivente/vivente_basso.mp3",
+    "tutti": "audio/vivente/vivente_all.mp3"
+  },
+  "righe": [
+    { "tempo": 0.0, "testo": "Cristo Vivente ieri oggi e sempre", "sezione": "RITORNELLO" },
+    { "tempo": 14.5, "testo": "celebriamo il tuo mistero d'amore", "sezione": "RITORNELLO" },
+    { "tempo": 21.4, "testo": "acclamiamo al tuo nome unica salvezza", "sezione": "RITORNELLO" },
+    { "tempo": 29.5, "testo": "a te la lode e la gloria", "sezione": "RITORNELLO" },
+    { "tempo": 33.8, "testo": "Signore Gesù", "sezione": "RITORNELLO" },
+    
+    { "tempo": 39.4, "testo": "Tu sei il figlio del dio vivente", "sezione": "STROFA 1" },
+    { "tempo": 46.7, "testo": "che offre al mondo la sua redenzione", "sezione": "STROFA 1" },
+    { "tempo": 53.5.0, "testo": "da ogni male", "sezione": "STROFA 1" },
+    
+    { "tempo": 57.8, "testo": "A te il nostro canto di benedizione", "sezione": "CORO" },
+    
+    { "tempo": 68.5, "testo": "Tu sei il Verbo splendente del Padre", "sezione": "STROFA 1" },
+    { "tempo": 75.8, "testo": "la luce vera che fa comunione", "sezione": "STROFA 1" },
+    { "tempo": 82.7, "testo": "tra uomo e uomo", "sezione": "STROFA 1" },
+
+    { "tempo": 86.9, "testo": "A te il nostro canto di benedizione", "sezione": "CORO" },
+    
+    { "tempo": 95.9, "testo": "Cristo Vivente ieri oggi e sempre", "sezione": "RITORNELLO" },
+    { "tempo": 103.7, "testo": "celebriamo il tuo mistero d'amore", "sezione": "RITORNELLO" },
+    { "tempo": 110.5, "testo": "acclamiamo al tuo nome unica salvezza", "sezione": "RITORNELLO" },
+    { "tempo": 118.7, "testo": "a te la lode e la gloria", "sezione": "RITORNELLO" },
+    { "tempo": 122.9, "testo": "Signore Gesù", "sezione": "RITORNELLO" },
+    
+    { "tempo":128.5, "testo": "Tu sei l'agnello che Dio ha immolato", "sezione": "STROFA 2" },
+    { "tempo": 135.8, "testo": "per dare ai figli riconciliazione", "sezione": "STROFA 2" },
+    { "tempo": 142.7, "testo": "perdono e pace", "sezione": "STROFA 2" },
+    
+    { "tempo": 146.9, "testo": "A te il nostro canto di benedizione", "sezione": "CORO" },
+    
+    { "tempo": 157.7, "testo": "Tu sei la Vita offerta in pienezza", "sezione": "STROFA 2" },
+    { "tempo": 164.9, "testo": "l'unica Via di liberazione", "sezione": "STROFA 2" },
+    { "tempo": 171.8, "testo": "del nostro mondo", "sezione": "STROFA 2" },
+
+    { "tempo": 176.1, "testo": "A te il nostro canto di benedizione", "sezione": "CORO" },
+
+    { "tempo": 185.1, "testo": "Cristo Vivente ieri oggi e sempre", "sezione": "RITORNELLO" },
+    { "tempo": 192.8, "testo": "celebriamo il tuo mistero d'amore", "sezione": "RITORNELLO" },
+    { "tempo": 199.7, "testo": "acclamiamo al tuo nome unica salvezza", "sezione": "RITORNELLO" },
+    { "tempo": 207.8, "testo": "a te la lode e la gloria", "sezione": "RITORNELLO" },
+    { "tempo": 212.2, "testo": "Signore Gesù", "sezione": "RITORNELLO" },
+  ]
+}
