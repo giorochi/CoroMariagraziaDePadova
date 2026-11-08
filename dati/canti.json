@@ -12,5 +12,12 @@
     "autore": "Taizè",
     "categoria": "Ringraziamento",
     "file": "canti/turbi.json"
+  },
+  {
+    "id": "cammino",
+    "titolo": "Il pane del cammino",
+    "autore": "Pierangelo Sequeri",
+    "categoria": "Comunione",
+    "file": "canti/cammino.json"
   }
 ]
