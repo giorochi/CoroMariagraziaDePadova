@@ -1,0 +1,17 @@
+{
+  "titolo": "O Donna gloriosa",
+  "tracce": {
+    "soprano": "audio/gloriosa/gloriosa_soprano.mp3",
+    "contralto": "audio/gloriosa/gloriosa_contralto.mp3",
+    "tenore": "audio/gloriosa/gloriosa_tenore.mp3",
+    "basso": "audio/gloriosa/gloriosa_basso.mp3",
+    "tutti": "audio/gloriosa/gloriosa_all.mp3"
+  },
+  "righe": [
+    { "tempo": 0.0, "testo": "o Donna gloriosa", "sezione": "Strofa 1" },
+    { "tempo": 6.7, "testo": "più alta delle stelle", "sezione": "Strofa 1" },
+    { "tempo": 10.3, "testo": "tu nutri sul tuo seno", "sezione": "Strofa 1" },
+    { "tempo": 20.2, "testo": "il Dio che ti ha creata", "sezione": "Strofa 1" },
+    { "tempo": 27.7, "testo": "Amen", "sezione": "FINALE" }
+  ]
+}
