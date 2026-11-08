@@ -19,5 +19,12 @@
     "autore": "Pierangelo Sequeri",
     "categoria": "Comunione",
     "file": "canti/cammino.json"
+  },
+  {
+    "id": "gloriosa",
+    "titolo": "O Donna gloriosa",
+    "autore": "Giorgio Golin",
+    "categoria": "Mariano",
+    "file": "canti/gloriosa.json"
   }
 ]
